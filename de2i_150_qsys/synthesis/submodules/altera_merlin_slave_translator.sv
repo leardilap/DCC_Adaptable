@@ -1,4 +1,4 @@
-// (C) 2001-2012 Altera Corporation. All rights reserved.
+// (C) 2001-2014 Altera Corporation. All rights reserved.
 // Your use of Altera Corporation's design tools, logic functions and other 
 // software and tools, and its AMPP partner logic functions, and any output 
 // files any of the foregoing (including device programming or simulation 
@@ -12,9 +12,9 @@
 
 
 
-// $Id: //acds/rel/12.1/ip/merlin/altera_merlin_slave_translator/altera_merlin_slave_translator.sv#1 $
+// $Id: //acds/rel/14.0/ip/merlin/altera_merlin_slave_translator/altera_merlin_slave_translator.sv#1 $
 // $Revision: #1 $
-// $Date: 2012/08/12 $
+// $Date: 2014/02/16 $
 // $Author: swbranch $
 
 // -------------------------------------
@@ -54,12 +54,14 @@ module altera_merlin_slave_translator
     //Optional Port Declarations
     USE_READDATAVALID       = 1,
     USE_WAITREQUEST         = 1,
-
+    USE_READRESPONSE        = 0,
+    USE_WRITERESPONSE       = 0,
+    
     //Variable Addressing
     AV_SYMBOLS_PER_WORD     = 4,
     AV_ADDRESS_SYMBOLS      = 0,
     AV_BURSTCOUNT_SYMBOLS   = 0,
-    BITS_PER_WORD           = clog2(AV_SYMBOLS_PER_WORD - 1),
+    BITS_PER_WORD           = clog2_plusone(AV_SYMBOLS_PER_WORD - 1),
     UAV_ADDRESS_W           = 38,
     UAV_BURSTCOUNT_W        = 10,
     UAV_DATA_W              = 32,
@@ -77,56 +79,64 @@ module altera_merlin_slave_translator
    // -------------------
    // Clock & Reset
    // -------------------
-   input wire clk,
-   input wire reset,
+   input wire                             clk,
+   input wire                             reset,
    
    // -------------------
    // Universal Avalon Slave
    // -------------------
 
-    input wire [UAV_ADDRESS_W    - 1 : 0]    uav_address,
-    input wire [UAV_DATA_W       - 1 : 0]    uav_writedata,
-    input wire 				     uav_write,
-    input wire 				     uav_read,
-    input wire [UAV_BURSTCOUNT_W - 1 : 0]    uav_burstcount,
-    input wire [UAV_BYTEENABLE_W - 1 : 0]    uav_byteenable,
-    input wire 				     uav_lock,
-    input wire                               uav_debugaccess,
-    input wire                               uav_clken,
+   input wire [UAV_ADDRESS_W - 1 : 0]     uav_address,
+   input wire [UAV_DATA_W - 1 : 0]        uav_writedata,
+   input wire                             uav_write,
+   input wire                             uav_read,
+   input wire [UAV_BURSTCOUNT_W - 1 : 0]  uav_burstcount,
+   input wire [UAV_BYTEENABLE_W - 1 : 0]  uav_byteenable,
+   input wire                             uav_lock,
+   input wire                             uav_debugaccess,
+   input wire                             uav_clken,
    
-    output logic                             uav_readdatavalid,
-    output logic			     uav_waitrequest,
-    output logic[UAV_DATA_W - 1 : 0]         uav_readdata,
+   output logic                           uav_readdatavalid,
+   output logic                           uav_waitrequest,
+   output logic [UAV_DATA_W - 1 : 0]      uav_readdata,
+   output logic [1:0]                     uav_response,
+   input wire                             uav_writeresponserequest,
+   output logic                           uav_writeresponsevalid,
    
    // -------------------
    // Customizable Avalon Master
    // -------------------
-    output logic [AV_ADDRESS_W    - 1 : 0]   av_address,
-    output logic [AV_DATA_W       - 1 : 0]   av_writedata,
-    output logic 			     av_write,
-    output logic			     av_read,
-    output logic[AV_BURSTCOUNT_W - 1 : 0]    av_burstcount,
-    output logic[AV_BYTEENABLE_W - 1 : 0]    av_byteenable,
-    output logic[AV_BYTEENABLE_W - 1 : 0]    av_writebyteenable, 						     
-    output logic               		     av_begintransfer,
-    output wire 			     av_chipselect,
-    output logic			     av_beginbursttransfer,     
-    output logic			     av_lock,
-    output wire                              av_clken,
-    output wire                              av_debugaccess,
-    output wire                              av_outputenable,
+   output logic [AV_ADDRESS_W - 1 : 0]    av_address,
+   output logic [AV_DATA_W - 1 : 0]       av_writedata,
+   output logic                           av_write,
+   output logic                           av_read,
+   output logic [AV_BURSTCOUNT_W - 1 : 0] av_burstcount,
+   output logic [AV_BYTEENABLE_W - 1 : 0] av_byteenable,
+   output logic [AV_BYTEENABLE_W - 1 : 0] av_writebyteenable, 
+   output logic                           av_begintransfer,
+   output wire                            av_chipselect,
+   output logic                           av_beginbursttransfer, 
+   output logic                           av_lock,
+   output wire                            av_clken,
+   output wire                            av_debugaccess,
+   output wire                            av_outputenable,
    
-    input logic [AV_DATA_W - 1 : 0] 	     av_readdata,
-    input logic                              av_readdatavalid,
-    input logic 			     av_waitrequest
+   input logic [AV_DATA_W - 1 : 0]        av_readdata,
+   input logic                            av_readdatavalid,
+   input logic                            av_waitrequest,
+
+   input logic [1:0]                      av_response,
+   output logic                           av_writeresponserequest,
+   input wire                             av_writeresponsevalid
+   
    );
 
-   function integer clog2;
+   function integer clog2_plusone;
       input [31:0] Depth;
       integer i;
       begin
          i = Depth;        
-         for(clog2 = 0; i > 0; clog2 = clog2 + 1)
+         for(clog2_plusone = 0; i > 0; clog2_plusone = clog2_plusone + 1)
            i = i >> 1;
       end
  
@@ -146,7 +156,7 @@ module altera_merlin_slave_translator
    localparam 	   AV_READ_WAIT_INDEXED      = (AV_SETUP_WAIT_CYCLES + AV_READ_WAIT_CYCLES);
    localparam 	   AV_WRITE_WAIT_INDEXED     = (AV_SETUP_WAIT_CYCLES + AV_WRITE_WAIT_CYCLES);
    localparam 	   AV_DATA_HOLD_INDEXED      = (AV_WRITE_WAIT_INDEXED + AV_DATA_HOLD_CYCLES);
-   localparam 	   LOG2_OF_LATENCY_SUM       = max(clog2(AV_READ_WAIT_INDEXED + 1),clog2(AV_DATA_HOLD_INDEXED + 1));
+   localparam 	   LOG2_OF_LATENCY_SUM       = max(clog2_plusone(AV_READ_WAIT_INDEXED + 1),clog2_plusone(AV_DATA_HOLD_INDEXED + 1));
    localparam 	   BURSTCOUNT_SHIFT_SELECTOR = AV_BURSTCOUNT_SYMBOLS ? 0 : BITS_PER_WORD;
    localparam 	   ADDRESS_SHIFT_SELECTOR    = AV_ADDRESS_SYMBOLS ? 0 : BITS_PER_WORD;
    
@@ -157,12 +167,12 @@ module altera_merlin_slave_translator
    localparam      BURSTCOUNT_HIGH           = ( UAV_BURSTCOUNT_W > AV_BURSTCOUNT_W + BURSTCOUNT_SHIFT_SELECTOR ) ? 
 		                                   AV_BURSTCOUNT_W : 
 		                                   UAV_BURSTCOUNT_W - BURSTCOUNT_SHIFT_SELECTOR;
-   localparam      BYTEENABLE_ADDRESS_BITS   = ( clog2(UAV_BYTEENABLE_W) - 1 ) >= 1 ? clog2(UAV_BYTEENABLE_W) - 1 : 1;
+   localparam      BYTEENABLE_ADDRESS_BITS   = ( clog2_plusone(UAV_BYTEENABLE_W) - 1 ) >= 1 ? clog2_plusone(UAV_BYTEENABLE_W) - 1 : 1;
    
 
    // Calculate the symbols per word as the power of 2 extended symbols per word
-   wire [31 : 0] symbols_per_word_int = 2**(clog2(AV_SYMBOLS_PER_WORD[UAV_BURSTCOUNT_W : 0] - 1));
-   wire [UAV_BURSTCOUNT_W : 0] symbols_per_word = symbols_per_word_int[UAV_BURSTCOUNT_W : 0];
+   wire [31 : 0] symbols_per_word_int = 2**(clog2_plusone(AV_SYMBOLS_PER_WORD[UAV_BURSTCOUNT_W : 0] - 1));
+   wire [UAV_BURSTCOUNT_W-1 : 0] symbols_per_word = symbols_per_word_int[UAV_BURSTCOUNT_W-1 : 0];
    
    // +--------------------------------
    // |Backwards Compatibility Signals
@@ -173,8 +183,17 @@ module altera_merlin_slave_translator
    // +-------------------
    // |Passthru Signals
    // +-------------------
-
-
+    always_comb
+        begin
+            if (!USE_READRESPONSE && !USE_WRITERESPONSE) begin
+                uav_response  = '0;
+            end else begin
+                uav_response  = av_response;
+            end
+        end
+    assign av_writeresponserequest  = uav_writeresponserequest;
+    assign uav_writeresponsevalid   = av_writeresponsevalid;
+ 
    //-------------------------
    //Writedata and Byteenable
    //-------------------------
@@ -289,11 +308,10 @@ end
 	 
 	 wait_latency_counter <= '0;
 	 	 	 
-	 if( uav_read | uav_write )
-	   wait_latency_counter <= wait_latency_counter + 1'h1;
-
 	 if( ~uav_waitrequest | waitrequest_reset_override )
 	   wait_latency_counter <= '0;
+     else if( uav_read | uav_write )
+       wait_latency_counter <= wait_latency_counter + 1'h1;     
 	 
       end
       
@@ -349,13 +367,13 @@ end
    end
 
    always@* begin
-      uav_readdata = '0;
+      uav_readdata = {UAV_DATA_W{1'b0}};
       
       if( AV_READLATENCY != 0  || USE_READDATAVALID ) begin
-	 uav_readdata = av_readdata;
+        uav_readdata[AV_DATA_W-1:0] = av_readdata;
       end 
       else begin
-	 uav_readdata = av_readdata_pre;
+	    uav_readdata[AV_DATA_W-1:0] = av_readdata_pre;
       end
    end
    // -------------------
@@ -398,7 +416,7 @@ end
       end
       else if (av_clken) begin
 	 
-	 read_latency_shift_reg <= uav_read && ~uav_waitrequest & ~waitrequest_reset_override;
+	 read_latency_shift_reg[0] <= uav_read && ~uav_waitrequest & ~waitrequest_reset_override;
 
 	 for (int i=0; i+1 < AV_READLATENCY ; i+=1 ) begin
 	    read_latency_shift_reg[i+1] <= read_latency_shift_reg[i];

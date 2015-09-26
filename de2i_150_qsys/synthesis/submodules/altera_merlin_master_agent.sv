@@ -1,4 +1,4 @@
-// (C) 2001-2012 Altera Corporation. All rights reserved.
+// (C) 2001-2014 Altera Corporation. All rights reserved.
 // Your use of Altera Corporation's design tools, logic functions and other 
 // software and tools, and its AMPP partner logic functions, and any output 
 // files any of the foregoing (including device programming or simulation 
@@ -11,9 +11,9 @@
 // agreement for further details.
 
 
-// $Id: //acds/rel/12.1/ip/merlin/altera_merlin_master_agent/altera_merlin_master_agent.sv#1 $
+// $Id: //acds/rel/14.0/ip/merlin/altera_merlin_master_agent/altera_merlin_master_agent.sv#1 $
 // $Revision: #1 $
-// $Date: 2012/08/12 $
+// $Date: 2014/02/16 $
 // $Author: swbranch $
 
 // --------------------------------------
@@ -67,8 +67,12 @@ module altera_merlin_master_agent
               PKT_SRC_ID_L         = 1,
               PKT_DEST_ID_H        = 0,
               PKT_DEST_ID_L        = 0,
-              ST_DATA_W            = 110,
-              ST_CHANNEL_W         = 1,
+              PKT_RESPONSE_STATUS_L = 110,
+              PKT_RESPONSE_STATUS_H = 111,
+			  PKT_ORI_BURST_SIZE_L  = 112,
+			  PKT_ORI_BURST_SIZE_H  = 114,
+              ST_DATA_W             = 115,
+              ST_CHANNEL_W          = 1,
 
     // -------------------
     // Agent Parameters
@@ -77,59 +81,67 @@ module altera_merlin_master_agent
               ID                    = 1,
               SUPPRESS_0_BYTEEN_RSP = 1,
               BURSTWRAP_VALUE       = 4,
-              CACHE_VALUE           = 4'b0000,
+              CACHE_VALUE           = 0,
+              SECURE_ACCESS_BIT     = 1,
+              USE_READRESPONSE      = 0,
+              USE_WRITERESPONSE     = 0,
 
     // -------------------
     // Derived Parameters
     // -------------------
               PKT_BURSTWRAP_W = PKT_BURSTWRAP_H - PKT_BURSTWRAP_L + 1,
               PKT_BYTE_CNT_W  = PKT_BYTE_CNT_H - PKT_BYTE_CNT_L + 1,
+              PKT_PROTECTION_W= PKT_PROTECTION_H - PKT_PROTECTION_L + 1,
               PKT_ADDR_W      = PKT_ADDR_H - PKT_ADDR_L + 1,
               PKT_DATA_W      = PKT_DATA_H - PKT_DATA_L + 1,
               PKT_BYTEEN_W    = PKT_BYTEEN_H - PKT_BYTEEN_L + 1,
               PKT_SRC_ID_W    = PKT_SRC_ID_H - PKT_SRC_ID_L + 1,
-              PKT_DEST_ID_W   = PKT_DEST_ID_H - PKT_DEST_ID_L + 1
+              PKT_DEST_ID_W   = PKT_DEST_ID_H - PKT_DEST_ID_L + 1,
+              PKT_BURST_SIZE_W= PKT_BURST_SIZE_H - PKT_BURST_SIZE_L + 1
 )
 (
     // -------------------
     // Clock & Reset
     // -------------------
-    input clk,
-    input reset,
+    input                         clk,
+    input                         reset,
 
     // -------------------
     // Avalon-MM Anti-Master
     // -------------------
-    input      [PKT_ADDR_W-1 : 0]      av_address,
-    input                              av_write,
-    input                              av_read,
-    input      [PKT_DATA_W-1 : 0]      av_writedata,
-    output reg [PKT_DATA_W-1 : 0]      av_readdata,
-    output reg                         av_waitrequest,
-    output reg                         av_readdatavalid,
-    input      [PKT_BYTEEN_W-1 : 0]    av_byteenable,
-    input      [AV_BURSTCOUNT_W-1 : 0] av_burstcount,
-    input                              av_debugaccess,
-    input                              av_lock,
-    
+    input [PKT_ADDR_W-1 : 0]      av_address,
+    input                         av_write,
+    input                         av_read,
+    input [PKT_DATA_W-1 : 0]      av_writedata,
+    output reg [PKT_DATA_W-1 : 0] av_readdata,
+    output reg                    av_waitrequest,
+    output reg                    av_readdatavalid,
+    input [PKT_BYTEEN_W-1 : 0]    av_byteenable,
+    input [AV_BURSTCOUNT_W-1 : 0] av_burstcount,
+    input                         av_debugaccess,
+    input                         av_lock,
+    output reg [1:0]              av_response,
+    input                         av_writeresponserequest,
+    output reg                    av_writeresponsevalid,
+ 
     // -------------------
     // Command Source
     // -------------------
-    output reg                         cp_valid,
-    output reg [ST_DATA_W-1 : 0]       cp_data,
-    output wire                        cp_startofpacket,
-    output wire                        cp_endofpacket,
-    input                              cp_ready,
+    output reg                    cp_valid,
+    output reg [ST_DATA_W-1 : 0]  cp_data,
+    output wire                   cp_startofpacket,
+    output wire                   cp_endofpacket,
+    input                         cp_ready,
 
     // -------------------
     // Response Sink
     // -------------------
-    input                              rp_valid,
-    input   [ST_DATA_W-1 : 0]          rp_data,
-    input   [ST_CHANNEL_W-1 : 0]       rp_channel,
-    input                              rp_startofpacket,
-    input                              rp_endofpacket,
-    output reg                         rp_ready
+    input                         rp_valid,
+    input [ST_DATA_W-1 : 0]       rp_data,
+    input [ST_CHANNEL_W-1 : 0]    rp_channel,
+    input                         rp_startofpacket,
+    input                         rp_endofpacket,
+    output reg                    rp_ready
 );
     // ------------------------------------------------------------
     // Utility Functions
@@ -165,8 +177,8 @@ module altera_merlin_master_agent
 
     wire [31:0] burstwrap_value_int = BURSTWRAP_VALUE;
     wire [31:0] id_int              = ID; 
-    wire [2:0]  burstsize_sig       = BURST_SIZE[2:0];
-    wire [1:0]  bursttype_value     = burstwrap_value_int[PKT_BURSTWRAP_W-1] ? INCR : WRAP;
+    wire [PKT_BURST_SIZE_W-1:0] burstsize_sig = BURST_SIZE[PKT_BURST_SIZE_W-1:0];
+    wire [1:0] bursttype_value = burstwrap_value_int[PKT_BURSTWRAP_W-1] ? INCR : WRAP;
 
     // --------------------------------------
     // Address alignment
@@ -189,30 +201,39 @@ module altera_merlin_master_agent
     // Command & Response Construction
     // --------------------------------------
     always @* begin
-        cp_data = '0; // default assignment; override below as needed.
-
-        cp_data[PKT_PROTECTION_H:PKT_PROTECTION_L] = av_debugaccess;
-        cp_data[PKT_BURSTWRAP_H:PKT_BURSTWRAP_L  ] = burstwrap_value_int[PKT_BURSTWRAP_W-1:0];
-        cp_data[PKT_BYTE_CNT_H :PKT_BYTE_CNT_L   ] = av_burstcount;
-        cp_data[PKT_ADDR_H     :PKT_ADDR_L       ] = av_address_aligned;
-        cp_data[PKT_TRANS_EXCLUSIVE              ] = 1'b0;
-        cp_data[PKT_TRANS_LOCK                   ] = av_lock;
-        cp_data[PKT_TRANS_COMPRESSED_READ        ] = av_read & is_burst;
-        cp_data[PKT_TRANS_READ                   ] = av_read;
-        cp_data[PKT_TRANS_WRITE                  ] = av_write;
-        cp_data[PKT_TRANS_POSTED                 ] = av_write;
-        cp_data[PKT_DATA_H     :PKT_DATA_L       ] = av_writedata;
-        cp_data[PKT_BYTEEN_H   :PKT_BYTEEN_L     ] = av_byteenable;
-        cp_data[PKT_BURST_SIZE_H:PKT_BURST_SIZE_L] = burstsize_sig;
-        cp_data[PKT_BURST_TYPE_H:PKT_BURST_TYPE_L] = bursttype_value;
-        cp_data[PKT_SRC_ID_H   :PKT_SRC_ID_L     ] = id_int[PKT_SRC_ID_W-1:0];
-        cp_data[PKT_THREAD_ID_H:PKT_THREAD_ID_L  ] = '0;
-        cp_data[PKT_CACHE_H    :PKT_CACHE_L      ] = CACHE_VALUE;
-        cp_data[PKT_QOS_H      : PKT_QOS_L]        = '0;        
-        cp_data[PKT_ADDR_SIDEBAND_H:PKT_ADDR_SIDEBAND_L] = '0;
-        cp_data[PKT_DATA_SIDEBAND_H :PKT_DATA_SIDEBAND_L] = '0;
+        cp_data                                            = '0; // default assignment; override below as needed.
+        
+        cp_data[PKT_PROTECTION_L]                          = av_debugaccess;    
+        cp_data[PKT_PROTECTION_L+1]                        = SECURE_ACCESS_BIT[0];    // Default Non-secured (AXI)
+        cp_data[PKT_PROTECTION_L+2]                        = 1'b0;                  // Default Data access (AXI)
+        cp_data[PKT_BURSTWRAP_H:PKT_BURSTWRAP_L  ]         = burstwrap_value_int[PKT_BURSTWRAP_W-1:0];
+        cp_data[PKT_BYTE_CNT_H :PKT_BYTE_CNT_L   ]         = av_burstcount;
+        cp_data[PKT_ADDR_H     :PKT_ADDR_L       ]         = av_address_aligned;
+        cp_data[PKT_TRANS_EXCLUSIVE              ]         = 1'b0;
+        cp_data[PKT_TRANS_LOCK                   ]         = av_lock;
+        cp_data[PKT_TRANS_COMPRESSED_READ        ]         = av_read & is_burst;
+        cp_data[PKT_TRANS_READ                   ]         = av_read;
+        cp_data[PKT_TRANS_WRITE                  ]         = av_write;
+        // posted and non-posted write avaiable now
+        cp_data[PKT_TRANS_POSTED                 ]         = av_write & !av_writeresponserequest;
+        cp_data[PKT_DATA_H     :PKT_DATA_L       ]         = av_writedata;
+        cp_data[PKT_BYTEEN_H   :PKT_BYTEEN_L     ]         = av_byteenable;
+        cp_data[PKT_BURST_SIZE_H:PKT_BURST_SIZE_L]         = burstsize_sig;
+		cp_data[PKT_ORI_BURST_SIZE_H:PKT_ORI_BURST_SIZE_L] = burstsize_sig;
+        cp_data[PKT_BURST_TYPE_H:PKT_BURST_TYPE_L] 		   = bursttype_value;
+        cp_data[PKT_SRC_ID_H   :PKT_SRC_ID_L     ]         = id_int[PKT_SRC_ID_W-1:0];
+        cp_data[PKT_THREAD_ID_H:PKT_THREAD_ID_L  ]         = '0;
+        cp_data[PKT_CACHE_H    :PKT_CACHE_L      ]         = CACHE_VALUE[3:0];
+        cp_data[PKT_QOS_H      : PKT_QOS_L]                = '0;        
+        cp_data[PKT_ADDR_SIDEBAND_H:PKT_ADDR_SIDEBAND_L]   = '0;
+        cp_data[PKT_DATA_SIDEBAND_H :PKT_DATA_SIDEBAND_L]  = '0;
                
-        av_readdata = rp_data[PKT_DATA_H : PKT_DATA_L];
+        av_readdata                                        = rp_data[PKT_DATA_H : PKT_DATA_L];
+        if (USE_WRITERESPONSE || USE_READRESPONSE)
+            av_response  = rp_data[PKT_RESPONSE_STATUS_H : PKT_RESPONSE_STATUS_L];
+        else
+            av_response  = '0;
+ 
     end
 
     // --------------------------------------
@@ -256,19 +277,32 @@ module altera_merlin_master_agent
     // --------------------------------------
     // Backpressure & Readdatavalid
     // --------------------------------------
-    always @* begin
-        rp_ready         = 1;
-        av_waitrequest   = 0;
-        av_readdatavalid = 0;
+    reg hold_waitrequest;
 
-        av_waitrequest = !cp_ready;
+    always @ (posedge clk, posedge reset) begin
+        if (reset)
+            hold_waitrequest <= 1'b1;
+        else
+            hold_waitrequest <= 1'b0;
+    end  
+
+    always @* begin
+        rp_ready               = 1;
+        av_readdatavalid       = 0;
+        av_writeresponsevalid  = 0;
+        av_waitrequest  = hold_waitrequest | !cp_ready;
 
         // --------------------------------------
         // Currently, responses are _always_ read responses because
         // this Avalon agent only issues posted writes, which do
-        // not have responses.
+        // not have responses. -> not true for now
+        // Now Avalon supports response, so based on type of transaction
+        // return, assert correct thing
         // --------------------------------------
-        av_readdatavalid = rp_valid;
+        if (rp_data[PKT_TRANS_WRITE] == 1)
+            av_writeresponsevalid  = rp_valid;
+        else
+            av_readdatavalid       = rp_valid;
 
         if (SUPPRESS_0_BYTEEN_RSP) begin
             if (rp_data[PKT_BYTEEN_H:PKT_BYTEEN_L] == 0)

@@ -50,7 +50,7 @@
 // ============================================================================
 
 `define ENABLE_PCIE
-`define DATE 32'h26090215
+`define DATE 32'h26090315
 
 module de2i_150_qsys_pcie(
 
@@ -438,7 +438,16 @@ output                                             VGA_VS;
 //  REG/WIRE declarations
 //=======================================================
 
-
+reg [13:0] fir_memory_s2_address;                      //              fir_memory_s2.address
+reg        fir_memory_s2_chipselect = 1'b1;                   //                           .chipselec
+reg        fir_memory_s2_clken = 1'b1;                        //                           .clken
+reg        fir_memory_s2_write = 1'b0;                        //                           .write
+wire [63:0] fir_memory_s2_readdata;                     //                           .readdata
+reg [63:0] fir_memory_s2_writedata = 64'b0;                    //                           .writedata
+reg [7:0]  fir_memory_s2_byteenable = 8'b0;                   //                           .byteenabl
+reg        fir_memory_clk2_clk;                        //            fir_memory_clk2.clk
+reg        fir_memory_reset2_reset = 1'b0;                    //          fir_memory_reset2.reset
+reg        fir_memory_reset2_reset_req = 1'b0;                 //                           .reset_req
 
 wire reset_n;
 
@@ -447,6 +456,10 @@ wire reset_n;
 //=======================================================
 
 assign reset_n = 1'b1;
+
+always@(posedge CLOCK_50) begin
+	fir_memory_s2_address <= fir_memory_s2_address + 1;
+end	
 
 
     de2i_150_qsys u0 (
@@ -457,7 +470,17 @@ assign reset_n = 1'b1;
         .pcie_ip_rx_in_rx_datain_0                  (PCIE_RX_P[0]),                  //              pcie_ip_rx_in.rx_datain_0
         .pcie_ip_tx_out_tx_dataout_0                (PCIE_TX_P[0]),                //             pcie_ip_tx_out.tx_dataout_0
         .led_external_connection_export             (LEDG[3:0]),             //    led_external_connection.export
-        .button_external_connection_export          (KEY)           // button_external_connection.export
+        .button_external_connection_export          (KEY),           // button_external_connection.export
+		  .fir_memory_s2_address                      (fir_memory_s2_address),       											//              fir_memory_s2.address
+		  .fir_memory_s2_chipselect                   (fir_memory_s2_chipselect),    											//                           .chipselect
+		  .fir_memory_s2_clken                        (fir_memory_s2_clken),         											//                           .clken
+		  .fir_memory_s2_write                        (fir_memory_s2_write),         											//                           .write
+		  .fir_memory_s2_readdata                     (fir_memory_s2_readdata),      											//                           .readdata
+		  .fir_memory_s2_writedata                    (fir_memory_s2_writedata),     											//                           .writedata
+		  .fir_memory_s2_byteenable                   (fir_memory_s2_byteenable),    											//                           .byteenable
+		  .fir_memory_clk2_clk                        (fir_memory_clk2_clk),         											//            fir_memory_clk2.clk
+		  .fir_memory_reset2_reset                    (fir_memory_reset2_reset),     											//          fir_memory_reset2.reset
+		  .fir_memory_reset2_reset_req                (fir_memory_reset2_reset_req)  											//                           .reset_req
     );
 
 assign PCIE_WAKE_N = 1'b1;	 // 07/30/2013, pull-high to avoid system reboot after power off

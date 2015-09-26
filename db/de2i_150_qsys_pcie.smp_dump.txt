@@ -1,68 +1,59 @@
 
-State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|altera_merlin_burst_adapter:burst_adapter_007|altera_merlin_burst_adapter_full:altera_merlin_burst_adapter_full.the_ba|state
+State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_mm_interconnect_1:mm_interconnect_1|altera_merlin_burst_adapter:pcie_ip_cra_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter_13_1|altera_merlin_burst_adapter_full_13_1:altera_merlin_burst_adapter_full.the_ba_13_1|state
 Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
 state.ST_IDLE 0 0 0 0 
 state.ST_COMP_TRANS 1 0 0 1 
 state.ST_UNCOMP_TRANS 1 0 1 0 
 state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
 
-State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|altera_merlin_burst_adapter:burst_adapter_006|altera_merlin_burst_adapter_full:altera_merlin_burst_adapter_full.the_ba|state
+State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_mm_interconnect_1:mm_interconnect_1|altera_merlin_burst_adapter:sgdma_csr_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter_13_1|altera_merlin_burst_adapter_full_13_1:altera_merlin_burst_adapter_full.the_ba_13_1|state
 Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
 state.ST_IDLE 0 0 0 0 
 state.ST_COMP_TRANS 1 0 0 1 
 state.ST_UNCOMP_TRANS 1 0 1 0 
 state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
 
-State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|altera_merlin_burst_adapter:burst_adapter_005|altera_merlin_burst_adapter_full:altera_merlin_burst_adapter_full.the_ba|state
+State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_mm_interconnect_0:mm_interconnect_0|altera_merlin_burst_adapter:fifo_memory_out_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter_13_1|altera_merlin_burst_adapter_full_13_1:altera_merlin_burst_adapter_full.the_ba_13_1|state
 Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
 state.ST_IDLE 0 0 0 0 
 state.ST_COMP_TRANS 1 0 0 1 
 state.ST_UNCOMP_TRANS 1 0 1 0 
 state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
 
-State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|altera_merlin_burst_adapter:burst_adapter_004|altera_merlin_burst_adapter_full:altera_merlin_burst_adapter_full.the_ba|state
+State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_mm_interconnect_0:mm_interconnect_0|altera_merlin_burst_adapter:fifo_memory_in_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter_13_1|altera_merlin_burst_adapter_full_13_1:altera_merlin_burst_adapter_full.the_ba_13_1|state
 Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
 state.ST_IDLE 0 0 0 0 
 state.ST_COMP_TRANS 1 0 0 1 
 state.ST_UNCOMP_TRANS 1 0 1 0 
 state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
 
-State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|altera_merlin_burst_adapter:burst_adapter_003|altera_merlin_burst_adapter_full:altera_merlin_burst_adapter_full.the_ba|state
+State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_mm_interconnect_0:mm_interconnect_0|altera_merlin_burst_adapter:fifo_memory_in_csr_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter_13_1|altera_merlin_burst_adapter_full_13_1:altera_merlin_burst_adapter_full.the_ba_13_1|state
 Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
 state.ST_IDLE 0 0 0 0 
 state.ST_COMP_TRANS 1 0 0 1 
 state.ST_UNCOMP_TRANS 1 0 1 0 
 state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
 
-State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|altera_merlin_burst_adapter:burst_adapter_002|altera_merlin_burst_adapter_full:altera_merlin_burst_adapter_full.the_ba|state
+State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_mm_interconnect_0:mm_interconnect_0|altera_merlin_burst_adapter:button_s1_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter_13_1|altera_merlin_burst_adapter_full_13_1:altera_merlin_burst_adapter_full.the_ba_13_1|state
 Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
 state.ST_IDLE 0 0 0 0 
 state.ST_COMP_TRANS 1 0 0 1 
 state.ST_UNCOMP_TRANS 1 0 1 0 
 state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
 
-State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|altera_merlin_burst_adapter:burst_adapter_001|altera_merlin_burst_adapter_full:altera_merlin_burst_adapter_full.the_ba|state
+State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_mm_interconnect_0:mm_interconnect_0|altera_merlin_burst_adapter:led_s1_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter_13_1|altera_merlin_burst_adapter_full_13_1:altera_merlin_burst_adapter_full.the_ba_13_1|state
 Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
 state.ST_IDLE 0 0 0 0 
 state.ST_COMP_TRANS 1 0 0 1 
 state.ST_UNCOMP_TRANS 1 0 1 0 
 state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
 
-State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|altera_merlin_burst_adapter:burst_adapter|altera_merlin_burst_adapter_full:altera_merlin_burst_adapter_full.the_ba|state
+State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_mm_interconnect_0:mm_interconnect_0|altera_merlin_burst_adapter:fir_memory_s1_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter_13_1|altera_merlin_burst_adapter_full_13_1:altera_merlin_burst_adapter_full.the_ba_13_1|state
 Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
 state.ST_IDLE 0 0 0 0 
 state.ST_COMP_TRANS 1 0 0 1 
 state.ST_UNCOMP_TRANS 1 0 1 0 
 state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
-
-State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_nios2:nios2|de2i_150_qsys_nios2_nios2_oci:the_de2i_150_qsys_nios2_nios2_oci|de2i_150_qsys_nios2_jtag_debug_module_wrapper:the_de2i_150_qsys_nios2_jtag_debug_module_wrapper|de2i_150_qsys_nios2_jtag_debug_module_tck:the_de2i_150_qsys_nios2_jtag_debug_module_tck|DRsize
-Name DRsize.101 DRsize.100 DRsize.011 DRsize.010 DRsize.001 DRsize.000 
-DRsize.000 0 0 0 0 0 0 
-DRsize.001 0 0 0 0 1 1 
-DRsize.010 0 0 0 1 0 1 
-DRsize.011 0 0 1 0 0 1 
-DRsize.100 0 1 0 0 0 1 
-DRsize.101 1 0 0 0 0 1 
 
 State Machine - |de2i_150_qsys_pcie|de2i_150_qsys:u0|de2i_150_qsys_sgdma:sgdma|de2i_150_qsys_sgdma_desc_address_fifo:the_de2i_150_qsys_sgdma_desc_address_fifo|scfifo:de2i_150_qsys_sgdma_desc_address_fifo_desc_address_fifo|a_fffifo:subfifo|a_fefifo:fifo_state|sm_emptyfull
 Name state_middle state_full state_empty 

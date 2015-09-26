@@ -1,4 +1,4 @@
-//Legal Notice: (C)2013 Altera Corporation. All rights reserved.  Your
+//Legal Notice: (C)2015 Altera Corporation. All rights reserved.  Your
 //use of Altera Corporation's design tools, logic functions and other
 //software and tools, and its AMPP partner logic functions, and any
 //output files any of the foregoing (including device programming or
@@ -62,7 +62,7 @@ module de2i_150_qsys_fifo_memory_single_clock_fifo (
     );
 
   defparam single_clock_fifo.add_ram_output_register = "OFF",
-           single_clock_fifo.intended_device_family = "STINGRAY",
+           single_clock_fifo.intended_device_family = "CYCLONEIVGX",
            single_clock_fifo.lpm_numwords = 2048,
            single_clock_fifo.lpm_showahead = "OFF",
            single_clock_fifo.lpm_type = "scfifo",

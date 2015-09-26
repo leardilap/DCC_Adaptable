@@ -1,4 +1,4 @@
-//Legal Notice: (C)2013 Altera Corporation. All rights reserved.  Your
+//Legal Notice: (C)2015 Altera Corporation. All rights reserved.  Your
 //use of Altera Corporation's design tools, logic functions and other
 //software and tools, and its AMPP partner logic functions, and any
 //output files any of the foregoing (including device programming or
@@ -103,6 +103,7 @@ module control_status_slave_which_resides_within_de2i_150_qsys_sgdma (
   reg     [  7: 0] delayed_descriptor_counter;
   reg              delayed_descriptor_write_write;
   reg              delayed_eop_encountered;
+  wire    [  7: 0] delayed_max_desc_processed;
   reg              delayed_run;
   reg              descriptor_completed;
   reg     [  7: 0] descriptor_counter;
@@ -411,12 +412,13 @@ module control_status_slave_which_resides_within_de2i_150_qsys_sgdma (
     end
 
 
+  assign delayed_max_desc_processed = max_desc_processed - 1;
   always @(posedge clk or negedge reset_n)
     begin
       if (reset_n == 0)
           csr_irq <= 0;
       else 
-        csr_irq <= csr_irq ? ~clear_interrupt : (delayed_run && ie_global && ((ie_error && error) || (ie_eop_encountered && eop_encountered_rise) || (ie_descriptor_completed && descriptor_write_write_fall) || (ie_chain_completed && chain_completed_int_rise) || (ie_max_desc_processed && (descriptor_counter == max_desc_processed) && (delayed_descriptor_counter == max_desc_processed - 1) )));
+        csr_irq <= csr_irq ? ~clear_interrupt : (delayed_run && ie_global && ((ie_error && error) || (ie_eop_encountered && eop_encountered_rise) || (ie_descriptor_completed && descriptor_write_write_fall) || (ie_chain_completed && chain_completed_int_rise) || (ie_max_desc_processed && (descriptor_counter == max_desc_processed) && (delayed_descriptor_counter == delayed_max_desc_processed) )));
     end
 
 
@@ -472,7 +474,7 @@ module descriptor_read_which_resides_within_de2i_150_qsys_sgdma_control_bits_fif
     );
 
   defparam descriptor_read_which_resides_within_de2i_150_qsys_sgdma_control_bits_fifo_controlbitsfifo.add_ram_output_register = "ON",
-           descriptor_read_which_resides_within_de2i_150_qsys_sgdma_control_bits_fifo_controlbitsfifo.intended_device_family = "STINGRAY",
+           descriptor_read_which_resides_within_de2i_150_qsys_sgdma_control_bits_fifo_controlbitsfifo.intended_device_family = "CYCLONEIVGX",
            descriptor_read_which_resides_within_de2i_150_qsys_sgdma_control_bits_fifo_controlbitsfifo.lpm_numwords = 2,
            descriptor_read_which_resides_within_de2i_150_qsys_sgdma_control_bits_fifo_controlbitsfifo.lpm_showahead = "OFF",
            descriptor_read_which_resides_within_de2i_150_qsys_sgdma_control_bits_fifo_controlbitsfifo.lpm_type = "scfifo",
@@ -1597,7 +1599,7 @@ module de2i_150_qsys_sgdma_m_readfifo_m_readfifo (
     );
 
   defparam de2i_150_qsys_sgdma_m_readfifo_m_readfifo_m_readfifo.add_ram_output_register = "ON",
-           de2i_150_qsys_sgdma_m_readfifo_m_readfifo_m_readfifo.intended_device_family = "STINGRAY",
+           de2i_150_qsys_sgdma_m_readfifo_m_readfifo_m_readfifo.intended_device_family = "CYCLONEIVGX",
            de2i_150_qsys_sgdma_m_readfifo_m_readfifo_m_readfifo.lpm_numwords = 32,
            de2i_150_qsys_sgdma_m_readfifo_m_readfifo_m_readfifo.lpm_showahead = "OFF",
            de2i_150_qsys_sgdma_m_readfifo_m_readfifo_m_readfifo.lpm_type = "scfifo",
@@ -2473,7 +2475,7 @@ module de2i_150_qsys_sgdma_command_fifo (
     );
 
   defparam de2i_150_qsys_sgdma_command_fifo_command_fifo.add_ram_output_register = "ON",
-           de2i_150_qsys_sgdma_command_fifo_command_fifo.intended_device_family = "STINGRAY",
+           de2i_150_qsys_sgdma_command_fifo_command_fifo.intended_device_family = "CYCLONEIVGX",
            de2i_150_qsys_sgdma_command_fifo_command_fifo.lpm_numwords = 2,
            de2i_150_qsys_sgdma_command_fifo_command_fifo.lpm_showahead = "OFF",
            de2i_150_qsys_sgdma_command_fifo_command_fifo.lpm_type = "scfifo",
@@ -2535,7 +2537,7 @@ module de2i_150_qsys_sgdma_desc_address_fifo (
     );
 
   defparam de2i_150_qsys_sgdma_desc_address_fifo_desc_address_fifo.add_ram_output_register = "ON",
-           de2i_150_qsys_sgdma_desc_address_fifo_desc_address_fifo.intended_device_family = "STINGRAY",
+           de2i_150_qsys_sgdma_desc_address_fifo_desc_address_fifo.intended_device_family = "CYCLONEIVGX",
            de2i_150_qsys_sgdma_desc_address_fifo_desc_address_fifo.lpm_numwords = 2,
            de2i_150_qsys_sgdma_desc_address_fifo_desc_address_fifo.lpm_showahead = "OFF",
            de2i_150_qsys_sgdma_desc_address_fifo_desc_address_fifo.lpm_type = "scfifo",
@@ -2597,7 +2599,7 @@ module de2i_150_qsys_sgdma_status_token_fifo (
     );
 
   defparam de2i_150_qsys_sgdma_status_token_fifo_status_token_fifo.add_ram_output_register = "ON",
-           de2i_150_qsys_sgdma_status_token_fifo_status_token_fifo.intended_device_family = "STINGRAY",
+           de2i_150_qsys_sgdma_status_token_fifo_status_token_fifo.intended_device_family = "CYCLONEIVGX",
            de2i_150_qsys_sgdma_status_token_fifo_status_token_fifo.lpm_numwords = 2,
            de2i_150_qsys_sgdma_status_token_fifo_status_token_fifo.lpm_showahead = "OFF",
            de2i_150_qsys_sgdma_status_token_fifo_status_token_fifo.lpm_type = "scfifo",
@@ -2659,7 +2661,7 @@ module de2i_150_qsys_sgdma_stream_fifo (
     );
 
   defparam de2i_150_qsys_sgdma_stream_fifo_stream_fifo.add_ram_output_register = "ON",
-           de2i_150_qsys_sgdma_stream_fifo_stream_fifo.intended_device_family = "STINGRAY",
+           de2i_150_qsys_sgdma_stream_fifo_stream_fifo.intended_device_family = "CYCLONEIVGX",
            de2i_150_qsys_sgdma_stream_fifo_stream_fifo.lpm_numwords = 4,
            de2i_150_qsys_sgdma_stream_fifo_stream_fifo.lpm_showahead = "OFF",
            de2i_150_qsys_sgdma_stream_fifo_stream_fifo.lpm_type = "scfifo",

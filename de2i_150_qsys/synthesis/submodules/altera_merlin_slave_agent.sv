@@ -1,4 +1,4 @@
-// (C) 2001-2012 Altera Corporation. All rights reserved.
+// (C) 2001-2014 Altera Corporation. All rights reserved.
 // Your use of Altera Corporation's design tools, logic functions and other 
 // software and tools, and its AMPP partner logic functions, and any output 
 // files any of the foregoing (including device programming or simulation 
@@ -24,10 +24,10 @@
 // agreement for further details.
 
 
-// $Id: //acds/rel/12.1/ip/merlin/altera_merlin_slave_agent/altera_merlin_slave_agent.sv#1 $
-// $Revision: #1 $
-// $Date: 2012/08/12 $
-// $Author: swbranch $
+// $Id: //acds/rel/14.0/ip/merlin/altera_merlin_slave_agent/altera_merlin_slave_agent.sv#2 $
+// $Revision: #2 $
+// $Date: 2014/02/20 $
+// $Author: ccching $
 
 `timescale 1 ns / 1 ns
 
@@ -61,7 +61,9 @@ module altera_merlin_slave_agent
     parameter PKT_RESPONSE_STATUS_L = 88,
     parameter PKT_BURST_SIZE_H = 92,
     parameter PKT_BURST_SIZE_L = 90,
-    parameter ST_DATA_W        = 93,
+	parameter PKT_ORI_BURST_SIZE_L = 93,
+    parameter PKT_ORI_BURST_SIZE_H = 95,
+    parameter ST_DATA_W        = 96,
     parameter ST_CHANNEL_W     = 32,
 
     // Slave parameters
@@ -73,6 +75,8 @@ module altera_merlin_slave_agent
     // Slave agent parameters
     parameter PREVENT_FIFO_OVERFLOW = 0,
     parameter SUPPRESS_0_BYTEEN_CMD = 1,
+    parameter USE_READRESPONSE      = 0,
+    parameter USE_WRITERESPONSE     = 0,
 
     // Derived slave parameters
     parameter AVS_BE_W = PKT_BYTEEN_H - PKT_BYTEEN_L + 1,
@@ -83,64 +87,68 @@ module altera_merlin_slave_agent
 )
 (
 
-    input clk,
-    input reset,
+    input                         clk,
+    input                         reset,
 
     // Universal-Avalon anti-slave
     output [ADDR_W-1:0]           m0_address,
     output [AVS_BURSTCOUNT_W-1:0] m0_burstcount,
     output [AVS_BE_W-1:0]         m0_byteenable,
     output                        m0_read,
-    input  [AVS_DATA_W-1:0]       m0_readdata,
+    input [AVS_DATA_W-1:0]        m0_readdata,
     input                         m0_waitrequest,
     output                        m0_write,
     output [AVS_DATA_W-1:0]       m0_writedata,
     input                         m0_readdatavalid,
     output                        m0_debugaccess,
     output                        m0_lock,
-
+    input [1:0]                   m0_response,
+    output                        m0_writeresponserequest,
+    input                         m0_writeresponsevalid,
+ 
     // Avalon-ST FIFO interfaces.
     // Note: there's no need to include the "data" field here, at least for
     // reads, since readdata is filled in from slave info.  To keep life
     // simple, have a data field, but fill it with 0s.
     // Av-st response fifo source interface
-    output reg [FIFO_DATA_W-1:0] rf_source_data,
-    output                       rf_source_valid,
-    output                       rf_source_startofpacket,
-    output                       rf_source_endofpacket,
-    input                        rf_source_ready,
+    output reg [FIFO_DATA_W-1:0]  rf_source_data,
+    output                        rf_source_valid,
+    output                        rf_source_startofpacket,
+    output                        rf_source_endofpacket,
+    input                         rf_source_ready,
 
     // Av-st response fifo sink interface
-    input [FIFO_DATA_W-1:0]    rf_sink_data,
-    input                      rf_sink_valid,
-    input                      rf_sink_startofpacket,
-    input                      rf_sink_endofpacket,
-    output                     rf_sink_ready,
+    input [FIFO_DATA_W-1:0]       rf_sink_data,
+    input                         rf_sink_valid,
+    input                         rf_sink_startofpacket,
+    input                         rf_sink_endofpacket,
+    output                        rf_sink_ready,
 
-    // Av-st readdata fifo src interface
-    output [AVS_DATA_W-1:0]    rdata_fifo_src_data,
-    output                     rdata_fifo_src_valid,
-    input                      rdata_fifo_src_ready,
+    // Av-st readdata fifo src interface, data and response
+	// extra 2 bits for storing RESPONSE STATUS
+    output [AVS_DATA_W+1:0]       rdata_fifo_src_data,
+    output                        rdata_fifo_src_valid,
+    input                         rdata_fifo_src_ready,
 
     // Av-st readdata fifo sink interface
-    input [AVS_DATA_W-1:0]     rdata_fifo_sink_data,
-    input                      rdata_fifo_sink_valid,
-    output                     rdata_fifo_sink_ready,
+    input [AVS_DATA_W+1:0]        rdata_fifo_sink_data,
+    input                         rdata_fifo_sink_valid,
+    output                        rdata_fifo_sink_ready,
 
     // Av-st sink command packet interface
-    output                     cp_ready,
-    input                      cp_valid,
-    input [ST_DATA_W-1:0]      cp_data,
-    input [ST_CHANNEL_W-1:0]   cp_channel,
-    input                      cp_startofpacket,
-    input                      cp_endofpacket,
+    output                        cp_ready,
+    input                         cp_valid,
+    input [ST_DATA_W-1:0]         cp_data,
+    input [ST_CHANNEL_W-1:0]      cp_channel,
+    input                         cp_startofpacket,
+    input                         cp_endofpacket,
 
     // Av-st source response packet interface
-    input                      rp_ready,
-    output                     rp_valid,
-    output reg [ST_DATA_W-1:0] rp_data,
-    output                     rp_startofpacket,
-    output                     rp_endofpacket
+    input                         rp_ready,
+    output reg                    rp_valid,
+    output reg [ST_DATA_W-1:0]    rp_data,
+    output                        rp_startofpacket,
+    output                        rp_endofpacket
 );
 
     // --------------------------------------------------
@@ -171,8 +179,9 @@ module altera_merlin_slave_agent
     localparam BYTE_CNT_W   = PKT_BYTE_CNT_H - PKT_BYTE_CNT_L + 1;
     localparam BURSTWRAP_W  = PKT_BURSTWRAP_H - PKT_BURSTWRAP_L + 1;
     localparam BURSTSIZE_W  = PKT_BURST_SIZE_H - PKT_BURST_SIZE_L + 1;
-    localparam RESPONSE_W   = PKT_RESPONSE_STATUS_H - PKT_RESPONSE_STATUS_L + 1;
     localparam BITS_TO_MASK = log2ceil(PKT_SYMBOLS);
+    localparam MAX_BURST    = 1 << (AVS_BURSTCOUNT_W - 1);
+    localparam BURSTING     = (MAX_BURST > PKT_SYMBOLS);
    
     // ------------------------------------------------
     // Signals
@@ -191,7 +200,10 @@ module altera_merlin_slave_agent
     wire [BURSTSIZE_W-1:0] cmd_burstsize;
     wire                   cmd_debugaccess;
    
+    wire                   suppress_cmd;
     wire                   byteen_asserted;
+    wire                   suppress_read;
+    wire                   suppress_write;
     wire                   needs_response_synthesis;
     wire                   generate_response;
 
@@ -222,7 +234,7 @@ module altera_merlin_slave_agent
     wire local_read  = cp_valid & cp_data[PKT_TRANS_READ];
     wire local_compressed_read = cp_valid & cp_data[PKT_TRANS_COMPRESSED_READ];
     wire nonposted_write_endofpacket = ~cp_data[PKT_TRANS_POSTED] & local_write & cp_endofpacket;
-
+	
     // num_symbols is PKT_SYMBOLS, appropriately sized.
     wire [31:0] int_num_symbols = PKT_SYMBOLS;
     wire [BYTE_CNT_W-1:0] num_symbols = int_num_symbols[BYTE_CNT_W-1:0];
@@ -251,7 +263,7 @@ module altera_merlin_slave_agent
             // ---------------------------------------------------
 
             assign ready_for_command = rf_source_ready;
-            assign cp_ready = (~m0_waitrequest | ~byteen_asserted) && ready_for_command;
+            assign cp_ready = (~m0_waitrequest | suppress_cmd) && ready_for_command;
 
         end else begin : no_prevent_fifo_overflow
 
@@ -259,15 +271,25 @@ module altera_merlin_slave_agent
             // not be able to waitrequest
             assign ready_for_command = 1'b1;
             // Backpressure only if the slave says to.
-            assign cp_ready = ~m0_waitrequest | ~byteen_asserted;
+            assign cp_ready = ~m0_waitrequest | suppress_cmd;
 
         end
     endgenerate
 
-    generate if (SUPPRESS_0_BYTEEN_CMD) begin : suppress_0_byteen_cmd
-        assign byteen_asserted = |cmd_byteen;
+    generate if (SUPPRESS_0_BYTEEN_CMD && !BURSTING) begin : suppress_0_byteen_cmd_non_bursting
+        assign byteen_asserted  = |cmd_byteen;
+        assign suppress_read    = ~byteen_asserted;
+        assign suppress_write   = ~byteen_asserted;
+        assign suppress_cmd     = ~byteen_asserted;
+    end else if (SUPPRESS_0_BYTEEN_CMD && BURSTING) begin: suppress_0_byteen_cmd_bursting
+        assign byteen_asserted  = |cmd_byteen;
+        assign suppress_read    = ~byteen_asserted;
+        assign suppress_write   = 1'b0;
+        assign suppress_cmd     = ~byteen_asserted && cmd_read;
     end else begin : no_suppress_0_byteen_cmd
-        assign byteen_asserted = 1'b1;
+        assign suppress_read    = 1'b0;
+        assign suppress_write   = 1'b0;
+        assign suppress_cmd     = 1'b0;
     end
     endgenerate
 
@@ -313,7 +335,7 @@ module altera_merlin_slave_agent
     // responsible for driving burstcount to 1 on each beat of an uncompressed
     // read burst.
    
-    assign m0_read = ready_for_command & byteen_asserted &
+    assign m0_read = ready_for_command & !suppress_read &
       (local_compressed_read | local_read);
    
     generate 
@@ -335,10 +357,12 @@ module altera_merlin_slave_agent
         end 
     endgenerate
    
-    assign m0_write = ready_for_command & local_write & byteen_asserted;
+    assign m0_write = ready_for_command & local_write & !suppress_write;
     assign m0_lock  = ready_for_command & local_lock & (m0_read | m0_write);
-    assign m0_debugaccess = cmd_debugaccess;
-
+	assign m0_debugaccess  = cmd_debugaccess;
+	// For now, to support write response 
+	assign m0_writeresponserequest  = ready_for_command & local_write & !suppress_write & !cmd_posted;
+    
     // -------------------------------------------------------------------
     // Indirection layer for response packet values.  Some may always wire
     // directly from the slave translator; others will no doubt emerge from
@@ -347,8 +371,12 @@ module altera_merlin_slave_agent
     // matter, because only response status is needed for non-posted writes,
     // and the packet already has a field for that.
   
-    assign rdata_fifo_src_valid = m0_readdatavalid;
-    assign rdata_fifo_src_data  = m0_readdata;
+    // tgngo:Use the rdata_fifo to store write response as well
+	// So that we wont lost response if master can back-pressured
+	// as well as it needs for write response merging
+    assign rdata_fifo_src_valid = m0_readdatavalid | m0_writeresponsevalid;
+	//assign rdata_fifo_src_valid = m0_readdatavalid;
+    assign rdata_fifo_src_data  = {m0_response,m0_readdata};
 
     // ------------------------------------------------------------------
     // Generate a token when read commands are suppressed. The token
@@ -360,10 +388,26 @@ module altera_merlin_slave_agent
     // the burst uncompression logic at the read side of the response FIFO
     // generates the correct number of responses.
     // ------------------------------------------------------------------
-    assign needs_response_synthesis = ((local_read | local_compressed_read) & !byteen_asserted) | nonposted_write_endofpacket;
+	// When the slave can return the response, let it does its works. Dont generate sysnthesis response
+    assign needs_response_synthesis = ((local_read | local_compressed_read) & suppress_read) | (nonposted_write_endofpacket && !USE_WRITERESPONSE);
 
     // Avalon-ST interfaces to external response fifo:
-    assign rf_source_valid = (local_read | local_compressed_read | nonposted_write_endofpacket) & ready_for_command & cp_ready;
+	// tgngo:Currently, with "generate response synthesis", only one write command is allowed to write in at eop of non-posted write
+	// To support response from slave, we need to store each sub-burst of write command into fifo.
+	// Each sub-burst will return a response and these two command and response are popped out together
+	// Resposne merging will happen and at end_of_packet of the command - the last sub-burst write
+	// the slave agent will send out the final merged response
+	
+	wire internal_cp_endofburst;
+	wire [31:0] minimum_bytecount_wire = PKT_SYMBOLS; // to solve qis warning
+	wire [AVS_BURSTCOUNT_W-1:0]	minimum_bytecount;
+	assign minimum_bytecount 		= minimum_bytecount_wire[AVS_BURSTCOUNT_W-1:0];
+	assign internal_cp_endofburst 	= (cmd_byte_cnt == minimum_bytecount);
+	wire local_nonposted_write 		= ~cp_data[PKT_TRANS_POSTED] & local_write;
+	wire nonposted_end_of_subburst 	= local_nonposted_write & internal_cp_endofburst;
+	
+    assign rf_source_valid = (local_read | local_compressed_read | (nonposted_write_endofpacket && !USE_WRITERESPONSE) | (USE_WRITERESPONSE && nonposted_end_of_subburst))
+								& ready_for_command & cp_ready;
     assign rf_source_startofpacket = cp_startofpacket;
     assign rf_source_endofpacket   = cp_endofpacket;
     always @* begin
@@ -391,8 +435,80 @@ module altera_merlin_slave_agent
 
     wire uncompressor_source_valid;
     wire [BURSTSIZE_W-1:0]     uncompressor_burstsize;
-    assign rp_valid = rdata_fifo_sink_valid | uncompressor_source_valid;
-    assign generate_response = rf_sink_data[FIFO_DATA_W-1];
+	
+	//assign rp_valid = rdata_fifo_sink_valid | uncompressor_source_valid;
+	// tgngo: last_write_response indicates the last response of the burst (incase need sub-burst)
+	// at this time, the final response merged will send out, and rp_valid is only asserted
+	// for one response for whole burst
+	generate
+	if (USE_WRITERESPONSE) begin
+		wire last_write_response = rf_sink_data[PKT_TRANS_WRITE] & !rf_sink_data[PKT_TRANS_POSTED] & rf_sink_endofpacket;
+		always @* begin
+			if (rf_sink_data[PKT_TRANS_WRITE] == 1) 
+				rp_valid = rdata_fifo_sink_valid & last_write_response;	
+			else
+				rp_valid = rdata_fifo_sink_valid | uncompressor_source_valid;
+		end
+	end else begin
+        always @* begin
+		    rp_valid = rdata_fifo_sink_valid | uncompressor_source_valid;
+        end
+	end
+	endgenerate
+	// ------------------------------------------------------------------
+    // Response merging
+    // ------------------------------------------------------------------
+
+    reg [1:0] current_response;
+	reg [1:0] response_merged;
+	generate
+	begin: response_merging
+	if (USE_WRITERESPONSE) begin
+		reg first_write_response;
+		reg reset_merged_output;
+		reg [1:0] previous_response_in;
+		reg [1:0]  previous_response;
+		
+		always_ff @(posedge clk, posedge reset) begin
+			if (reset) begin
+				first_write_response  <= 1'b1;
+			end 
+			else begin // Merging work for write response, for read: previous_response_in = current_response
+				if (rf_sink_valid & rdata_fifo_sink_valid & rf_sink_data[PKT_TRANS_WRITE]) begin
+					first_write_response <= 1'b0;
+					if (rf_sink_endofpacket)
+						first_write_response <= 1'b1;
+				end
+			end
+		end
+	
+		always_comb begin
+            current_response = rdata_fifo_sink_data[AVS_DATA_W+1:AVS_DATA_W];
+			reset_merged_output = first_write_response && rdata_fifo_sink_valid;
+			previous_response_in = reset_merged_output ? current_response : previous_response;
+			response_merged = current_response >= previous_response ? current_response: previous_response_in;
+		end
+	
+		always_ff @(posedge clk or posedge reset) begin
+			if (reset) begin 
+				previous_response <= 2'b00;
+			end
+			else begin
+				if (rf_sink_valid & rdata_fifo_sink_valid) begin
+					previous_response <= response_merged;
+				end
+			end
+		end
+	end else begin
+        always @* begin
+            current_response = generate_response ? 2'b00: rdata_fifo_sink_data[AVS_DATA_W+1:AVS_DATA_W];
+		    response_merged = current_response;
+        end
+	end
+	end
+	endgenerate
+
+	assign generate_response = rf_sink_data[FIFO_DATA_W-1];
   
     wire [BYTE_CNT_W-1:0]  rf_sink_byte_cnt   = rf_sink_data[PKT_BYTE_CNT_H:PKT_BYTE_CNT_L];
     wire                   rf_sink_compressed = rf_sink_data[PKT_TRANS_COMPRESSED_READ];
@@ -416,30 +532,33 @@ module altera_merlin_slave_agent
   
     always @* begin
         // By default, return all fields...
-        rp_data                                    = rf_sink_data[ST_DATA_W - 1 : 0];
+        rp_data                                               = rf_sink_data[ST_DATA_W - 1 : 0];
   
         // ... and override specific fields.
-        rp_data[PKT_DATA_H   :PKT_DATA_L]          = rdata_fifo_sink_data;
+        rp_data[PKT_DATA_H   :PKT_DATA_L]                     = rdata_fifo_sink_data[AVS_DATA_W-1:0];
         // Assignments directly from the response fifo.
-        rp_data[PKT_TRANS_POSTED]                  = rf_sink_data[PKT_TRANS_POSTED];
-        rp_data[PKT_TRANS_WRITE]                   = rf_sink_data[PKT_TRANS_WRITE];
-        rp_data[PKT_SRC_ID_H :PKT_SRC_ID_L]        = rf_sink_data[PKT_DEST_ID_H : PKT_DEST_ID_L];
-        rp_data[PKT_DEST_ID_H:PKT_DEST_ID_L]       = rf_sink_data[PKT_SRC_ID_H : PKT_SRC_ID_L];
-        rp_data[PKT_BYTEEN_H :PKT_BYTEEN_L]        = rf_sink_data[PKT_BYTEEN_H : PKT_BYTEEN_L];
-        rp_data[PKT_PROTECTION_H:PKT_PROTECTION_L] = rf_sink_data[PKT_PROTECTION_H:PKT_PROTECTION_L];
+        rp_data[PKT_TRANS_POSTED]                             = rf_sink_data[PKT_TRANS_POSTED];
+        rp_data[PKT_TRANS_WRITE]                              = rf_sink_data[PKT_TRANS_WRITE];
+        rp_data[PKT_SRC_ID_H :PKT_SRC_ID_L]                   = rf_sink_data[PKT_DEST_ID_H : PKT_DEST_ID_L];
+        rp_data[PKT_DEST_ID_H:PKT_DEST_ID_L]                  = rf_sink_data[PKT_SRC_ID_H : PKT_SRC_ID_L];
+        rp_data[PKT_BYTEEN_H :PKT_BYTEEN_L]                   = rf_sink_data[PKT_BYTEEN_H : PKT_BYTEEN_L];
+        rp_data[PKT_PROTECTION_H:PKT_PROTECTION_L]            = rf_sink_data[PKT_PROTECTION_H:PKT_PROTECTION_L];
   
         // Burst uncompressor assignments
-        rp_data[PKT_ADDR_H   :PKT_ADDR_L]          = rp_address;
-        rp_data[PKT_BURSTWRAP_H:PKT_BURSTWRAP_L]   = rp_burstwrap;
-        rp_data[PKT_BYTE_CNT_H:PKT_BYTE_CNT_L]     = burst_byte_cnt;
-        rp_data[PKT_TRANS_READ]                    = rf_sink_data[PKT_TRANS_READ] | rf_sink_data[PKT_TRANS_COMPRESSED_READ];
-        rp_data[PKT_TRANS_COMPRESSED_READ]         = rp_is_compressed;
+        rp_data[PKT_ADDR_H   :PKT_ADDR_L]                     = rp_address;
+        rp_data[PKT_BURSTWRAP_H:PKT_BURSTWRAP_L]              = rp_burstwrap;
+        rp_data[PKT_BYTE_CNT_H:PKT_BYTE_CNT_L]                = burst_byte_cnt;
+        rp_data[PKT_TRANS_READ]                               = rf_sink_data[PKT_TRANS_READ] | rf_sink_data[PKT_TRANS_COMPRESSED_READ];
+        rp_data[PKT_TRANS_COMPRESSED_READ]                    = rp_is_compressed;
   
-        // avalon slaves always respond with "okay"
-        rp_data[PKT_RESPONSE_STATUS_H:PKT_RESPONSE_STATUS_L] = {RESPONSE_W{ 1'b0 }}; 
-        rp_data[PKT_BURST_SIZE_H:PKT_BURST_SIZE_L]           = uncompressor_burstsize;
+        // avalon slaves always respond with "okay" -> not true for now
+        //rp_data[PKT_RESPONSE_STATUS_H:PKT_RESPONSE_STATUS_L]  = {RESPONSE_W{ 1'b0 }};
+		rp_data[PKT_RESPONSE_STATUS_H:PKT_RESPONSE_STATUS_L]  = response_merged;
+		rp_data[PKT_BURST_SIZE_H:PKT_BURST_SIZE_L]            = uncompressor_burstsize;
+		// bounce the original size back to the master untouch
+		rp_data[PKT_ORI_BURST_SIZE_H:PKT_ORI_BURST_SIZE_L]    = rf_sink_data[PKT_ORI_BURST_SIZE_H:PKT_ORI_BURST_SIZE_L];
     end
-  
+
     // ------------------------------------------------------------------
     // Note: the burst uncompressor may be asked to generate responses for
     // write packets; these are treated the same as single-cycle uncompressed 
@@ -449,7 +568,8 @@ module altera_merlin_slave_agent
         .ADDR_W               (ADDR_W),
         .BURSTWRAP_W          (BURSTWRAP_W),
         .BYTE_CNT_W           (BYTE_CNT_W),
-        .PKT_SYMBOLS          (PKT_SYMBOLS)
+        .PKT_SYMBOLS          (PKT_SYMBOLS),
+        .BURST_SIZE_W         (BURSTSIZE_W)
     ) uncompressor
     (
         .clk                  (clk),
@@ -474,6 +594,17 @@ module altera_merlin_slave_agent
         .source_is_compressed (rp_is_compressed),
         .source_burstsize     (uncompressor_burstsize)
     );
+	
+//--------------------------------------
+// Assertion: In case slave support response. Yhe slave needs return response in order
+// Ex: non-posted write followed by a read: write response must complete before read data 
+//--------------------------------------
+// synthesis translate_off      
+ERROR_write_response_and_read_response_cannot_happen_same_time:
+	assert property ( @(posedge clk)
+		disable iff (reset) !(m0_writeresponsevalid  && m0_readdatavalid)
+	);    
 
+// synthesis translate_on
 endmodule
 
