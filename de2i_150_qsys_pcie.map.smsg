@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at altpcie_pcie_reconfig_bridge.v(253): always construct contains both blocking and non-blocking assignments
