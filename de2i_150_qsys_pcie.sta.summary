@@ -3,27 +3,27 @@ TimeQuest Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1200mV 85C Model Setup 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : -0.663
-TNS   : -61.881
+Slack : -0.482
+TNS   : -47.647
 
 Type  : Slow 1200mV 85C Model Setup 'CLOCK_50'
-Slack : 13.670
+Slack : 9.616
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Setup 'n/a'
-Slack : 14.341
+Slack : 13.898
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Setup 'altera_reserved_tck'
-Slack : 42.217
+Slack : 43.060
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'CLOCK_50'
-Slack : 0.238
-TNS   : 0.000
+Slack : -0.143
+TNS   : -0.284
 
 Type  : Slow 1200mV 85C Model Hold 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 0.254
+Slack : 0.210
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'altera_reserved_tck'
@@ -31,23 +31,23 @@ Slack : 0.393
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'n/a'
-Slack : 5.146
+Slack : 5.395
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Recovery 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 2.347
+Slack : 2.542
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Recovery 'altera_reserved_tck'
-Slack : 48.166
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Removal 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 1.030
+Slack : 47.764
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Removal 'altera_reserved_tck'
-Slack : 1.121
+Slack : 0.984
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Removal 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
+Slack : 1.187
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'u0|pcie_ip|altgx_internal|de2i_150_qsys_pcie_ip_altgx_internal_alt_c3gxb_u7h8_component|transmit_pcs0|hiptxclkout'
@@ -59,7 +59,7 @@ Slack : 2.000
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 3.578
+Slack : 3.576
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|pclkch0'
@@ -71,7 +71,7 @@ Slack : 4.813
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.649
+Slack : 9.651
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK2_50'
@@ -83,55 +83,55 @@ Slack : 16.000
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 49.724
+Slack : 49.725
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Setup 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 0.084
+Slack : 0.258
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Setup 'CLOCK_50'
-Slack : 14.312
+Slack : 9.661
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Setup 'n/a'
-Slack : 14.812
+Slack : 14.391
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Setup 'altera_reserved_tck'
-Slack : 42.827
+Slack : 43.592
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'CLOCK_50'
-Slack : 0.242
-TNS   : 0.000
+Slack : -0.125
+TNS   : -0.249
 
 Type  : Slow 1200mV 0C Model Hold 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 0.259
+Slack : 0.215
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'altera_reserved_tck'
-Slack : 0.346
+Slack : 0.345
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'n/a'
-Slack : 4.712
+Slack : 4.948
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Recovery 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 2.751
+Slack : 3.080
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Recovery 'altera_reserved_tck'
-Slack : 48.346
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Removal 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 0.937
+Slack : 47.979
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Removal 'altera_reserved_tck'
-Slack : 1.028
+Slack : 0.887
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Removal 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
+Slack : 1.082
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'u0|pcie_ip|altgx_internal|de2i_150_qsys_pcie_ip_altgx_internal_alt_c3gxb_u7h8_component|transmit_pcs0|hiptxclkout'
@@ -143,7 +143,7 @@ Slack : 2.000
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 3.522
+Slack : 3.525
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|pclkch0'
@@ -155,7 +155,7 @@ Slack : 4.811
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.643
+Slack : 9.642
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK2_50'
@@ -167,55 +167,55 @@ Slack : 16.000
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'altera_reserved_tck'
-Slack : 49.718
+Slack : 49.719
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Setup 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 3.678
+Slack : 3.807
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Setup 'CLOCK_50'
-Slack : 16.474
+Slack : 9.318
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Setup 'n/a'
-Slack : 17.104
+Slack : 16.862
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Setup 'altera_reserved_tck'
-Slack : 46.256
+Slack : 46.785
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'CLOCK_50'
-Slack : 0.079
-TNS   : 0.000
+Slack : -0.090
+TNS   : -0.177
 
 Type  : Fast 1200mV 0C Model Hold 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 0.089
+Slack : 0.057
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'altera_reserved_tck'
-Slack : 0.176
+Slack : 0.175
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'n/a'
-Slack : 2.611
+Slack : 2.723
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Recovery 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 4.891
+Slack : 4.969
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Recovery 'altera_reserved_tck'
-Slack : 49.421
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Removal 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 0.491
+Slack : 49.171
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Removal 'altera_reserved_tck'
-Slack : 0.535
+Slack : 0.480
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Removal 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
+Slack : 0.556
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'u0|pcie_ip|altgx_internal|de2i_150_qsys_pcie_ip_altgx_internal_alt_c3gxb_u7h8_component|transmit_pcs0|hiptxclkout'
@@ -227,7 +227,7 @@ Slack : 2.000
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|coreclkout'
-Slack : 3.683
+Slack : 3.681
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'u0|pcie_ip|pcie_internal_hip|cyclone_iii.cycloneiv_hssi_pcie_hip|pclkch0'

@@ -439,23 +439,18 @@ output                                             VGA_VS;
 //=======================================================
 
 reg [13:0] fir_memory_s2_address;                      //              fir_memory_s2.address
-reg        fir_memory_s2_chipselect = 1'b1;                   //                           .chipselec
-reg        fir_memory_s2_clken = 1'b1;                        //                           .clken
-reg        fir_memory_s2_write = 1'b0;                        //                           .write
+wire        fir_memory_s2_clken;                        //                           .clken
 wire [63:0] fir_memory_s2_readdata;                     //                           .readdata
-reg [63:0] fir_memory_s2_writedata = 64'b0;                    //                           .writedata
-reg [7:0]  fir_memory_s2_byteenable = 8'b0;                   //                           .byteenabl
-reg        fir_memory_clk2_clk;                        //            fir_memory_clk2.clk
-reg        fir_memory_reset2_reset = 1'b0;                    //          fir_memory_reset2.reset
-reg        fir_memory_reset2_reset_req = 1'b0;                 //                           .reset_req
+wire        fir_memory_clk2_clk;                        //            fir_memory_clk2.clk
 
 wire reset_n;
 
 //=======================================================
 //  Structural coding
 //=======================================================
-
 assign reset_n = 1'b1;
+assign fir_memory_s2_clken = 1'b1;
+assign fir_memory_clk2_clk = CLOCK_50;
 
 always@(posedge CLOCK_50) begin
 	fir_memory_s2_address <= fir_memory_s2_address + 1;
@@ -472,15 +467,15 @@ end
         .led_external_connection_export             (LEDG[3:0]),             //    led_external_connection.export
         .button_external_connection_export          (KEY),           // button_external_connection.export
 		  .fir_memory_s2_address                      (fir_memory_s2_address),       											//              fir_memory_s2.address
-		  .fir_memory_s2_chipselect                   (fir_memory_s2_chipselect),    											//                           .chipselect
+		  .fir_memory_s2_chipselect                   (1'b1),    											//                           .chipselect
 		  .fir_memory_s2_clken                        (fir_memory_s2_clken),         											//                           .clken
-		  .fir_memory_s2_write                        (fir_memory_s2_write),         											//                           .write
+		  .fir_memory_s2_write                        (1'b0),         											//                           .write
 		  .fir_memory_s2_readdata                     (fir_memory_s2_readdata),      											//                           .readdata
-		  .fir_memory_s2_writedata                    (fir_memory_s2_writedata),     											//                           .writedata
-		  .fir_memory_s2_byteenable                   (fir_memory_s2_byteenable),    											//                           .byteenable
+		  .fir_memory_s2_writedata                    (64'b0),     											//                           .writedata
+		  .fir_memory_s2_byteenable                   (8'b0),    											//                           .byteenable
 		  .fir_memory_clk2_clk                        (fir_memory_clk2_clk),         											//            fir_memory_clk2.clk
-		  .fir_memory_reset2_reset                    (fir_memory_reset2_reset),     											//          fir_memory_reset2.reset
-		  .fir_memory_reset2_reset_req                (fir_memory_reset2_reset_req)  											//                           .reset_req
+		  .fir_memory_reset2_reset                    (1'b0),     											//          fir_memory_reset2.reset
+		  .fir_memory_reset2_reset_req                (1'b0)  											//                           .reset_req
     );
 
 assign PCIE_WAKE_N = 1'b1;	 // 07/30/2013, pull-high to avoid system reboot after power off
