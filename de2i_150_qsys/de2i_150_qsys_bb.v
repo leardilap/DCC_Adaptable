@@ -71,13 +71,13 @@ module de2i_150_qsys (
 	output	[4:0]	pcie_ip_reconfig_fromgxb_0_data;
 	output	[3:0]	led_external_connection_export;
 	input	[3:0]	button_external_connection_export;
-	input	[13:0]	fir_memory_s2_address;
+	input	[14:0]	fir_memory_s2_address;
 	input		fir_memory_s2_chipselect;
 	input		fir_memory_s2_clken;
 	input		fir_memory_s2_write;
-	output	[63:0]	fir_memory_s2_readdata;
-	input	[63:0]	fir_memory_s2_writedata;
-	input	[7:0]	fir_memory_s2_byteenable;
+	output	[31:0]	fir_memory_s2_readdata;
+	input	[31:0]	fir_memory_s2_writedata;
+	input	[3:0]	fir_memory_s2_byteenable;
 	input		fir_memory_clk2_clk;
 	input		fir_memory_reset2_reset;
 	input		fir_memory_reset2_reset_req;

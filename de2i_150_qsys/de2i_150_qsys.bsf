@@ -139,8 +139,8 @@ agreement for further details.
 	(port
 		(pt 0 768)
 		(input)
-		(text "fir_memory_s2_address[13..0]" (rect 0 0 126 12)(font "Arial" (font_size 8)))
-		(text "fir_memory_s2_address[13..0]" (rect 4 757 172 768)(font "Arial" (font_size 8)))
+		(text "fir_memory_s2_address[14..0]" (rect 0 0 127 12)(font "Arial" (font_size 8)))
+		(text "fir_memory_s2_address[14..0]" (rect 4 757 172 768)(font "Arial" (font_size 8)))
 		(line (pt 0 768)(pt 208 768)(line_width 3))
 	)
 	(port
@@ -167,15 +167,15 @@ agreement for further details.
 	(port
 		(pt 0 848)
 		(input)
-		(text "fir_memory_s2_writedata[63..0]" (rect 0 0 129 12)(font "Arial" (font_size 8)))
-		(text "fir_memory_s2_writedata[63..0]" (rect 4 837 184 848)(font "Arial" (font_size 8)))
+		(text "fir_memory_s2_writedata[31..0]" (rect 0 0 128 12)(font "Arial" (font_size 8)))
+		(text "fir_memory_s2_writedata[31..0]" (rect 4 837 184 848)(font "Arial" (font_size 8)))
 		(line (pt 0 848)(pt 208 848)(line_width 3))
 	)
 	(port
 		(pt 0 864)
 		(input)
-		(text "fir_memory_s2_byteenable[7..0]" (rect 0 0 133 12)(font "Arial" (font_size 8)))
-		(text "fir_memory_s2_byteenable[7..0]" (rect 4 853 184 864)(font "Arial" (font_size 8)))
+		(text "fir_memory_s2_byteenable[3..0]" (rect 0 0 133 12)(font "Arial" (font_size 8)))
+		(text "fir_memory_s2_byteenable[3..0]" (rect 4 853 184 864)(font "Arial" (font_size 8)))
 		(line (pt 0 864)(pt 208 864)(line_width 3))
 	)
 	(port
@@ -300,8 +300,8 @@ agreement for further details.
 	(port
 		(pt 0 832)
 		(output)
-		(text "fir_memory_s2_readdata[63..0]" (rect 0 0 129 12)(font "Arial" (font_size 8)))
-		(text "fir_memory_s2_readdata[63..0]" (rect 4 821 178 832)(font "Arial" (font_size 8)))
+		(text "fir_memory_s2_readdata[31..0]" (rect 0 0 128 12)(font "Arial" (font_size 8)))
+		(text "fir_memory_s2_readdata[31..0]" (rect 4 821 178 832)(font "Arial" (font_size 8)))
 		(line (pt 0 832)(pt 208 832)(line_width 3))
 	)
 	(drawing

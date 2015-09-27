@@ -125,17 +125,12 @@
          type = "int";
       }
    }
-   element button.s1
+   element led.s1
    {
       datum _lockedAddress
       {
          value = "1";
          type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "32";
-         type = "long";
       }
    }
    element fir_memory.s1
@@ -151,12 +146,17 @@
          type = "String";
       }
    }
-   element led.s1
+   element button.s1
    {
       datum _lockedAddress
       {
          value = "1";
          type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "32";
+         type = "long";
       }
    }
    element fir_memory.s2
@@ -426,7 +426,7 @@
    name="fir_memory">
   <parameter name="allowInSystemMemoryContentEditor" value="false" />
   <parameter name="blockType" value="AUTO" />
-  <parameter name="dataWidth" value="64" />
+  <parameter name="dataWidth" value="32" />
   <parameter name="dualPort" value="true" />
   <parameter name="initMemContent" value="true" />
   <parameter name="initializationFileName" value="onchip_memory" />

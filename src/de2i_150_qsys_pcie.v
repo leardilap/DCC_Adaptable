@@ -438,13 +438,13 @@ output                                             VGA_VS;
 //  REG/WIRE declarations
 //=======================================================
 
-reg [13:0] fir_memory_s2_address;                      //              fir_memory_s2.address
+reg [14:0] fir_memory_s2_address;                      //              fir_memory_s2.address
 wire        fir_memory_s2_clken;                        //                           .clken
-wire [63:0] fir_memory_s2_readdata;                     //                           .readdata
+wire [31:0] fir_memory_s2_readdata;                     //                           .readdata
 wire        fir_memory_clk2_clk;                        //            fir_memory_clk2.clk
 
 wire reset_n;
-
+ 
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -471,8 +471,8 @@ end
 		  .fir_memory_s2_clken                        (fir_memory_s2_clken),         											//                           .clken
 		  .fir_memory_s2_write                        (1'b0),         											//                           .write
 		  .fir_memory_s2_readdata                     (fir_memory_s2_readdata),      											//                           .readdata
-		  .fir_memory_s2_writedata                    (64'b0),     											//                           .writedata
-		  .fir_memory_s2_byteenable                   (8'b0),    											//                           .byteenable
+		  .fir_memory_s2_writedata                    (32'b0),     											//                           .writedata
+		  .fir_memory_s2_byteenable                   (3'b0),    											//                           .byteenable
 		  .fir_memory_clk2_clk                        (fir_memory_clk2_clk),         											//            fir_memory_clk2.clk
 		  .fir_memory_reset2_reset                    (1'b0),     											//          fir_memory_reset2.reset
 		  .fir_memory_reset2_reset_req                (1'b0)  											//                           .reset_req

@@ -30,13 +30,13 @@
 			pcie_ip_reconfig_fromgxb_0_data            : out std_logic_vector(4 downto 0);                     -- data
 			led_external_connection_export             : out std_logic_vector(3 downto 0);                     -- export
 			button_external_connection_export          : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- export
-			fir_memory_s2_address                      : in  std_logic_vector(13 downto 0) := (others => 'X'); -- address
+			fir_memory_s2_address                      : in  std_logic_vector(14 downto 0) := (others => 'X'); -- address
 			fir_memory_s2_chipselect                   : in  std_logic                     := 'X';             -- chipselect
 			fir_memory_s2_clken                        : in  std_logic                     := 'X';             -- clken
 			fir_memory_s2_write                        : in  std_logic                     := 'X';             -- write
-			fir_memory_s2_readdata                     : out std_logic_vector(63 downto 0);                    -- readdata
-			fir_memory_s2_writedata                    : in  std_logic_vector(63 downto 0) := (others => 'X'); -- writedata
-			fir_memory_s2_byteenable                   : in  std_logic_vector(7 downto 0)  := (others => 'X'); -- byteenable
+			fir_memory_s2_readdata                     : out std_logic_vector(31 downto 0);                    -- readdata
+			fir_memory_s2_writedata                    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			fir_memory_s2_byteenable                   : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
 			fir_memory_clk2_clk                        : in  std_logic                     := 'X';             -- clk
 			fir_memory_reset2_reset                    : in  std_logic                     := 'X';             -- reset
 			fir_memory_reset2_reset_req                : in  std_logic                     := 'X'              -- reset_req

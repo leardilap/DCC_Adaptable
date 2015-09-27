@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="de2i_150_qsys" kind="de2i_150_qsys" version="1.0" fabric="QSYS">
  <!-- Format version 14.0 200 (Future versions may contain additional information.) -->
- <!-- 2015.09.27.00:20:42 -->
+ <!-- 2015.09.27.02:13:17 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1443306042</value>
+  <value>1443312796</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -6924,7 +6924,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.memoryInfo.MEM_INIT_DATA_WIDTH</name>
-   <value>64</value>
+   <value>32</value>
   </assignment>
   <assignment>
    <name>embeddedsw.memoryInfo.MEM_INIT_FILENAME</name>
@@ -6956,7 +6956,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="dataWidth">
    <type>int</type>
-   <value>64</value>
+   <value>32</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -7119,7 +7119,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_set_addr_width">
    <type>int</type>
-   <value>14</value>
+   <value>15</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -7127,7 +7127,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_set_data_width">
    <type>int</type>
-   <value>64</value>
+   <value>32</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -7547,7 +7547,7 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>address</name>
     <direction>Input</direction>
-    <width>14</width>
+    <width>15</width>
     <role>address</role>
    </port>
    <port>
@@ -7571,19 +7571,19 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>readdata</name>
     <direction>Output</direction>
-    <width>64</width>
+    <width>32</width>
     <role>readdata</role>
    </port>
    <port>
     <name>writedata</name>
     <direction>Input</direction>
-    <width>64</width>
+    <width>32</width>
     <role>writedata</role>
    </port>
    <port>
     <name>byteenable</name>
     <direction>Input</direction>
-    <width>8</width>
+    <width>4</width>
     <role>byteenable</role>
    </port>
   </interface>
@@ -7975,7 +7975,7 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>address2</name>
     <direction>Input</direction>
-    <width>14</width>
+    <width>15</width>
     <role>address</role>
    </port>
    <port>
@@ -7999,19 +7999,19 @@ parameters are a RESULT of the module parameters. -->
    <port>
     <name>readdata2</name>
     <direction>Output</direction>
-    <width>64</width>
+    <width>32</width>
     <role>readdata</role>
    </port>
    <port>
     <name>writedata2</name>
     <direction>Input</direction>
-    <width>64</width>
+    <width>32</width>
     <role>writedata</role>
    </port>
    <port>
     <name>byteenable2</name>
     <direction>Input</direction>
-    <width>8</width>
+    <width>4</width>
     <role>byteenable</role>
    </port>
   </interface>
