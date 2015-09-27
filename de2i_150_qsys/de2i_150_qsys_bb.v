@@ -89,7 +89,19 @@ module de2i_150_qsys (
 	interpo_5_3_s2_byteenable,
 	interpo_5_3_clk2_clk,
 	interpo_5_3_reset2_reset,
-	interpo_5_3_reset2_reset_req);	
+	interpo_5_3_reset2_reset_req,
+	adapt_fir_mem_s2_address,
+	adapt_fir_mem_s2_chipselect,
+	adapt_fir_mem_s2_clken,
+	adapt_fir_mem_s2_write,
+	adapt_fir_mem_s2_readdata,
+	adapt_fir_mem_s2_writedata,
+	adapt_fir_mem_s2_byteenable,
+	adapt_fir_mem_clk2_clk,
+	adapt_fir_mem_reset2_reset,
+	adapt_fir_mem_reset2_reset_req,
+	micfilter_cntl_export,
+	micfilter_rst_export);	
 
 	input		clk_clk;
 	input		reset_reset_n;
@@ -181,4 +193,16 @@ module de2i_150_qsys (
 	input		interpo_5_3_clk2_clk;
 	input		interpo_5_3_reset2_reset;
 	input		interpo_5_3_reset2_reset_req;
+	input	[8:0]	adapt_fir_mem_s2_address;
+	input		adapt_fir_mem_s2_chipselect;
+	input		adapt_fir_mem_s2_clken;
+	input		adapt_fir_mem_s2_write;
+	output	[31:0]	adapt_fir_mem_s2_readdata;
+	input	[31:0]	adapt_fir_mem_s2_writedata;
+	input	[3:0]	adapt_fir_mem_s2_byteenable;
+	input		adapt_fir_mem_clk2_clk;
+	input		adapt_fir_mem_reset2_reset;
+	input		adapt_fir_mem_reset2_reset_req;
+	output	[31:0]	micfilter_cntl_export;
+	output		micfilter_rst_export;
 endmodule

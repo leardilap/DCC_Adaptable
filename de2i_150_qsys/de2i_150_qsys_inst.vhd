@@ -89,7 +89,19 @@
 			interpo_5_3_s2_byteenable                  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
 			interpo_5_3_clk2_clk                       : in  std_logic                     := 'X';             -- clk
 			interpo_5_3_reset2_reset                   : in  std_logic                     := 'X';             -- reset
-			interpo_5_3_reset2_reset_req               : in  std_logic                     := 'X'              -- reset_req
+			interpo_5_3_reset2_reset_req               : in  std_logic                     := 'X';             -- reset_req
+			adapt_fir_mem_s2_address                   : in  std_logic_vector(8 downto 0)  := (others => 'X'); -- address
+			adapt_fir_mem_s2_chipselect                : in  std_logic                     := 'X';             -- chipselect
+			adapt_fir_mem_s2_clken                     : in  std_logic                     := 'X';             -- clken
+			adapt_fir_mem_s2_write                     : in  std_logic                     := 'X';             -- write
+			adapt_fir_mem_s2_readdata                  : out std_logic_vector(31 downto 0);                    -- readdata
+			adapt_fir_mem_s2_writedata                 : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			adapt_fir_mem_s2_byteenable                : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			adapt_fir_mem_clk2_clk                     : in  std_logic                     := 'X';             -- clk
+			adapt_fir_mem_reset2_reset                 : in  std_logic                     := 'X';             -- reset
+			adapt_fir_mem_reset2_reset_req             : in  std_logic                     := 'X';             -- reset_req
+			micfilter_cntl_export                      : out std_logic_vector(31 downto 0);                    -- export
+			micfilter_rst_export                       : out std_logic                                         -- export
 		);
 	end component de2i_150_qsys;
 
@@ -184,6 +196,18 @@
 			interpo_5_3_s2_byteenable                  => CONNECTED_TO_interpo_5_3_s2_byteenable,                  --                           .byteenable
 			interpo_5_3_clk2_clk                       => CONNECTED_TO_interpo_5_3_clk2_clk,                       --           interpo_5_3_clk2.clk
 			interpo_5_3_reset2_reset                   => CONNECTED_TO_interpo_5_3_reset2_reset,                   --         interpo_5_3_reset2.reset
-			interpo_5_3_reset2_reset_req               => CONNECTED_TO_interpo_5_3_reset2_reset_req                --                           .reset_req
+			interpo_5_3_reset2_reset_req               => CONNECTED_TO_interpo_5_3_reset2_reset_req,               --                           .reset_req
+			adapt_fir_mem_s2_address                   => CONNECTED_TO_adapt_fir_mem_s2_address,                   --           adapt_fir_mem_s2.address
+			adapt_fir_mem_s2_chipselect                => CONNECTED_TO_adapt_fir_mem_s2_chipselect,                --                           .chipselect
+			adapt_fir_mem_s2_clken                     => CONNECTED_TO_adapt_fir_mem_s2_clken,                     --                           .clken
+			adapt_fir_mem_s2_write                     => CONNECTED_TO_adapt_fir_mem_s2_write,                     --                           .write
+			adapt_fir_mem_s2_readdata                  => CONNECTED_TO_adapt_fir_mem_s2_readdata,                  --                           .readdata
+			adapt_fir_mem_s2_writedata                 => CONNECTED_TO_adapt_fir_mem_s2_writedata,                 --                           .writedata
+			adapt_fir_mem_s2_byteenable                => CONNECTED_TO_adapt_fir_mem_s2_byteenable,                --                           .byteenable
+			adapt_fir_mem_clk2_clk                     => CONNECTED_TO_adapt_fir_mem_clk2_clk,                     --         adapt_fir_mem_clk2.clk
+			adapt_fir_mem_reset2_reset                 => CONNECTED_TO_adapt_fir_mem_reset2_reset,                 --       adapt_fir_mem_reset2.reset
+			adapt_fir_mem_reset2_reset_req             => CONNECTED_TO_adapt_fir_mem_reset2_reset_req,             --                           .reset_req
+			micfilter_cntl_export                      => CONNECTED_TO_micfilter_cntl_export,                      --             micfilter_cntl.export
+			micfilter_rst_export                       => CONNECTED_TO_micfilter_rst_export                        --              micfilter_rst.export
 		);
 

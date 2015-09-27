@@ -88,6 +88,18 @@
 		.interpo_5_3_s2_byteenable                  (<connected-to-interpo_5_3_s2_byteenable>),                  //                           .byteenable
 		.interpo_5_3_clk2_clk                       (<connected-to-interpo_5_3_clk2_clk>),                       //           interpo_5_3_clk2.clk
 		.interpo_5_3_reset2_reset                   (<connected-to-interpo_5_3_reset2_reset>),                   //         interpo_5_3_reset2.reset
-		.interpo_5_3_reset2_reset_req               (<connected-to-interpo_5_3_reset2_reset_req>)                //                           .reset_req
+		.interpo_5_3_reset2_reset_req               (<connected-to-interpo_5_3_reset2_reset_req>),               //                           .reset_req
+		.adapt_fir_mem_s2_address                   (<connected-to-adapt_fir_mem_s2_address>),                   //           adapt_fir_mem_s2.address
+		.adapt_fir_mem_s2_chipselect                (<connected-to-adapt_fir_mem_s2_chipselect>),                //                           .chipselect
+		.adapt_fir_mem_s2_clken                     (<connected-to-adapt_fir_mem_s2_clken>),                     //                           .clken
+		.adapt_fir_mem_s2_write                     (<connected-to-adapt_fir_mem_s2_write>),                     //                           .write
+		.adapt_fir_mem_s2_readdata                  (<connected-to-adapt_fir_mem_s2_readdata>),                  //                           .readdata
+		.adapt_fir_mem_s2_writedata                 (<connected-to-adapt_fir_mem_s2_writedata>),                 //                           .writedata
+		.adapt_fir_mem_s2_byteenable                (<connected-to-adapt_fir_mem_s2_byteenable>),                //                           .byteenable
+		.adapt_fir_mem_clk2_clk                     (<connected-to-adapt_fir_mem_clk2_clk>),                     //         adapt_fir_mem_clk2.clk
+		.adapt_fir_mem_reset2_reset                 (<connected-to-adapt_fir_mem_reset2_reset>),                 //       adapt_fir_mem_reset2.reset
+		.adapt_fir_mem_reset2_reset_req             (<connected-to-adapt_fir_mem_reset2_reset_req>),             //                           .reset_req
+		.micfilter_cntl_export                      (<connected-to-micfilter_cntl_export>),                      //             micfilter_cntl.export
+		.micfilter_rst_export                       (<connected-to-micfilter_rst_export>)                        //              micfilter_rst.export
 	);
 

@@ -11,20 +11,25 @@
 #define DEMO_PCIE_FIFO_WRITE_ADDR	0x40
 #define DEMO_PCIE_FIFO_STATUS_ADDR	0x60
 #define DEMO_PCIE_FIFO_READ_ADDR	0x80
+
+#define PCIE_MICFILTER_CNTL_ADDR	0x100
+#define PCIE_MICFILTER_RST_ADDR	0x120
+
 #define PCIE_FIR_MEM_ADDR			0x20000
 #define PCIE_INTERPO_4_0_ADDR		0x40000
 #define PCIE_INTERPO_5_0_ADDR		0x50000
 #define PCIE_INTERPO_5_1_ADDR		0x51000
 #define PCIE_INTERPO_5_2_ADDR		0x52000
 #define PCIE_INTERPO_5_3_ADDR		0x53000
+#define PCIE_ADAPT_FIR_MEM_ADDR		0x60000
 
-#define FIR_MEM_SIZE			(4*1024) // 4KB
+#define FIR_MEM_SIZE			(4*1024) // 4kB
 #define INTERPO_4_0_SIZE		(4*32)	// 128 bytes
 #define INTERPO_5_0_SIZE		(4*40)	// 160 bytes
 #define INTERPO_5_1_SIZE		(4*40)	// 160 bytes
 #define INTERPO_5_2_SIZE		(4*40)	// 160 bytes
 #define INTERPO_5_3_SIZE		(4*40)	// 160 bytes
-
+#define ADAPT_FIR_MEM_SIZE		(4*512)	// 2kB
 
 #define FIFO_SIZE			(16*1024) // 2KBx8
 
@@ -37,6 +42,7 @@ typedef enum{
 	MENU_INTERPO_5_1,
 	MENU_INTERPO_5_2,
 	MENU_INTERPO_5_3,
+	MENU_ADAPT_FIR_MEM,
 	MENU_DMA_FIFO,
 	MENU_QUIT = 99
 }MENU_ID;
@@ -51,6 +57,7 @@ void UI_ShowMenu(void){
 	printf("[%d]: INTERPO_5_1 DMA Memory\r\n", MENU_INTERPO_5_1);
 	printf("[%d]: INTERPO_5_2 DMA Memory\r\n", MENU_INTERPO_5_2);
 	printf("[%d]: INTERPO_5_3 DMA Memory\r\n", MENU_INTERPO_5_3);
+	printf("[%d]: ADAPT FIR DMA Memory\r\n", MENU_ADAPT_FIR_MEM);
 	printf("[%d]: DMA Fifo Test\r\n", MENU_DMA_FIFO);
 	printf("[%d]: Quit\r\n", MENU_QUIT);
 	printf("Please input your selection:");
@@ -67,14 +74,14 @@ BOOL TEST_LED(PCIE_HANDLE hPCIe){
 	BOOL bPass;
 	int	Mask;
 	
-	printf("Please input led conrol mask:");
+	printf("Please input led control mask:");
 	scanf("%d", &Mask);
 
 	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, DEMO_PCIE_IO_LED_ADDR,(DWORD)Mask);
 	if (bPass)
 		printf("Led control success, mask=%xh\r\n", Mask);
 	else
-		printf("Led conrol failed\r\n");
+		printf("Led control failed\r\n");
 
 	
 	return bPass;
@@ -93,6 +100,41 @@ BOOL TEST_BUTTON(PCIE_HANDLE hPCIe){
 	
 	return bPass;
 }
+
+BOOL MICFILTER_CNTL(PCIE_HANDLE hPCIe){
+	BOOL bPass;
+	int	Mask;
+	
+	printf("Please input micFilter control mask:");
+	scanf("%d", &Mask);
+
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_MICFILTER_CNTL_ADDR,(DWORD)Mask);
+	if (bPass)
+		printf("micFilter control success, mask=%xh\r\n", Mask);
+	else
+		printf("micFilter control failed\r\n");
+
+	
+	return bPass;
+}
+
+BOOL MICFILTER_RST(PCIE_HANDLE hPCIe){
+	BOOL bPass;
+	int	Mask;
+	
+	printf("Please input micFilter rst mask:");
+	scanf("%d", &Mask);
+
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_MICFILTER_RST_ADDR,(DWORD)Mask);
+	if (bPass)
+		printf("micFilter rst success, mask=%xh\r\n", Mask);
+	else
+		printf("micFilter rst failed\r\n");
+
+	
+	return bPass;
+}
+
 
 char PAT_GEN(int nIndex){
 	char Data;
@@ -280,6 +322,84 @@ BOOL INTERPO(PCIE_HANDLE hPCIe, const int nTestSize, const PCIE_LOCAL_ADDRESS Lo
 	return bPass;
 }
 
+BOOL ADAPT_FIR_DMA_MEMORY(PCIE_HANDLE hPCIe){
+	BOOL bPass=TRUE;
+	int i;
+	const int nTestSize = ADAPT_FIR_MEM_SIZE;
+	const PCIE_LOCAL_ADDRESS LocalAddr = PCIE_ADAPT_FIR_MEM_ADDR;
+	char *pWrite;
+	char *pRead;
+	char szError[256];
+
+
+	pWrite = (char *)malloc(nTestSize);
+	pRead = (char *)malloc(nTestSize);
+	if (!pWrite || !pRead){
+		bPass = FALSE;
+		sprintf(szError, "DMA Memory:malloc failed\r\n");
+	}
+	
+
+	// init test pattern
+	FILE *fileWrite = fopen("FIRwr.txt", "w");
+	if (fileWrite == NULL)
+	{
+    	printf("Error opening file!\n");
+    	exit(1);
+	}
+
+	for(i=0;i<nTestSize && bPass;i++) {
+		*(pWrite+i) = PAT_GEN(i);
+		fprintf(fileWrite, "%d\t0x%02X\n", i, (unsigned char)*(pWrite+i));
+	}
+	fclose(fileWrite);
+	// write test pattern
+	if (bPass){
+		bPass = PCIE_DmaWrite(hPCIe, LocalAddr, pWrite, nTestSize);
+		if (!bPass)
+			sprintf(szError, "DMA Memory:PCIE_DmaWrite failed\r\n");
+	}		
+	
+	FILE *fileRead = fopen("FIRrd.txt", "w");
+	if (fileRead == NULL)
+	{
+    	printf("Error opening file!\n");
+    	exit(1);
+	}
+
+	// read back test pattern and verify
+	if (bPass){
+		bPass = PCIE_DmaRead(hPCIe, LocalAddr, pRead, nTestSize);
+
+		if (!bPass){
+			sprintf(szError, "DMA Memory:PCIE_DmaRead failed\r\n");
+		}else{
+			for(i=0;i<nTestSize && bPass;i++){
+				fprintf(fileRead, "%d\t0x%02X\n", i, (unsigned char)*(pRead+i));
+				if (*(pRead+i) != PAT_GEN(i)){
+					bPass = FALSE;
+					sprintf(szError, "DMA Memory:Read-back verify unmatch, index = %d, read=%xh, expected=%xh\r\n", i, *(pRead+i), PAT_GEN(i));
+				}
+			}
+		}
+	}
+	fclose(fileRead);
+
+	// free resource
+	if (pWrite)
+		free(pWrite);
+	if (pRead)
+		free(pRead);
+	
+	if (!bPass)
+		printf("%s", szError);
+	else
+		printf("DMA-Memory (Size = %d byes) pass\r\n", nTestSize);
+
+
+	return bPass;
+}
+
 BOOL TEST_DMA_FIFO(PCIE_HANDLE hPCIe){
 	BOOL bPass=TRUE;
 	int i;
@@ -389,6 +509,9 @@ int main(void)
 					break;
 				case MENU_INTERPO_5_3:
 					INTERPO(hPCIE, INTERPO_5_3_SIZE, PCIE_INTERPO_5_3_ADDR);
+					break;
+				case MENU_ADAPT_FIR_MEM:
+					ADAPT_FIR_DMA_MEMORY(hPCIE);
 					break;
 				case MENU_DMA_FIFO:
 					TEST_DMA_FIFO(hPCIE);
