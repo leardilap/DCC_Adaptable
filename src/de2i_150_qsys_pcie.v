@@ -50,7 +50,7 @@
 // ============================================================================
 
 `define ENABLE_PCIE
-`define DATE 32'h26090315
+`define DATE 32'h27090001
 
 module de2i_150_qsys_pcie(
 
@@ -438,45 +438,68 @@ output                                             VGA_VS;
 //  REG/WIRE declarations
 //=======================================================
 
+wire reset_n;
+
+// MicFilter
+
 reg [14:0] fir_memory_s2_address;                      //              fir_memory_s2.address
 wire        fir_memory_s2_clken;                        //                           .clken
-wire [31:0] fir_memory_s2_readdata;                     //                           .readdata
+(*KEEP = "TRUE"*) wire [31:0] fir_memory_s2_readdata;                     //                           .readdata
 wire        fir_memory_clk2_clk;                        //            fir_memory_clk2.clk
 
-wire reset_n;
+reg [5:0]  interpo_4_s2_address;                       //               interpo_4_s2.address
+wire        interpo_4_s2_clken;                         //                           .clken
+(*KEEP = "TRUE"*) wire [31:0] interpo_4_s2_readdata;                      //                           .readdata
+wire        interpo_4_clk2_clk;                         //             interpo_4_clk2.clk
  
 //=======================================================
 //  Structural coding
 //=======================================================
 assign reset_n = 1'b1;
+
 assign fir_memory_s2_clken = 1'b1;
 assign fir_memory_clk2_clk = CLOCK_50;
 
+assign interpo_4_s2_clken = 1'b1;
+assign interpo_4_clk2_clk = CLOCK_50;
+
 always@(posedge CLOCK_50) begin
 	fir_memory_s2_address <= fir_memory_s2_address + 1;
+	interpo_4_s2_address <= interpo_4_s2_address + 1;
 end	
 
 
     de2i_150_qsys u0 (
-        .clk_clk                                    (CLOCK_50),                                    //                        clk.clk
-        .reset_reset_n                              (reset_n),                              //                      reset.reset_n
-        .pcie_ip_refclk_export                      (PCIE_REFCLK_P),                      //             pcie_ip_refclk.export
-        .pcie_ip_pcie_rstn_export                   (PCIE_PERST_N),                   //          pcie_ip_pcie_rstn.export
-        .pcie_ip_rx_in_rx_datain_0                  (PCIE_RX_P[0]),                  //              pcie_ip_rx_in.rx_datain_0
-        .pcie_ip_tx_out_tx_dataout_0                (PCIE_TX_P[0]),                //             pcie_ip_tx_out.tx_dataout_0
-        .led_external_connection_export             (LEDG[3:0]),             //    led_external_connection.export
-        .button_external_connection_export          (KEY),           // button_external_connection.export
-		  .fir_memory_s2_address                      (fir_memory_s2_address),       											//              fir_memory_s2.address
-		  .fir_memory_s2_chipselect                   (1'b1),    											//                           .chipselect
-		  .fir_memory_s2_clken                        (fir_memory_s2_clken),         											//                           .clken
-		  .fir_memory_s2_write                        (1'b0),         											//                           .write
-		  .fir_memory_s2_readdata                     (fir_memory_s2_readdata),      											//                           .readdata
-		  .fir_memory_s2_writedata                    (32'b0),     											//                           .writedata
-		  .fir_memory_s2_byteenable                   (3'b0),    											//                           .byteenable
-		  .fir_memory_clk2_clk                        (fir_memory_clk2_clk),         											//            fir_memory_clk2.clk
-		  .fir_memory_reset2_reset                    (1'b0),     											//          fir_memory_reset2.reset
-		  .fir_memory_reset2_reset_req                (1'b0)  											//                           .reset_req
-    );
+         .clk_clk                            	(CLOCK_50),                                    //                        clk.clk
+         .reset_reset_n                      	(reset_n),                              //                      reset.reset_n
+         .pcie_ip_refclk_export              	(PCIE_REFCLK_P),                      //             pcie_ip_refclk.export
+         .pcie_ip_pcie_rstn_export           	(PCIE_PERST_N),                   //          pcie_ip_pcie_rstn.export
+         .pcie_ip_rx_in_rx_datain_0          	(PCIE_RX_P[0]),                  //              pcie_ip_rx_in.rx_datain_0
+         .pcie_ip_tx_out_tx_dataout_0        	(PCIE_TX_P[0]),                //             pcie_ip_tx_out.tx_dataout_0
+         .led_external_connection_export     	(LEDG[3:0]),             //    led_external_connection.export
+         .button_external_connection_export  	(KEY),           // button_external_connection.export
+		   .fir_memory_s2_address              	(fir_memory_s2_address),       											//              fir_memory_s2.address
+		   .fir_memory_s2_chipselect           	(1'b1),    											//                           .chipselect
+		   .fir_memory_s2_clken                	(fir_memory_s2_clken),         											//                           .clken
+		   .fir_memory_s2_write                	(1'b0),         											//                           .write
+		   .fir_memory_s2_readdata             	(fir_memory_s2_readdata),      											//                           .readdata
+		   .fir_memory_s2_writedata            	(32'b0),     											//                           .writedata
+		   .fir_memory_s2_byteenable           	(3'b0),    											//                           .byteenable
+		   .fir_memory_clk2_clk                	(fir_memory_clk2_clk),         											//            fir_memory_clk2.clk
+		   .fir_memory_reset2_reset            	(1'b0),     											//          fir_memory_reset2.reset
+		   .fir_memory_reset2_reset_req        	(1'b0),  											//                           .reset_req
+			.interpo_4_s2_address						(interpo_4_s2_address),                       //               interpo_4_s2.address
+			.interpo_4_s2_chipselect					(1'b1),                    //                           .chipselect
+			.interpo_4_s2_clken							(interpo_4_s2_clken),                         //                           .clken
+			.interpo_4_s2_write							(1'b0),                         //                           .write
+			.interpo_4_s2_readdata						(interpo_4_s2_readdata),                      //                           .readdata
+			.interpo_4_s2_writedata						(32'b0),                     //                           .writedata
+			.interpo_4_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_4_clk2_clk							(interpo_4_clk2_clk),                         //             interpo_4_clk2.clk
+			.interpo_4_reset2_reset						(1'b0),                     //           interpo_4_reset2.reset
+			.interpo_4_reset2_reset_req				(1'b0)                 //                           .reset_req
+
+  );
 
 assign PCIE_WAKE_N = 1'b1;	 // 07/30/2013, pull-high to avoid system reboot after power off
 

@@ -30,7 +30,7 @@
 			pcie_ip_reconfig_fromgxb_0_data            : out std_logic_vector(4 downto 0);                     -- data
 			led_external_connection_export             : out std_logic_vector(3 downto 0);                     -- export
 			button_external_connection_export          : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- export
-			fir_memory_s2_address                      : in  std_logic_vector(14 downto 0) := (others => 'X'); -- address
+			fir_memory_s2_address                      : in  std_logic_vector(9 downto 0)  := (others => 'X'); -- address
 			fir_memory_s2_chipselect                   : in  std_logic                     := 'X';             -- chipselect
 			fir_memory_s2_clken                        : in  std_logic                     := 'X';             -- clken
 			fir_memory_s2_write                        : in  std_logic                     := 'X';             -- write
@@ -39,7 +39,17 @@
 			fir_memory_s2_byteenable                   : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
 			fir_memory_clk2_clk                        : in  std_logic                     := 'X';             -- clk
 			fir_memory_reset2_reset                    : in  std_logic                     := 'X';             -- reset
-			fir_memory_reset2_reset_req                : in  std_logic                     := 'X'              -- reset_req
+			fir_memory_reset2_reset_req                : in  std_logic                     := 'X';             -- reset_req
+			interpo_4_s2_address                       : in  std_logic_vector(5 downto 0)  := (others => 'X'); -- address
+			interpo_4_s2_chipselect                    : in  std_logic                     := 'X';             -- chipselect
+			interpo_4_s2_clken                         : in  std_logic                     := 'X';             -- clken
+			interpo_4_s2_write                         : in  std_logic                     := 'X';             -- write
+			interpo_4_s2_readdata                      : out std_logic_vector(31 downto 0);                    -- readdata
+			interpo_4_s2_writedata                     : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			interpo_4_s2_byteenable                    : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			interpo_4_clk2_clk                         : in  std_logic                     := 'X';             -- clk
+			interpo_4_reset2_reset                     : in  std_logic                     := 'X';             -- reset
+			interpo_4_reset2_reset_req                 : in  std_logic                     := 'X'              -- reset_req
 		);
 	end component de2i_150_qsys;
 
@@ -84,6 +94,16 @@
 			fir_memory_s2_byteenable                   => CONNECTED_TO_fir_memory_s2_byteenable,                   --                           .byteenable
 			fir_memory_clk2_clk                        => CONNECTED_TO_fir_memory_clk2_clk,                        --            fir_memory_clk2.clk
 			fir_memory_reset2_reset                    => CONNECTED_TO_fir_memory_reset2_reset,                    --          fir_memory_reset2.reset
-			fir_memory_reset2_reset_req                => CONNECTED_TO_fir_memory_reset2_reset_req                 --                           .reset_req
+			fir_memory_reset2_reset_req                => CONNECTED_TO_fir_memory_reset2_reset_req,                --                           .reset_req
+			interpo_4_s2_address                       => CONNECTED_TO_interpo_4_s2_address,                       --               interpo_4_s2.address
+			interpo_4_s2_chipselect                    => CONNECTED_TO_interpo_4_s2_chipselect,                    --                           .chipselect
+			interpo_4_s2_clken                         => CONNECTED_TO_interpo_4_s2_clken,                         --                           .clken
+			interpo_4_s2_write                         => CONNECTED_TO_interpo_4_s2_write,                         --                           .write
+			interpo_4_s2_readdata                      => CONNECTED_TO_interpo_4_s2_readdata,                      --                           .readdata
+			interpo_4_s2_writedata                     => CONNECTED_TO_interpo_4_s2_writedata,                     --                           .writedata
+			interpo_4_s2_byteenable                    => CONNECTED_TO_interpo_4_s2_byteenable,                    --                           .byteenable
+			interpo_4_clk2_clk                         => CONNECTED_TO_interpo_4_clk2_clk,                         --             interpo_4_clk2.clk
+			interpo_4_reset2_reset                     => CONNECTED_TO_interpo_4_reset2_reset,                     --           interpo_4_reset2.reset
+			interpo_4_reset2_reset_req                 => CONNECTED_TO_interpo_4_reset2_reset_req                  --                           .reset_req
 		);
 

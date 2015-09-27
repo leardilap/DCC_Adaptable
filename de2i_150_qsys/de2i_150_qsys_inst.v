@@ -38,6 +38,16 @@
 		.fir_memory_s2_byteenable                   (<connected-to-fir_memory_s2_byteenable>),                   //                           .byteenable
 		.fir_memory_clk2_clk                        (<connected-to-fir_memory_clk2_clk>),                        //            fir_memory_clk2.clk
 		.fir_memory_reset2_reset                    (<connected-to-fir_memory_reset2_reset>),                    //          fir_memory_reset2.reset
-		.fir_memory_reset2_reset_req                (<connected-to-fir_memory_reset2_reset_req>)                 //                           .reset_req
+		.fir_memory_reset2_reset_req                (<connected-to-fir_memory_reset2_reset_req>),                //                           .reset_req
+		.interpo_4_s2_address                       (<connected-to-interpo_4_s2_address>),                       //               interpo_4_s2.address
+		.interpo_4_s2_chipselect                    (<connected-to-interpo_4_s2_chipselect>),                    //                           .chipselect
+		.interpo_4_s2_clken                         (<connected-to-interpo_4_s2_clken>),                         //                           .clken
+		.interpo_4_s2_write                         (<connected-to-interpo_4_s2_write>),                         //                           .write
+		.interpo_4_s2_readdata                      (<connected-to-interpo_4_s2_readdata>),                      //                           .readdata
+		.interpo_4_s2_writedata                     (<connected-to-interpo_4_s2_writedata>),                     //                           .writedata
+		.interpo_4_s2_byteenable                    (<connected-to-interpo_4_s2_byteenable>),                    //                           .byteenable
+		.interpo_4_clk2_clk                         (<connected-to-interpo_4_clk2_clk>),                         //             interpo_4_clk2.clk
+		.interpo_4_reset2_reset                     (<connected-to-interpo_4_reset2_reset>),                     //           interpo_4_reset2.reset
+		.interpo_4_reset2_reset_req                 (<connected-to-interpo_4_reset2_reset_req>)                  //                           .reset_req
 	);
 

@@ -11,9 +11,12 @@
 #define DEMO_PCIE_FIFO_WRITE_ADDR	0x40
 #define DEMO_PCIE_FIFO_STATUS_ADDR	0x60
 #define DEMO_PCIE_FIFO_READ_ADDR	0x80
-#define DEMO_PCIE_MEM_ADDR			0x20000
+#define PCIE_FIR_MEM_ADDR			0x20000
+#define PCIE_INTERPO_4_ADDR		0x30000
 
-#define MEM_SIZE			(128*1024) //128KB
+
+#define FIR_MEM_SIZE			(4*1024) // 4KB
+#define INTERPO_4_SIZE		(4*64)	// 256 bytes
 #define FIFO_SIZE			(16*1024) // 2KBx8
 
 
@@ -21,7 +24,8 @@
 typedef enum{
 	MENU_LED = 0,
 	MENU_BUTTON,
-	MENU_DMA_MEMORY,
+	MENU_FIR_DMA_MEMORY,
+	MENU_INTERPO_4,
 	MENU_DMA_FIFO,
 	MENU_QUIT = 99
 }MENU_ID;
@@ -30,7 +34,8 @@ void UI_ShowMenu(void){
 	printf("==============================\r\n");
 	printf("[%d]: Led control\r\n", MENU_LED);
 	printf("[%d]: Button Status Read\r\n", MENU_BUTTON);
-	printf("[%d]: DMA Memory Test\r\n", MENU_DMA_MEMORY);
+	printf("[%d]: FIR DMA Memory\r\n", MENU_FIR_DMA_MEMORY);
+	printf("[%d]: INTERPO_4 DMA Memory\r\n", MENU_INTERPO_4);
 	printf("[%d]: DMA Fifo Test\r\n", MENU_DMA_FIFO);
 	printf("[%d]: Quit\r\n", MENU_QUIT);
 	printf("Please input your selection:");
@@ -80,11 +85,11 @@ char PAT_GEN(int nIndex){
 	return Data;
 }
 
-BOOL TEST_DMA_MEMORY(PCIE_HANDLE hPCIe){
+BOOL FIR_DMA_MEMORY(PCIE_HANDLE hPCIe){
 	BOOL bPass=TRUE;
 	int i;
-	const int nTestSize = MEM_SIZE;
-	const PCIE_LOCAL_ADDRESS LocalAddr = DEMO_PCIE_MEM_ADDR;
+	const int nTestSize = FIR_MEM_SIZE;
+	const PCIE_LOCAL_ADDRESS LocalAddr = PCIE_FIR_MEM_ADDR;
 	char *pWrite;
 	char *pRead;
 	char szError[256];
@@ -99,7 +104,7 @@ BOOL TEST_DMA_MEMORY(PCIE_HANDLE hPCIe){
 	
 
 	// init test pattern
-	FILE *fileWrite = fopen("write.txt", "w");
+	FILE *fileWrite = fopen("FIRwr.txt", "w");
 	if (fileWrite == NULL)
 	{
     	printf("Error opening file!\n");
@@ -118,7 +123,85 @@ BOOL TEST_DMA_MEMORY(PCIE_HANDLE hPCIe){
 			sprintf(szError, "DMA Memory:PCIE_DmaWrite failed\r\n");
 	}		
 	
-	FILE *fileRead = fopen("read.txt", "w");
+	FILE *fileRead = fopen("FIRrd.txt", "w");
+	if (fileRead == NULL)
+	{
+    	printf("Error opening file!\n");
+    	exit(1);
+	}
+
+	// read back test pattern and verify
+	if (bPass){
+		bPass = PCIE_DmaRead(hPCIe, LocalAddr, pRead, nTestSize);
+
+		if (!bPass){
+			sprintf(szError, "DMA Memory:PCIE_DmaRead failed\r\n");
+		}else{
+			for(i=0;i<nTestSize && bPass;i++){
+				fprintf(fileRead, "%d\t0x%02X\n", i, (unsigned char)*(pRead+i));
+				if (*(pRead+i) != PAT_GEN(i)){
+					bPass = FALSE;
+					sprintf(szError, "DMA Memory:Read-back verify unmatch, index = %d, read=%xh, expected=%xh\r\n", i, *(pRead+i), PAT_GEN(i));
+				}
+			}
+		}
+	}
+	fclose(fileRead);
+
+	// free resource
+	if (pWrite)
+		free(pWrite);
+	if (pRead)
+		free(pRead);
+	
+	if (!bPass)
+		printf("%s", szError);
+	else
+		printf("DMA-Memory (Size = %d byes) pass\r\n", nTestSize);
+
+
+	return bPass;
+}
+
+BOOL INTERPO_4(PCIE_HANDLE hPCIe){
+	BOOL bPass=TRUE;
+	int i;
+	const int nTestSize = INTERPO_4_SIZE;
+	const PCIE_LOCAL_ADDRESS LocalAddr = PCIE_INTERPO_4_ADDR;
+	char *pWrite;
+	char *pRead;
+	char szError[256];
+
+
+	pWrite = (char *)malloc(nTestSize);
+	pRead = (char *)malloc(nTestSize);
+	if (!pWrite || !pRead){
+		bPass = FALSE;
+		sprintf(szError, "DMA Memory:malloc failed\r\n");
+	}
+	
+
+	// init test pattern
+	FILE *fileWrite = fopen("INT4wr.txt", "w");
+	if (fileWrite == NULL)
+	{
+    	printf("Error opening file!\n");
+    	exit(1);
+	}
+
+	for(i=0;i<nTestSize && bPass;i++) {
+		*(pWrite+i) = PAT_GEN(i);
+		fprintf(fileWrite, "%d\t0x%02X\n", i, (unsigned char)*(pWrite+i));
+	}
+	fclose(fileWrite);
+	// write test pattern
+	if (bPass){
+		bPass = PCIE_DmaWrite(hPCIe, LocalAddr, pWrite, nTestSize);
+		if (!bPass)
+			sprintf(szError, "DMA Memory:PCIE_DmaWrite failed\r\n");
+	}		
+	
+	FILE *fileRead = fopen("INT4rd.txt", "w");
 	if (fileRead == NULL)
 	{
     	printf("Error opening file!\n");
@@ -250,8 +333,11 @@ int main(void)
 				case MENU_BUTTON:
 					TEST_BUTTON(hPCIE);
 					break;
-				case MENU_DMA_MEMORY:
-					TEST_DMA_MEMORY(hPCIE);
+				case MENU_FIR_DMA_MEMORY:
+					FIR_DMA_MEMORY(hPCIE);
+					break;
+				case MENU_INTERPO_4:
+					INTERPO_4(hPCIE);
 					break;
 				case MENU_DMA_FIFO:
 					TEST_DMA_FIFO(hPCIE);
