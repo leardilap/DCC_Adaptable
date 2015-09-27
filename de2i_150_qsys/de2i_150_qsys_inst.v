@@ -39,15 +39,55 @@
 		.fir_memory_clk2_clk                        (<connected-to-fir_memory_clk2_clk>),                        //            fir_memory_clk2.clk
 		.fir_memory_reset2_reset                    (<connected-to-fir_memory_reset2_reset>),                    //          fir_memory_reset2.reset
 		.fir_memory_reset2_reset_req                (<connected-to-fir_memory_reset2_reset_req>),                //                           .reset_req
-		.interpo_4_s2_address                       (<connected-to-interpo_4_s2_address>),                       //               interpo_4_s2.address
-		.interpo_4_s2_chipselect                    (<connected-to-interpo_4_s2_chipselect>),                    //                           .chipselect
-		.interpo_4_s2_clken                         (<connected-to-interpo_4_s2_clken>),                         //                           .clken
-		.interpo_4_s2_write                         (<connected-to-interpo_4_s2_write>),                         //                           .write
-		.interpo_4_s2_readdata                      (<connected-to-interpo_4_s2_readdata>),                      //                           .readdata
-		.interpo_4_s2_writedata                     (<connected-to-interpo_4_s2_writedata>),                     //                           .writedata
-		.interpo_4_s2_byteenable                    (<connected-to-interpo_4_s2_byteenable>),                    //                           .byteenable
-		.interpo_4_clk2_clk                         (<connected-to-interpo_4_clk2_clk>),                         //             interpo_4_clk2.clk
-		.interpo_4_reset2_reset                     (<connected-to-interpo_4_reset2_reset>),                     //           interpo_4_reset2.reset
-		.interpo_4_reset2_reset_req                 (<connected-to-interpo_4_reset2_reset_req>)                  //                           .reset_req
+		.interpo_4_0_s2_address                     (<connected-to-interpo_4_0_s2_address>),                     //             interpo_4_0_s2.address
+		.interpo_4_0_s2_chipselect                  (<connected-to-interpo_4_0_s2_chipselect>),                  //                           .chipselect
+		.interpo_4_0_s2_clken                       (<connected-to-interpo_4_0_s2_clken>),                       //                           .clken
+		.interpo_4_0_s2_write                       (<connected-to-interpo_4_0_s2_write>),                       //                           .write
+		.interpo_4_0_s2_readdata                    (<connected-to-interpo_4_0_s2_readdata>),                    //                           .readdata
+		.interpo_4_0_s2_writedata                   (<connected-to-interpo_4_0_s2_writedata>),                   //                           .writedata
+		.interpo_4_0_s2_byteenable                  (<connected-to-interpo_4_0_s2_byteenable>),                  //                           .byteenable
+		.interpo_4_0_clk2_clk                       (<connected-to-interpo_4_0_clk2_clk>),                       //           interpo_4_0_clk2.clk
+		.interpo_4_0_reset2_reset                   (<connected-to-interpo_4_0_reset2_reset>),                   //         interpo_4_0_reset2.reset
+		.interpo_4_0_reset2_reset_req               (<connected-to-interpo_4_0_reset2_reset_req>),               //                           .reset_req
+		.interpo_5_0_s2_address                     (<connected-to-interpo_5_0_s2_address>),                     //             interpo_5_0_s2.address
+		.interpo_5_0_s2_chipselect                  (<connected-to-interpo_5_0_s2_chipselect>),                  //                           .chipselect
+		.interpo_5_0_s2_clken                       (<connected-to-interpo_5_0_s2_clken>),                       //                           .clken
+		.interpo_5_0_s2_write                       (<connected-to-interpo_5_0_s2_write>),                       //                           .write
+		.interpo_5_0_s2_readdata                    (<connected-to-interpo_5_0_s2_readdata>),                    //                           .readdata
+		.interpo_5_0_s2_writedata                   (<connected-to-interpo_5_0_s2_writedata>),                   //                           .writedata
+		.interpo_5_0_s2_byteenable                  (<connected-to-interpo_5_0_s2_byteenable>),                  //                           .byteenable
+		.interpo_5_0_clk2_clk                       (<connected-to-interpo_5_0_clk2_clk>),                       //           interpo_5_0_clk2.clk
+		.interpo_5_0_reset2_reset                   (<connected-to-interpo_5_0_reset2_reset>),                   //         interpo_5_0_reset2.reset
+		.interpo_5_0_reset2_reset_req               (<connected-to-interpo_5_0_reset2_reset_req>),               //                           .reset_req
+		.interpo_5_1_clk2_clk                       (<connected-to-interpo_5_1_clk2_clk>),                       //           interpo_5_1_clk2.clk
+		.interpo_5_1_s2_address                     (<connected-to-interpo_5_1_s2_address>),                     //             interpo_5_1_s2.address
+		.interpo_5_1_s2_chipselect                  (<connected-to-interpo_5_1_s2_chipselect>),                  //                           .chipselect
+		.interpo_5_1_s2_clken                       (<connected-to-interpo_5_1_s2_clken>),                       //                           .clken
+		.interpo_5_1_s2_write                       (<connected-to-interpo_5_1_s2_write>),                       //                           .write
+		.interpo_5_1_s2_readdata                    (<connected-to-interpo_5_1_s2_readdata>),                    //                           .readdata
+		.interpo_5_1_s2_writedata                   (<connected-to-interpo_5_1_s2_writedata>),                   //                           .writedata
+		.interpo_5_1_s2_byteenable                  (<connected-to-interpo_5_1_s2_byteenable>),                  //                           .byteenable
+		.interpo_5_1_reset2_reset                   (<connected-to-interpo_5_1_reset2_reset>),                   //         interpo_5_1_reset2.reset
+		.interpo_5_1_reset2_reset_req               (<connected-to-interpo_5_1_reset2_reset_req>),               //                           .reset_req
+		.interpo_5_2_s2_address                     (<connected-to-interpo_5_2_s2_address>),                     //             interpo_5_2_s2.address
+		.interpo_5_2_s2_chipselect                  (<connected-to-interpo_5_2_s2_chipselect>),                  //                           .chipselect
+		.interpo_5_2_s2_clken                       (<connected-to-interpo_5_2_s2_clken>),                       //                           .clken
+		.interpo_5_2_s2_write                       (<connected-to-interpo_5_2_s2_write>),                       //                           .write
+		.interpo_5_2_s2_readdata                    (<connected-to-interpo_5_2_s2_readdata>),                    //                           .readdata
+		.interpo_5_2_s2_writedata                   (<connected-to-interpo_5_2_s2_writedata>),                   //                           .writedata
+		.interpo_5_2_s2_byteenable                  (<connected-to-interpo_5_2_s2_byteenable>),                  //                           .byteenable
+		.interpo_5_2_clk2_clk                       (<connected-to-interpo_5_2_clk2_clk>),                       //           interpo_5_2_clk2.clk
+		.interpo_5_2_reset2_reset                   (<connected-to-interpo_5_2_reset2_reset>),                   //         interpo_5_2_reset2.reset
+		.interpo_5_2_reset2_reset_req               (<connected-to-interpo_5_2_reset2_reset_req>),               //                           .reset_req
+		.interpo_5_3_s2_address                     (<connected-to-interpo_5_3_s2_address>),                     //             interpo_5_3_s2.address
+		.interpo_5_3_s2_chipselect                  (<connected-to-interpo_5_3_s2_chipselect>),                  //                           .chipselect
+		.interpo_5_3_s2_clken                       (<connected-to-interpo_5_3_s2_clken>),                       //                           .clken
+		.interpo_5_3_s2_write                       (<connected-to-interpo_5_3_s2_write>),                       //                           .write
+		.interpo_5_3_s2_readdata                    (<connected-to-interpo_5_3_s2_readdata>),                    //                           .readdata
+		.interpo_5_3_s2_writedata                   (<connected-to-interpo_5_3_s2_writedata>),                   //                           .writedata
+		.interpo_5_3_s2_byteenable                  (<connected-to-interpo_5_3_s2_byteenable>),                  //                           .byteenable
+		.interpo_5_3_clk2_clk                       (<connected-to-interpo_5_3_clk2_clk>),                       //           interpo_5_3_clk2.clk
+		.interpo_5_3_reset2_reset                   (<connected-to-interpo_5_3_reset2_reset>),                   //         interpo_5_3_reset2.reset
+		.interpo_5_3_reset2_reset_req               (<connected-to-interpo_5_3_reset2_reset_req>)                //                           .reset_req
 	);
 

@@ -28,10 +28,10 @@
 // ------------------------------------------
 // Generation parameters:
 //   output_name:         de2i_150_qsys_mm_interconnect_0_cmd_demux
-//   ST_DATA_W:           149
-//   ST_CHANNEL_W:        8
-//   NUM_OUTPUTS:         7
-//   VALID_WIDTH:         8
+//   ST_DATA_W:           151
+//   ST_CHANNEL_W:        12
+//   NUM_OUTPUTS:         11
+//   VALID_WIDTH:         12
 // ------------------------------------------
 
 //------------------------------------------
@@ -45,9 +45,9 @@ module de2i_150_qsys_mm_interconnect_0_cmd_demux
     // -------------------
     // Sink
     // -------------------
-    input  [8-1      : 0]   sink_valid,
-    input  [149-1    : 0]   sink_data, // ST_DATA_W=149
-    input  [8-1 : 0]   sink_channel, // ST_CHANNEL_W=8
+    input  [12-1      : 0]   sink_valid,
+    input  [151-1    : 0]   sink_data, // ST_DATA_W=151
+    input  [12-1 : 0]   sink_channel, // ST_CHANNEL_W=12
     input                         sink_startofpacket,
     input                         sink_endofpacket,
     output                        sink_ready,
@@ -56,53 +56,81 @@ module de2i_150_qsys_mm_interconnect_0_cmd_demux
     // Sources 
     // -------------------
     output reg                      src0_valid,
-    output reg [149-1    : 0] src0_data, // ST_DATA_W=149
-    output reg [8-1 : 0] src0_channel, // ST_CHANNEL_W=8
+    output reg [151-1    : 0] src0_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src0_channel, // ST_CHANNEL_W=12
     output reg                      src0_startofpacket,
     output reg                      src0_endofpacket,
     input                           src0_ready,
 
     output reg                      src1_valid,
-    output reg [149-1    : 0] src1_data, // ST_DATA_W=149
-    output reg [8-1 : 0] src1_channel, // ST_CHANNEL_W=8
+    output reg [151-1    : 0] src1_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src1_channel, // ST_CHANNEL_W=12
     output reg                      src1_startofpacket,
     output reg                      src1_endofpacket,
     input                           src1_ready,
 
     output reg                      src2_valid,
-    output reg [149-1    : 0] src2_data, // ST_DATA_W=149
-    output reg [8-1 : 0] src2_channel, // ST_CHANNEL_W=8
+    output reg [151-1    : 0] src2_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src2_channel, // ST_CHANNEL_W=12
     output reg                      src2_startofpacket,
     output reg                      src2_endofpacket,
     input                           src2_ready,
 
     output reg                      src3_valid,
-    output reg [149-1    : 0] src3_data, // ST_DATA_W=149
-    output reg [8-1 : 0] src3_channel, // ST_CHANNEL_W=8
+    output reg [151-1    : 0] src3_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src3_channel, // ST_CHANNEL_W=12
     output reg                      src3_startofpacket,
     output reg                      src3_endofpacket,
     input                           src3_ready,
 
     output reg                      src4_valid,
-    output reg [149-1    : 0] src4_data, // ST_DATA_W=149
-    output reg [8-1 : 0] src4_channel, // ST_CHANNEL_W=8
+    output reg [151-1    : 0] src4_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src4_channel, // ST_CHANNEL_W=12
     output reg                      src4_startofpacket,
     output reg                      src4_endofpacket,
     input                           src4_ready,
 
     output reg                      src5_valid,
-    output reg [149-1    : 0] src5_data, // ST_DATA_W=149
-    output reg [8-1 : 0] src5_channel, // ST_CHANNEL_W=8
+    output reg [151-1    : 0] src5_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src5_channel, // ST_CHANNEL_W=12
     output reg                      src5_startofpacket,
     output reg                      src5_endofpacket,
     input                           src5_ready,
 
     output reg                      src6_valid,
-    output reg [149-1    : 0] src6_data, // ST_DATA_W=149
-    output reg [8-1 : 0] src6_channel, // ST_CHANNEL_W=8
+    output reg [151-1    : 0] src6_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src6_channel, // ST_CHANNEL_W=12
     output reg                      src6_startofpacket,
     output reg                      src6_endofpacket,
     input                           src6_ready,
+
+    output reg                      src7_valid,
+    output reg [151-1    : 0] src7_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src7_channel, // ST_CHANNEL_W=12
+    output reg                      src7_startofpacket,
+    output reg                      src7_endofpacket,
+    input                           src7_ready,
+
+    output reg                      src8_valid,
+    output reg [151-1    : 0] src8_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src8_channel, // ST_CHANNEL_W=12
+    output reg                      src8_startofpacket,
+    output reg                      src8_endofpacket,
+    input                           src8_ready,
+
+    output reg                      src9_valid,
+    output reg [151-1    : 0] src9_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src9_channel, // ST_CHANNEL_W=12
+    output reg                      src9_startofpacket,
+    output reg                      src9_endofpacket,
+    input                           src9_ready,
+
+    output reg                      src10_valid,
+    output reg [151-1    : 0] src10_data, // ST_DATA_W=151
+    output reg [12-1 : 0] src10_channel, // ST_CHANNEL_W=12
+    output reg                      src10_startofpacket,
+    output reg                      src10_endofpacket,
+    input                           src10_ready,
 
 
     // -------------------
@@ -115,7 +143,7 @@ module de2i_150_qsys_mm_interconnect_0_cmd_demux
 
 );
 
-    localparam NUM_OUTPUTS = 7;
+    localparam NUM_OUTPUTS = 11;
     wire [NUM_OUTPUTS - 1 : 0] ready_vector;
 
     // -------------------
@@ -171,6 +199,34 @@ module de2i_150_qsys_mm_interconnect_0_cmd_demux
 
         src6_valid         = sink_channel[6] && sink_valid[6];
 
+        src7_data          = sink_data;
+        src7_startofpacket = sink_startofpacket;
+        src7_endofpacket   = sink_endofpacket;
+        src7_channel       = sink_channel >> NUM_OUTPUTS;
+
+        src7_valid         = sink_channel[7] && sink_valid[7];
+
+        src8_data          = sink_data;
+        src8_startofpacket = sink_startofpacket;
+        src8_endofpacket   = sink_endofpacket;
+        src8_channel       = sink_channel >> NUM_OUTPUTS;
+
+        src8_valid         = sink_channel[8] && sink_valid[8];
+
+        src9_data          = sink_data;
+        src9_startofpacket = sink_startofpacket;
+        src9_endofpacket   = sink_endofpacket;
+        src9_channel       = sink_channel >> NUM_OUTPUTS;
+
+        src9_valid         = sink_channel[9] && sink_valid[9];
+
+        src10_data          = sink_data;
+        src10_startofpacket = sink_startofpacket;
+        src10_endofpacket   = sink_endofpacket;
+        src10_channel       = sink_channel >> NUM_OUTPUTS;
+
+        src10_valid         = sink_channel[10] && sink_valid[10];
+
     end
 
     // -------------------
@@ -183,6 +239,10 @@ module de2i_150_qsys_mm_interconnect_0_cmd_demux
     assign ready_vector[4] = src4_ready;
     assign ready_vector[5] = src5_ready;
     assign ready_vector[6] = src6_ready;
+    assign ready_vector[7] = src7_ready;
+    assign ready_vector[8] = src8_ready;
+    assign ready_vector[9] = src9_ready;
+    assign ready_vector[10] = src10_ready;
 
     assign sink_ready = |(sink_channel & {{1{1'b0}},{ready_vector[NUM_OUTPUTS - 1 : 0]}});
 

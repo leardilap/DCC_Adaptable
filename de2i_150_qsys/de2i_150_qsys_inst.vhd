@@ -40,16 +40,56 @@
 			fir_memory_clk2_clk                        : in  std_logic                     := 'X';             -- clk
 			fir_memory_reset2_reset                    : in  std_logic                     := 'X';             -- reset
 			fir_memory_reset2_reset_req                : in  std_logic                     := 'X';             -- reset_req
-			interpo_4_s2_address                       : in  std_logic_vector(5 downto 0)  := (others => 'X'); -- address
-			interpo_4_s2_chipselect                    : in  std_logic                     := 'X';             -- chipselect
-			interpo_4_s2_clken                         : in  std_logic                     := 'X';             -- clken
-			interpo_4_s2_write                         : in  std_logic                     := 'X';             -- write
-			interpo_4_s2_readdata                      : out std_logic_vector(31 downto 0);                    -- readdata
-			interpo_4_s2_writedata                     : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
-			interpo_4_s2_byteenable                    : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
-			interpo_4_clk2_clk                         : in  std_logic                     := 'X';             -- clk
-			interpo_4_reset2_reset                     : in  std_logic                     := 'X';             -- reset
-			interpo_4_reset2_reset_req                 : in  std_logic                     := 'X'              -- reset_req
+			interpo_4_0_s2_address                     : in  std_logic_vector(4 downto 0)  := (others => 'X'); -- address
+			interpo_4_0_s2_chipselect                  : in  std_logic                     := 'X';             -- chipselect
+			interpo_4_0_s2_clken                       : in  std_logic                     := 'X';             -- clken
+			interpo_4_0_s2_write                       : in  std_logic                     := 'X';             -- write
+			interpo_4_0_s2_readdata                    : out std_logic_vector(31 downto 0);                    -- readdata
+			interpo_4_0_s2_writedata                   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			interpo_4_0_s2_byteenable                  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			interpo_4_0_clk2_clk                       : in  std_logic                     := 'X';             -- clk
+			interpo_4_0_reset2_reset                   : in  std_logic                     := 'X';             -- reset
+			interpo_4_0_reset2_reset_req               : in  std_logic                     := 'X';             -- reset_req
+			interpo_5_0_s2_address                     : in  std_logic_vector(5 downto 0)  := (others => 'X'); -- address
+			interpo_5_0_s2_chipselect                  : in  std_logic                     := 'X';             -- chipselect
+			interpo_5_0_s2_clken                       : in  std_logic                     := 'X';             -- clken
+			interpo_5_0_s2_write                       : in  std_logic                     := 'X';             -- write
+			interpo_5_0_s2_readdata                    : out std_logic_vector(31 downto 0);                    -- readdata
+			interpo_5_0_s2_writedata                   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			interpo_5_0_s2_byteenable                  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			interpo_5_0_clk2_clk                       : in  std_logic                     := 'X';             -- clk
+			interpo_5_0_reset2_reset                   : in  std_logic                     := 'X';             -- reset
+			interpo_5_0_reset2_reset_req               : in  std_logic                     := 'X';             -- reset_req
+			interpo_5_1_clk2_clk                       : in  std_logic                     := 'X';             -- clk
+			interpo_5_1_s2_address                     : in  std_logic_vector(5 downto 0)  := (others => 'X'); -- address
+			interpo_5_1_s2_chipselect                  : in  std_logic                     := 'X';             -- chipselect
+			interpo_5_1_s2_clken                       : in  std_logic                     := 'X';             -- clken
+			interpo_5_1_s2_write                       : in  std_logic                     := 'X';             -- write
+			interpo_5_1_s2_readdata                    : out std_logic_vector(31 downto 0);                    -- readdata
+			interpo_5_1_s2_writedata                   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			interpo_5_1_s2_byteenable                  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			interpo_5_1_reset2_reset                   : in  std_logic                     := 'X';             -- reset
+			interpo_5_1_reset2_reset_req               : in  std_logic                     := 'X';             -- reset_req
+			interpo_5_2_s2_address                     : in  std_logic_vector(5 downto 0)  := (others => 'X'); -- address
+			interpo_5_2_s2_chipselect                  : in  std_logic                     := 'X';             -- chipselect
+			interpo_5_2_s2_clken                       : in  std_logic                     := 'X';             -- clken
+			interpo_5_2_s2_write                       : in  std_logic                     := 'X';             -- write
+			interpo_5_2_s2_readdata                    : out std_logic_vector(31 downto 0);                    -- readdata
+			interpo_5_2_s2_writedata                   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			interpo_5_2_s2_byteenable                  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			interpo_5_2_clk2_clk                       : in  std_logic                     := 'X';             -- clk
+			interpo_5_2_reset2_reset                   : in  std_logic                     := 'X';             -- reset
+			interpo_5_2_reset2_reset_req               : in  std_logic                     := 'X';             -- reset_req
+			interpo_5_3_s2_address                     : in  std_logic_vector(5 downto 0)  := (others => 'X'); -- address
+			interpo_5_3_s2_chipselect                  : in  std_logic                     := 'X';             -- chipselect
+			interpo_5_3_s2_clken                       : in  std_logic                     := 'X';             -- clken
+			interpo_5_3_s2_write                       : in  std_logic                     := 'X';             -- write
+			interpo_5_3_s2_readdata                    : out std_logic_vector(31 downto 0);                    -- readdata
+			interpo_5_3_s2_writedata                   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			interpo_5_3_s2_byteenable                  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			interpo_5_3_clk2_clk                       : in  std_logic                     := 'X';             -- clk
+			interpo_5_3_reset2_reset                   : in  std_logic                     := 'X';             -- reset
+			interpo_5_3_reset2_reset_req               : in  std_logic                     := 'X'              -- reset_req
 		);
 	end component de2i_150_qsys;
 
@@ -95,15 +135,55 @@
 			fir_memory_clk2_clk                        => CONNECTED_TO_fir_memory_clk2_clk,                        --            fir_memory_clk2.clk
 			fir_memory_reset2_reset                    => CONNECTED_TO_fir_memory_reset2_reset,                    --          fir_memory_reset2.reset
 			fir_memory_reset2_reset_req                => CONNECTED_TO_fir_memory_reset2_reset_req,                --                           .reset_req
-			interpo_4_s2_address                       => CONNECTED_TO_interpo_4_s2_address,                       --               interpo_4_s2.address
-			interpo_4_s2_chipselect                    => CONNECTED_TO_interpo_4_s2_chipselect,                    --                           .chipselect
-			interpo_4_s2_clken                         => CONNECTED_TO_interpo_4_s2_clken,                         --                           .clken
-			interpo_4_s2_write                         => CONNECTED_TO_interpo_4_s2_write,                         --                           .write
-			interpo_4_s2_readdata                      => CONNECTED_TO_interpo_4_s2_readdata,                      --                           .readdata
-			interpo_4_s2_writedata                     => CONNECTED_TO_interpo_4_s2_writedata,                     --                           .writedata
-			interpo_4_s2_byteenable                    => CONNECTED_TO_interpo_4_s2_byteenable,                    --                           .byteenable
-			interpo_4_clk2_clk                         => CONNECTED_TO_interpo_4_clk2_clk,                         --             interpo_4_clk2.clk
-			interpo_4_reset2_reset                     => CONNECTED_TO_interpo_4_reset2_reset,                     --           interpo_4_reset2.reset
-			interpo_4_reset2_reset_req                 => CONNECTED_TO_interpo_4_reset2_reset_req                  --                           .reset_req
+			interpo_4_0_s2_address                     => CONNECTED_TO_interpo_4_0_s2_address,                     --             interpo_4_0_s2.address
+			interpo_4_0_s2_chipselect                  => CONNECTED_TO_interpo_4_0_s2_chipselect,                  --                           .chipselect
+			interpo_4_0_s2_clken                       => CONNECTED_TO_interpo_4_0_s2_clken,                       --                           .clken
+			interpo_4_0_s2_write                       => CONNECTED_TO_interpo_4_0_s2_write,                       --                           .write
+			interpo_4_0_s2_readdata                    => CONNECTED_TO_interpo_4_0_s2_readdata,                    --                           .readdata
+			interpo_4_0_s2_writedata                   => CONNECTED_TO_interpo_4_0_s2_writedata,                   --                           .writedata
+			interpo_4_0_s2_byteenable                  => CONNECTED_TO_interpo_4_0_s2_byteenable,                  --                           .byteenable
+			interpo_4_0_clk2_clk                       => CONNECTED_TO_interpo_4_0_clk2_clk,                       --           interpo_4_0_clk2.clk
+			interpo_4_0_reset2_reset                   => CONNECTED_TO_interpo_4_0_reset2_reset,                   --         interpo_4_0_reset2.reset
+			interpo_4_0_reset2_reset_req               => CONNECTED_TO_interpo_4_0_reset2_reset_req,               --                           .reset_req
+			interpo_5_0_s2_address                     => CONNECTED_TO_interpo_5_0_s2_address,                     --             interpo_5_0_s2.address
+			interpo_5_0_s2_chipselect                  => CONNECTED_TO_interpo_5_0_s2_chipselect,                  --                           .chipselect
+			interpo_5_0_s2_clken                       => CONNECTED_TO_interpo_5_0_s2_clken,                       --                           .clken
+			interpo_5_0_s2_write                       => CONNECTED_TO_interpo_5_0_s2_write,                       --                           .write
+			interpo_5_0_s2_readdata                    => CONNECTED_TO_interpo_5_0_s2_readdata,                    --                           .readdata
+			interpo_5_0_s2_writedata                   => CONNECTED_TO_interpo_5_0_s2_writedata,                   --                           .writedata
+			interpo_5_0_s2_byteenable                  => CONNECTED_TO_interpo_5_0_s2_byteenable,                  --                           .byteenable
+			interpo_5_0_clk2_clk                       => CONNECTED_TO_interpo_5_0_clk2_clk,                       --           interpo_5_0_clk2.clk
+			interpo_5_0_reset2_reset                   => CONNECTED_TO_interpo_5_0_reset2_reset,                   --         interpo_5_0_reset2.reset
+			interpo_5_0_reset2_reset_req               => CONNECTED_TO_interpo_5_0_reset2_reset_req,               --                           .reset_req
+			interpo_5_1_clk2_clk                       => CONNECTED_TO_interpo_5_1_clk2_clk,                       --           interpo_5_1_clk2.clk
+			interpo_5_1_s2_address                     => CONNECTED_TO_interpo_5_1_s2_address,                     --             interpo_5_1_s2.address
+			interpo_5_1_s2_chipselect                  => CONNECTED_TO_interpo_5_1_s2_chipselect,                  --                           .chipselect
+			interpo_5_1_s2_clken                       => CONNECTED_TO_interpo_5_1_s2_clken,                       --                           .clken
+			interpo_5_1_s2_write                       => CONNECTED_TO_interpo_5_1_s2_write,                       --                           .write
+			interpo_5_1_s2_readdata                    => CONNECTED_TO_interpo_5_1_s2_readdata,                    --                           .readdata
+			interpo_5_1_s2_writedata                   => CONNECTED_TO_interpo_5_1_s2_writedata,                   --                           .writedata
+			interpo_5_1_s2_byteenable                  => CONNECTED_TO_interpo_5_1_s2_byteenable,                  --                           .byteenable
+			interpo_5_1_reset2_reset                   => CONNECTED_TO_interpo_5_1_reset2_reset,                   --         interpo_5_1_reset2.reset
+			interpo_5_1_reset2_reset_req               => CONNECTED_TO_interpo_5_1_reset2_reset_req,               --                           .reset_req
+			interpo_5_2_s2_address                     => CONNECTED_TO_interpo_5_2_s2_address,                     --             interpo_5_2_s2.address
+			interpo_5_2_s2_chipselect                  => CONNECTED_TO_interpo_5_2_s2_chipselect,                  --                           .chipselect
+			interpo_5_2_s2_clken                       => CONNECTED_TO_interpo_5_2_s2_clken,                       --                           .clken
+			interpo_5_2_s2_write                       => CONNECTED_TO_interpo_5_2_s2_write,                       --                           .write
+			interpo_5_2_s2_readdata                    => CONNECTED_TO_interpo_5_2_s2_readdata,                    --                           .readdata
+			interpo_5_2_s2_writedata                   => CONNECTED_TO_interpo_5_2_s2_writedata,                   --                           .writedata
+			interpo_5_2_s2_byteenable                  => CONNECTED_TO_interpo_5_2_s2_byteenable,                  --                           .byteenable
+			interpo_5_2_clk2_clk                       => CONNECTED_TO_interpo_5_2_clk2_clk,                       --           interpo_5_2_clk2.clk
+			interpo_5_2_reset2_reset                   => CONNECTED_TO_interpo_5_2_reset2_reset,                   --         interpo_5_2_reset2.reset
+			interpo_5_2_reset2_reset_req               => CONNECTED_TO_interpo_5_2_reset2_reset_req,               --                           .reset_req
+			interpo_5_3_s2_address                     => CONNECTED_TO_interpo_5_3_s2_address,                     --             interpo_5_3_s2.address
+			interpo_5_3_s2_chipselect                  => CONNECTED_TO_interpo_5_3_s2_chipselect,                  --                           .chipselect
+			interpo_5_3_s2_clken                       => CONNECTED_TO_interpo_5_3_s2_clken,                       --                           .clken
+			interpo_5_3_s2_write                       => CONNECTED_TO_interpo_5_3_s2_write,                       --                           .write
+			interpo_5_3_s2_readdata                    => CONNECTED_TO_interpo_5_3_s2_readdata,                    --                           .readdata
+			interpo_5_3_s2_writedata                   => CONNECTED_TO_interpo_5_3_s2_writedata,                   --                           .writedata
+			interpo_5_3_s2_byteenable                  => CONNECTED_TO_interpo_5_3_s2_byteenable,                  --                           .byteenable
+			interpo_5_3_clk2_clk                       => CONNECTED_TO_interpo_5_3_clk2_clk,                       --           interpo_5_3_clk2.clk
+			interpo_5_3_reset2_reset                   => CONNECTED_TO_interpo_5_3_reset2_reset,                   --         interpo_5_3_reset2.reset
+			interpo_5_3_reset2_reset_req               => CONNECTED_TO_interpo_5_3_reset2_reset_req                --                           .reset_req
 		);
 

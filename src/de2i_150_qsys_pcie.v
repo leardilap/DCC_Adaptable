@@ -50,7 +50,7 @@
 // ============================================================================
 
 `define ENABLE_PCIE
-`define DATE 32'h27090001
+`define DATE 32'h27090002
 
 module de2i_150_qsys_pcie(
 
@@ -444,13 +444,33 @@ wire reset_n;
 
 reg [14:0] fir_memory_s2_address;                      //              fir_memory_s2.address
 wire        fir_memory_s2_clken;                        //                           .clken
-(*KEEP = "TRUE"*) wire [31:0] fir_memory_s2_readdata;                     //                           .readdata
+wire [31:0] fir_memory_s2_readdata;                     //                           .readdata
 wire        fir_memory_clk2_clk;                        //            fir_memory_clk2.clk
 
-reg [5:0]  interpo_4_s2_address;                       //               interpo_4_s2.address
-wire        interpo_4_s2_clken;                         //                           .clken
-(*KEEP = "TRUE"*) wire [31:0] interpo_4_s2_readdata;                      //                           .readdata
-wire        interpo_4_clk2_clk;                         //             interpo_4_clk2.clk
+reg [4:0]  interpo_4_0_s2_address;                       //               interpo_4_s2.address
+wire        interpo_4_0_s2_clken;                         //                           .clken
+wire [31:0] interpo_4_0_s2_readdata;                      //                           .readdata
+wire        interpo_4_0_clk2_clk;                         //             interpo_4_clk2.clk
+
+reg [5:0]  interpo_5_0_s2_address;                     //             interpo_5_0_s2.address
+wire        interpo_5_0_s2_clken;                       //                           .clken
+wire [31:0] interpo_5_0_s2_readdata;                    //                           .readdata
+wire        interpo_5_0_clk2_clk;                      //           interpo_5_0_clk2.clk
+
+reg [5:0]  interpo_5_1_s2_address;                     //             interpo_5_1_s2.address
+wire        interpo_5_1_s2_clken;                       //                           .clken
+wire [31:0] interpo_5_1_s2_readdata;                    //                           .readdata
+wire        interpo_5_1_clk2_clk;                       //           interpo_5_1_clk2.clk
+
+reg [5:0]  interpo_5_2_s2_address;                     //             interpo_5_2_s2.address
+wire        interpo_5_2_s2_clken;                       //                           .clken
+wire [31:0] interpo_5_2_s2_readdata;                    //                           .readdata
+wire        interpo_5_2_clk2_clk;                       //           interpo_5_2_clk2.clk
+
+reg [5:0]  interpo_5_3_s2_address;                     //             interpo_5_3_s2.address
+wire        interpo_5_3_s2_clken;                      //                           .clken
+wire [31:0] interpo_5_3_s2_readdata;                    //                           .readdata
+wire        interpo_5_3_clk2_clk;                      //           interpo_5_3_clk2.clk
  
 //=======================================================
 //  Structural coding
@@ -458,17 +478,29 @@ wire        interpo_4_clk2_clk;                         //             interpo_4
 assign reset_n = 1'b1;
 
 assign fir_memory_s2_clken = 1'b1;
-assign fir_memory_clk2_clk = CLOCK_50;
+assign interpo_4_0_s2_clken = 1'b1;
+assign interpo_5_0_s2_clken = 1'b1;
+assign interpo_5_1_s2_clken = 1'b1;
+assign interpo_5_2_s2_clken = 1'b1;
+assign interpo_5_3_s2_clken = 1'b1;
 
-assign interpo_4_s2_clken = 1'b1;
-assign interpo_4_clk2_clk = CLOCK_50;
+assign fir_memory_clk2_clk = CLOCK_50;
+assign interpo_4_0_clk2_clk = CLOCK_50;
+assign interpo_5_0_clk2_clk = CLOCK_50;
+assign interpo_5_1_clk2_clk = CLOCK_50;
+assign interpo_5_2_clk2_clk = CLOCK_50;
+assign interpo_5_3_clk2_clk = CLOCK_50;
 
 always@(posedge CLOCK_50) begin
 	fir_memory_s2_address <= fir_memory_s2_address + 1;
-	interpo_4_s2_address <= interpo_4_s2_address + 1;
+	interpo_4_0_s2_address <= interpo_4_0_s2_address + 1;
+	interpo_5_0_s2_address <= interpo_5_0_s2_address + 1;
+	interpo_5_1_s2_address <= interpo_5_1_s2_address + 1;
+	interpo_5_2_s2_address <= interpo_5_2_s2_address + 1;
+	interpo_5_3_s2_address <= interpo_5_3_s2_address + 1;
 end	
 
-
+ 
     de2i_150_qsys u0 (
          .clk_clk                            	(CLOCK_50),                                    //                        clk.clk
          .reset_reset_n                      	(reset_n),                              //                      reset.reset_n
@@ -488,16 +520,56 @@ end
 		   .fir_memory_clk2_clk                	(fir_memory_clk2_clk),         											//            fir_memory_clk2.clk
 		   .fir_memory_reset2_reset            	(1'b0),     											//          fir_memory_reset2.reset
 		   .fir_memory_reset2_reset_req        	(1'b0),  											//                           .reset_req
-			.interpo_4_s2_address						(interpo_4_s2_address),                       //               interpo_4_s2.address
-			.interpo_4_s2_chipselect					(1'b1),                    //                           .chipselect
-			.interpo_4_s2_clken							(interpo_4_s2_clken),                         //                           .clken
-			.interpo_4_s2_write							(1'b0),                         //                           .write
-			.interpo_4_s2_readdata						(interpo_4_s2_readdata),                      //                           .readdata
-			.interpo_4_s2_writedata						(32'b0),                     //                           .writedata
-			.interpo_4_s2_byteenable					(3'b0),                    //                           .byteenable
-			.interpo_4_clk2_clk							(interpo_4_clk2_clk),                         //             interpo_4_clk2.clk
-			.interpo_4_reset2_reset						(1'b0),                     //           interpo_4_reset2.reset
-			.interpo_4_reset2_reset_req				(1'b0)                 //                           .reset_req
+			.interpo_4_0_s2_address						(interpo_4_0_s2_address),                       //               interpo_4_s2.address
+			.interpo_4_0_s2_chipselect					(1'b1),                    //                           .chipselect
+			.interpo_4_0_s2_clken						(interpo_4_0_s2_clken),                         //                           .clken
+			.interpo_4_0_s2_write						(1'b0),                         //                           .write
+			.interpo_4_0_s2_readdata					(interpo_4_0_s2_readdata),                      //                           .readdata
+			.interpo_4_0_s2_writedata					(32'b0),                     //                           .writedata
+			.interpo_4_0_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_4_0_clk2_clk						(interpo_4_0_clk2_clk),                         //             interpo_4_clk2.clk
+			.interpo_4_0_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
+			.interpo_4_0_reset2_reset_req				(1'b0),                 //                           .reset_req
+			.interpo_5_0_s2_address						(interpo_5_0_s2_address),                       //               interpo_4_s2.address
+			.interpo_5_0_s2_chipselect					(1'b1),                    //                           .chipselect
+			.interpo_5_0_s2_clken						(interpo_5_0_s2_clken),                         //                           .clken
+			.interpo_5_0_s2_write						(1'b0),                         //                           .write
+			.interpo_5_0_s2_readdata					(interpo_5_0_s2_readdata),                      //                           .readdata
+			.interpo_5_0_s2_writedata					(32'b0),                     //                           .writedata
+			.interpo_5_0_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_5_0_clk2_clk						(interpo_5_0_clk2_clk),                         //             interpo_4_clk2.clk
+			.interpo_5_0_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
+			.interpo_5_0_reset2_reset_req				(1'b0),                 //                           .reset_req
+			.interpo_5_1_s2_address						(interpo_5_1_s2_address),                       //               interpo_4_s2.address
+			.interpo_5_1_s2_chipselect					(1'b1),                    //                           .chipselect
+			.interpo_5_1_s2_clken						(interpo_5_1_s2_clken),                         //                           .clken
+			.interpo_5_1_s2_write						(1'b0),                         //                           .write
+			.interpo_5_1_s2_readdata					(interpo_5_1_s2_readdata),                      //                           .readdata
+			.interpo_5_1_s2_writedata					(32'b0),                     //                           .writedata
+			.interpo_5_1_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_5_1_clk2_clk						(interpo_5_1_clk2_clk),                         //             interpo_4_clk2.clk
+			.interpo_5_1_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
+			.interpo_5_1_reset2_reset_req				(1'b0),                 //                           .reset_req
+			.interpo_5_2_s2_address						(interpo_5_2_s2_address),                       //               interpo_4_s2.address
+			.interpo_5_2_s2_chipselect					(1'b1),                    //                           .chipselect
+			.interpo_5_2_s2_clken						(interpo_5_2_s2_clken),                         //                           .clken
+			.interpo_5_2_s2_write						(1'b0),                         //                           .write
+			.interpo_5_2_s2_readdata					(interpo_5_2_s2_readdata),                      //                           .readdata
+			.interpo_5_2_s2_writedata					(32'b0),                     //                           .writedata
+			.interpo_5_2_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_5_2_clk2_clk						(interpo_5_2_clk2_clk),                         //             interpo_4_clk2.clk
+			.interpo_5_2_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
+			.interpo_5_2_reset2_reset_req				(1'b0),                 //                           .reset_req
+			.interpo_5_3_s2_address						(interpo_5_3_s2_address),                       //               interpo_4_s2.address
+			.interpo_5_3_s2_chipselect					(1'b1),                    //                           .chipselect
+			.interpo_5_3_s2_clken						(interpo_5_3_s2_clken),                         //                           .clken
+			.interpo_5_3_s2_write						(1'b0),                         //                           .write
+			.interpo_5_3_s2_readdata					(interpo_5_3_s2_readdata),                      //                           .readdata
+			.interpo_5_3_s2_writedata					(32'b0),                     //                           .writedata
+			.interpo_5_3_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_5_3_clk2_clk						(interpo_5_3_clk2_clk),                         //             interpo_4_clk2.clk
+			.interpo_5_3_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
+			.interpo_5_3_reset2_reset_req				(1'b0)                 //                           .reset_req
 
   );
 

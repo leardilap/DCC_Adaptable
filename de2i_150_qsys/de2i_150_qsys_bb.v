@@ -40,16 +40,56 @@ module de2i_150_qsys (
 	fir_memory_clk2_clk,
 	fir_memory_reset2_reset,
 	fir_memory_reset2_reset_req,
-	interpo_4_s2_address,
-	interpo_4_s2_chipselect,
-	interpo_4_s2_clken,
-	interpo_4_s2_write,
-	interpo_4_s2_readdata,
-	interpo_4_s2_writedata,
-	interpo_4_s2_byteenable,
-	interpo_4_clk2_clk,
-	interpo_4_reset2_reset,
-	interpo_4_reset2_reset_req);	
+	interpo_4_0_s2_address,
+	interpo_4_0_s2_chipselect,
+	interpo_4_0_s2_clken,
+	interpo_4_0_s2_write,
+	interpo_4_0_s2_readdata,
+	interpo_4_0_s2_writedata,
+	interpo_4_0_s2_byteenable,
+	interpo_4_0_clk2_clk,
+	interpo_4_0_reset2_reset,
+	interpo_4_0_reset2_reset_req,
+	interpo_5_0_s2_address,
+	interpo_5_0_s2_chipselect,
+	interpo_5_0_s2_clken,
+	interpo_5_0_s2_write,
+	interpo_5_0_s2_readdata,
+	interpo_5_0_s2_writedata,
+	interpo_5_0_s2_byteenable,
+	interpo_5_0_clk2_clk,
+	interpo_5_0_reset2_reset,
+	interpo_5_0_reset2_reset_req,
+	interpo_5_1_clk2_clk,
+	interpo_5_1_s2_address,
+	interpo_5_1_s2_chipselect,
+	interpo_5_1_s2_clken,
+	interpo_5_1_s2_write,
+	interpo_5_1_s2_readdata,
+	interpo_5_1_s2_writedata,
+	interpo_5_1_s2_byteenable,
+	interpo_5_1_reset2_reset,
+	interpo_5_1_reset2_reset_req,
+	interpo_5_2_s2_address,
+	interpo_5_2_s2_chipselect,
+	interpo_5_2_s2_clken,
+	interpo_5_2_s2_write,
+	interpo_5_2_s2_readdata,
+	interpo_5_2_s2_writedata,
+	interpo_5_2_s2_byteenable,
+	interpo_5_2_clk2_clk,
+	interpo_5_2_reset2_reset,
+	interpo_5_2_reset2_reset_req,
+	interpo_5_3_s2_address,
+	interpo_5_3_s2_chipselect,
+	interpo_5_3_s2_clken,
+	interpo_5_3_s2_write,
+	interpo_5_3_s2_readdata,
+	interpo_5_3_s2_writedata,
+	interpo_5_3_s2_byteenable,
+	interpo_5_3_clk2_clk,
+	interpo_5_3_reset2_reset,
+	interpo_5_3_reset2_reset_req);	
 
 	input		clk_clk;
 	input		reset_reset_n;
@@ -91,14 +131,54 @@ module de2i_150_qsys (
 	input		fir_memory_clk2_clk;
 	input		fir_memory_reset2_reset;
 	input		fir_memory_reset2_reset_req;
-	input	[5:0]	interpo_4_s2_address;
-	input		interpo_4_s2_chipselect;
-	input		interpo_4_s2_clken;
-	input		interpo_4_s2_write;
-	output	[31:0]	interpo_4_s2_readdata;
-	input	[31:0]	interpo_4_s2_writedata;
-	input	[3:0]	interpo_4_s2_byteenable;
-	input		interpo_4_clk2_clk;
-	input		interpo_4_reset2_reset;
-	input		interpo_4_reset2_reset_req;
+	input	[4:0]	interpo_4_0_s2_address;
+	input		interpo_4_0_s2_chipselect;
+	input		interpo_4_0_s2_clken;
+	input		interpo_4_0_s2_write;
+	output	[31:0]	interpo_4_0_s2_readdata;
+	input	[31:0]	interpo_4_0_s2_writedata;
+	input	[3:0]	interpo_4_0_s2_byteenable;
+	input		interpo_4_0_clk2_clk;
+	input		interpo_4_0_reset2_reset;
+	input		interpo_4_0_reset2_reset_req;
+	input	[5:0]	interpo_5_0_s2_address;
+	input		interpo_5_0_s2_chipselect;
+	input		interpo_5_0_s2_clken;
+	input		interpo_5_0_s2_write;
+	output	[31:0]	interpo_5_0_s2_readdata;
+	input	[31:0]	interpo_5_0_s2_writedata;
+	input	[3:0]	interpo_5_0_s2_byteenable;
+	input		interpo_5_0_clk2_clk;
+	input		interpo_5_0_reset2_reset;
+	input		interpo_5_0_reset2_reset_req;
+	input		interpo_5_1_clk2_clk;
+	input	[5:0]	interpo_5_1_s2_address;
+	input		interpo_5_1_s2_chipselect;
+	input		interpo_5_1_s2_clken;
+	input		interpo_5_1_s2_write;
+	output	[31:0]	interpo_5_1_s2_readdata;
+	input	[31:0]	interpo_5_1_s2_writedata;
+	input	[3:0]	interpo_5_1_s2_byteenable;
+	input		interpo_5_1_reset2_reset;
+	input		interpo_5_1_reset2_reset_req;
+	input	[5:0]	interpo_5_2_s2_address;
+	input		interpo_5_2_s2_chipselect;
+	input		interpo_5_2_s2_clken;
+	input		interpo_5_2_s2_write;
+	output	[31:0]	interpo_5_2_s2_readdata;
+	input	[31:0]	interpo_5_2_s2_writedata;
+	input	[3:0]	interpo_5_2_s2_byteenable;
+	input		interpo_5_2_clk2_clk;
+	input		interpo_5_2_reset2_reset;
+	input		interpo_5_2_reset2_reset_req;
+	input	[5:0]	interpo_5_3_s2_address;
+	input		interpo_5_3_s2_chipselect;
+	input		interpo_5_3_s2_clken;
+	input		interpo_5_3_s2_write;
+	output	[31:0]	interpo_5_3_s2_readdata;
+	input	[31:0]	interpo_5_3_s2_writedata;
+	input	[3:0]	interpo_5_3_s2_byteenable;
+	input		interpo_5_3_clk2_clk;
+	input		interpo_5_3_reset2_reset;
+	input		interpo_5_3_reset2_reset_req;
 endmodule

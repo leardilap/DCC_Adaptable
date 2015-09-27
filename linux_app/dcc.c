@@ -12,20 +12,31 @@
 #define DEMO_PCIE_FIFO_STATUS_ADDR	0x60
 #define DEMO_PCIE_FIFO_READ_ADDR	0x80
 #define PCIE_FIR_MEM_ADDR			0x20000
-#define PCIE_INTERPO_4_ADDR		0x30000
-
+#define PCIE_INTERPO_4_0_ADDR		0x40000
+#define PCIE_INTERPO_5_0_ADDR		0x50000
+#define PCIE_INTERPO_5_1_ADDR		0x51000
+#define PCIE_INTERPO_5_2_ADDR		0x52000
+#define PCIE_INTERPO_5_3_ADDR		0x53000
 
 #define FIR_MEM_SIZE			(4*1024) // 4KB
-#define INTERPO_4_SIZE		(4*64)	// 256 bytes
+#define INTERPO_4_0_SIZE		(4*32)	// 128 bytes
+#define INTERPO_5_0_SIZE		(4*40)	// 160 bytes
+#define INTERPO_5_1_SIZE		(4*40)	// 160 bytes
+#define INTERPO_5_2_SIZE		(4*40)	// 160 bytes
+#define INTERPO_5_3_SIZE		(4*40)	// 160 bytes
+
+
 #define FIFO_SIZE			(16*1024) // 2KBx8
-
-
 
 typedef enum{
 	MENU_LED = 0,
 	MENU_BUTTON,
 	MENU_FIR_DMA_MEMORY,
-	MENU_INTERPO_4,
+	MENU_INTERPO_4_0,
+	MENU_INTERPO_5_0,
+	MENU_INTERPO_5_1,
+	MENU_INTERPO_5_2,
+	MENU_INTERPO_5_3,
 	MENU_DMA_FIFO,
 	MENU_QUIT = 99
 }MENU_ID;
@@ -35,7 +46,11 @@ void UI_ShowMenu(void){
 	printf("[%d]: Led control\r\n", MENU_LED);
 	printf("[%d]: Button Status Read\r\n", MENU_BUTTON);
 	printf("[%d]: FIR DMA Memory\r\n", MENU_FIR_DMA_MEMORY);
-	printf("[%d]: INTERPO_4 DMA Memory\r\n", MENU_INTERPO_4);
+	printf("[%d]: INTERPO_4_0 DMA Memory\r\n", MENU_INTERPO_4_0);
+	printf("[%d]: INTERPO_5_0 DMA Memory\r\n", MENU_INTERPO_5_0);
+	printf("[%d]: INTERPO_5_1 DMA Memory\r\n", MENU_INTERPO_5_1);
+	printf("[%d]: INTERPO_5_2 DMA Memory\r\n", MENU_INTERPO_5_2);
+	printf("[%d]: INTERPO_5_3 DMA Memory\r\n", MENU_INTERPO_5_3);
 	printf("[%d]: DMA Fifo Test\r\n", MENU_DMA_FIFO);
 	printf("[%d]: Quit\r\n", MENU_QUIT);
 	printf("Please input your selection:");
@@ -163,15 +178,39 @@ BOOL FIR_DMA_MEMORY(PCIE_HANDLE hPCIe){
 	return bPass;
 }
 
-BOOL INTERPO_4(PCIE_HANDLE hPCIe){
+BOOL INTERPO(PCIE_HANDLE hPCIe, const int nTestSize, const PCIE_LOCAL_ADDRESS LocalAddr) {
 	BOOL bPass=TRUE;
 	int i;
-	const int nTestSize = INTERPO_4_SIZE;
-	const PCIE_LOCAL_ADDRESS LocalAddr = PCIE_INTERPO_4_ADDR;
+	
 	char *pWrite;
 	char *pRead;
 	char szError[256];
-
+	char *wrName;
+   char *rdName;
+	switch(LocalAddr){
+		case 0x40000:
+			wrName = "INT4_0_wr.txt";
+			rdName = "INT4_0_rd.txt";
+			break;
+		case 0x50000:
+			wrName = "INT5_0_wr.txt";
+			rdName = "INT5_0_rd.txt";
+			break;
+		case 0x51000:
+			wrName = "INT5_1_wr.txt";
+			rdName = "INT5_1_rd.txt";
+			break;
+		case 0x52000:
+			wrName = "INT5_2_wr.txt";
+			rdName = "INT5_2_rd.txt";
+			break;
+		case 0x53000:
+			wrName = "INT5_3_wr.txt";
+			rdName = "INT5_3_rd.txt";
+			break;
+		default:
+			printf("Other Address");
+	}
 
 	pWrite = (char *)malloc(nTestSize);
 	pRead = (char *)malloc(nTestSize);
@@ -182,7 +221,7 @@ BOOL INTERPO_4(PCIE_HANDLE hPCIe){
 	
 
 	// init test pattern
-	FILE *fileWrite = fopen("INT4wr.txt", "w");
+	FILE *fileWrite = fopen(wrName, "w");
 	if (fileWrite == NULL)
 	{
     	printf("Error opening file!\n");
@@ -201,7 +240,7 @@ BOOL INTERPO_4(PCIE_HANDLE hPCIe){
 			sprintf(szError, "DMA Memory:PCIE_DmaWrite failed\r\n");
 	}		
 	
-	FILE *fileRead = fopen("INT4rd.txt", "w");
+	FILE *fileRead = fopen(rdName, "w");
 	if (fileRead == NULL)
 	{
     	printf("Error opening file!\n");
@@ -336,8 +375,20 @@ int main(void)
 				case MENU_FIR_DMA_MEMORY:
 					FIR_DMA_MEMORY(hPCIE);
 					break;
-				case MENU_INTERPO_4:
-					INTERPO_4(hPCIE);
+				case MENU_INTERPO_4_0:
+					INTERPO(hPCIE, INTERPO_4_0_SIZE, PCIE_INTERPO_4_0_ADDR);
+					break;
+				case MENU_INTERPO_5_0:
+					INTERPO(hPCIE, INTERPO_5_0_SIZE, PCIE_INTERPO_5_0_ADDR);
+					break;
+				case MENU_INTERPO_5_1:
+					INTERPO(hPCIE, INTERPO_5_1_SIZE, PCIE_INTERPO_5_1_ADDR);
+					break;
+				case MENU_INTERPO_5_2:
+					INTERPO(hPCIE, INTERPO_5_2_SIZE, PCIE_INTERPO_5_2_ADDR);
+					break;
+				case MENU_INTERPO_5_3:
+					INTERPO(hPCIE, INTERPO_5_3_SIZE, PCIE_INTERPO_5_3_ADDR);
 					break;
 				case MENU_DMA_FIFO:
 					TEST_DMA_FIFO(hPCIE);
