@@ -30,8 +30,8 @@
 //        LEDR[0] 	  --> Heart_beat
 //
 //      SW : 
-//        SW[0] --> 
-//        SW[1] --> 
+//        SW[0] --> ADC DFS(Data Format Select)
+//        SW[1] --> ADC DCS(Duty Cycle Stabilizer Select)
 //        SW[2] --> 
 //		    SW[3] --> 
 //		    SW[4] --> 
@@ -50,7 +50,7 @@
 // ============================================================================
 
 `define ENABLE_PCIE
-`define DATE 32'h27090003
+`define DATE 32'h27090004
 
 module de2i_150_qsys_pcie(
 
@@ -439,10 +439,29 @@ output                                             VGA_VS;
 //=======================================================
 
 wire reset_n;
+wire hb_50;
+
 
 // MicFilter
+// assign for ADC control signal
+assign	HSMC_AD_SCLK			= SW[0];			// (DFS)Data Format Select
+assign	HSMC_AD_SDIO			= SW[1];			// (DCS)Duty Cycle Stabilizer Select
+assign	HSMC_ADA_OE				= 1'b0;				// enable ADA output
+assign	HSMC_ADA_SPI_CS		= 1'b1;				// disable ADA_SPI_CS (CSB)
+assign	HSMC_ADB_OE				= 1'b0;				// enable ADB output
+assign	HSMC_ADB_SPI_CS		= 1'b1;				// disable ADB_SPI_CS (CSB)
+assign 	HSMC_FPGA_CLK_A_N		= sCLK25_180;
+assign 	HSMC_FPGA_CLK_A_P		= ~sCLK25_180;
+assign 	HSMC_FPGA_CLK_B_N		= sCLK25_270;
+assign 	HSMC_FPGA_CLK_B_P		= ~sCLK25_270;
+// CLK
 
-reg [14:0] fir_memory_s2_address;                      //              fir_memory_s2.address
+wire sCLK25_0;
+wire sCLK25_180;
+wire sCLK25_270;
+
+// MEM
+wire [14:0] fir_memory_s2_address;                      //              fir_memory_s2.address
 wire        fir_memory_s2_clken;                        //                           .clken
 wire [31:0] fir_memory_s2_readdata;                     //                           .readdata
 wire        fir_memory_clk2_clk;                        //            fir_memory_clk2.clk
@@ -483,8 +502,10 @@ wire       micfilter_rst_export;                        //              micfilte
 //  Structural coding
 //=======================================================
 assign reset_n = 1'b1;
+assign PCIE_WAKE_N = 1'b1;	 // 07/30/2013, pull-high to avoid system reboot after power off
 
-assign fir_memory_s2_clken = 1'b1;
+assign LEDG[7:4] = 4'b1010;
+
 assign interpo_4_0_s2_clken = 1'b1;
 assign interpo_5_0_s2_clken = 1'b1;
 assign interpo_5_1_s2_clken = 1'b1;
@@ -492,7 +513,6 @@ assign interpo_5_2_s2_clken = 1'b1;
 assign interpo_5_3_s2_clken = 1'b1;
 assign adapt_fir_mem_s2_clken = 1'b1;
 
-assign fir_memory_clk2_clk = CLOCK_50;
 assign interpo_4_0_clk2_clk = CLOCK_50;
 assign interpo_5_0_clk2_clk = CLOCK_50;
 assign interpo_5_1_clk2_clk = CLOCK_50;
@@ -500,8 +520,13 @@ assign interpo_5_2_clk2_clk = CLOCK_50;
 assign interpo_5_3_clk2_clk = CLOCK_50;
 assign adapt_fir_mem_clk2_clk = CLOCK_50;
 
+heart_beat	heart_beat_clk50(
+	.clk(CLOCK_50),
+	.led(hb_50)
+);
+assign LEDR[0] = hb_50;
+
 always@(posedge CLOCK_50) begin
-	fir_memory_s2_address <= fir_memory_s2_address + 1;
 	interpo_4_0_s2_address <= interpo_4_0_s2_address + 1;
 	interpo_5_0_s2_address <= interpo_5_0_s2_address + 1;
 	interpo_5_1_s2_address <= interpo_5_1_s2_address + 1;
@@ -595,15 +620,6 @@ end
 
   );
 
-assign PCIE_WAKE_N = 1'b1;	 // 07/30/2013, pull-high to avoid system reboot after power off
-
-
-wire hb_50;
-heart_beat	heart_beat_clk50(
-	.clk(CLOCK_50),
-	.led(hb_50)
-);
-
 hex_module hex_module_inst(
 			.HDIG			(`DATE),		
 			.HEX_0		(HEX0),	
@@ -616,10 +632,28 @@ hex_module hex_module_inst(
 			.HEX_7		(HEX7)	
 );
 
-assign LEDR[0] = hb_50;
+micFilterCLK micFilterCLK_inst(
+	.areset			(micfilter_rst_export),
+	.inclk0			(CLOCK_50),
+	.c0				(sCLK25_0),
+	.c1				(sCLK25_180),
+	.c2				(sCLK25_270),
+);
 
-
-assign LEDG[7:4] = 4'b1010;
+micFilter_Top micFilter_Top_inst(
+			.clk 						(sCLK25_0),						//Clock input (nom. 25 MHz)
+			.rst 						(micfilter_rst_export),	 	//Synchronous reset input
+			.HSMC_ADA_D				(HSMC_ADA_D),
+			.HSMC_ADA_DCO			(HSMC_ADA_DCO),
+			.HSMC_ADB_D				(HSMC_ADB_D),
+			.HSMC_ADB_DCO			(HSMC_ADB_DCO),
+			.HSMC_DA					(HSMC_DA),
+			.HSMC_DB             (HSMC_DB),
+			.fir_memory_s2_address		(fir_memory_s2_address),
+			.fir_memory_s2_clken			(fir_memory_s2_clken),		
+			.fir_memory_s2_readdata		(fir_memory_s2_readdata),	
+			.fir_memory_clk2_clk			(fir_memory_clk2_clk)		
+	);
 
 
 endmodule
