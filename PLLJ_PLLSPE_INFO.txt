@@ -23,3 +23,8 @@ PLLJITTER	NA
 PLLSPEmax	NA
 PLLSPEmin	NA
 
+PLL_Name	micFilterCLK:micFilterCLK_inst|altpll:altpll_component|micFilterCLK_altpll:auto_generated|pll1
+PLLJITTER	25
+PLLSPEmax	84
+PLLSPEmin	-53
+

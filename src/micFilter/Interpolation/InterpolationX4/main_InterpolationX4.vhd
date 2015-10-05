@@ -14,10 +14,16 @@ use work.txt_util.all;
 
 entity InterpolationX4 is
 generic( c_file : string := "X:\c\cpfeiffer\Projects\Microphonics\Vivado\SIM_FILES\i4coef.dat"); -- Coefficient file path
-port (	clk 	: IN STD_LOGIC;                                                 -- Clock
-		rst 	: IN STD_LOGIC;                                                 -- Reset
+port (	clk	: in STD_LOGIC;
+				clk25M	: in STD_LOGIC;
+			rst : in STD_LOGIC;															 -- Reset
+			cntl : in STD_LOGIC;                                               
 		x 		: IN STD_LOGIC_VECTOR (15 downto 0);                            -- Input sample
-		y 		: OUT STD_LOGIC_VECTOR (15 downto 0) := x"0000");               -- Output sample
+		y 		: OUT STD_LOGIC_VECTOR (15 downto 0) := x"0000";					-- Output sample
+		s2_address 		: out std_logic_vector (4 downto 0);	
+		s2_clken			: out std_logic;		
+		s2_readdata		: in std_logic_vector(31 downto 0);
+		clk2_clk			: out std_logic);               
 end;
 
 architecture behav_InterpolationX4 of InterpolationX4 is 
@@ -47,6 +53,8 @@ architecture behav_InterpolationX4 of InterpolationX4 is
 	signal tmp : array8_32_t := (others=>(others=>'0'));
     signal reg : STD_LOGIC_VECTOR (15 downto 0):= (others=>'0');
 	signal count : integer := 0;
+	
+	signal c_data : std_logic_vector(31 downto 0);
 	--- Components -----------------------------------------------------------
 	component iMultiplier
     port (	DIN 	: IN SIGNED (15 downto 0);
@@ -61,6 +69,16 @@ architecture behav_InterpolationX4 of InterpolationX4 is
 	end component;
 	-----------------------------------------------------------------------------
 begin
+
+	---------------------------------------------------------------
+	-- Update COEFF
+	clk2_clk <= clk25M;
+	c_data <= s2_readdata;
+	s2_clken <= '1';
+	s2_address <= (others => '0');
+	
+	
+	
 	Multiplier_0 : component iMultiplier
     port map (	DIN 	=> shiftReg(0),
 				COEFF 	=> b(0),

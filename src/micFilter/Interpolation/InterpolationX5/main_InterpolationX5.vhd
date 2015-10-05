@@ -14,10 +14,16 @@ use work.txt_util.all;
 
 entity InterpolationX5 is
 generic( c_file : string := "D:\Dropbox\HS-KA\STM3\ProyectB\micFilter\i5coef.dat"); -- Coefficient file path
-port (	clk 	: IN STD_LOGIC;                                                         -- Clock
-		rst 	: IN STD_LOGIC;                                                         -- Reset
+port (	clk	: in STD_LOGIC;
+				clk25M	: in STD_LOGIC;
+			rst : in STD_LOGIC;																			 -- Reset
+			cntl : in STD_LOGIC;                                                       
 		x 		: IN STD_LOGIC_VECTOR (15 downto 0);                                    -- Input sample
-		y 		: OUT STD_LOGIC_VECTOR (15 downto 0) := x"0000");                       -- Output sample
+		y 		: OUT STD_LOGIC_VECTOR (15 downto 0) := x"0000";								 -- Output sample
+		s2_address 		: out std_logic_vector (5 downto 0);	
+		s2_clken			: out std_logic;		
+		s2_readdata		: in std_logic_vector(31 downto 0);
+		clk2_clk			: out std_logic);                      
 end;
 
 
@@ -46,8 +52,10 @@ architecture behav_InterpolationX5 of InterpolationX5 is
 	signal b : array8_32_t := (others=>(others=>'0'));
 	signal add1,add2,add3,add4,add12,add34,add1234 : SIGNED (31 downto 0):= (others=>'0');
 	signal tmp : array8_32_t := (others=>(others=>'0'));
-    signal reg : STD_LOGIC_VECTOR (15 downto 0):= (others=>'0');
+   signal reg : STD_LOGIC_VECTOR (15 downto 0):= (others=>'0');
 	signal count : integer := 0;
+	
+	signal c_data : std_logic_vector(31 downto 0);
 	-- Components --
 	component iMultiplier
     port (	DIN 	: IN SIGNED (15 downto 0);
@@ -61,7 +69,19 @@ architecture behav_InterpolationX5 of InterpolationX5 is
            DOUT : out SIGNED (31 downto 0));
 	end component;
 	----------------------------------------
+	
 begin
+
+	---------------------------------------------------------------
+	-- Update COEFF
+	clk2_clk <= clk25M;
+	c_data <= s2_readdata;
+	s2_clken <= '1';
+	s2_address <= (others => '0');
+
+
+
+
 	Multiplier_0 : component iMultiplier
     port map (	DIN 	=> shiftReg(0),
 				COEFF 	=> b(0),
@@ -175,5 +195,6 @@ begin
     end process;
 	
 	y <= reg;
+	
 	
 end behav_InterpolationX5;

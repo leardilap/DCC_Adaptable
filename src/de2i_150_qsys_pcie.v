@@ -50,7 +50,7 @@
 // ============================================================================
 
 `define ENABLE_PCIE
-`define DATE 32'h27090004
+`define DATE 32'h05101501
 
 module de2i_150_qsys_pcie(
 
@@ -466,32 +466,32 @@ wire        fir_memory_s2_clken;                        //                      
 wire [31:0] fir_memory_s2_readdata;                     //                           .readdata
 wire        fir_memory_clk2_clk;                        //            fir_memory_clk2.clk
 
-reg [4:0]  interpo_4_0_s2_address;                       //               interpo_4_s2.address
+wire [4:0]  interpo_4_0_s2_address;                       //               interpo_4_s2.address
 wire        interpo_4_0_s2_clken;                         //                           .clken
 wire [31:0] interpo_4_0_s2_readdata;                      //                           .readdata
 wire        interpo_4_0_clk2_clk;                         //             interpo_4_clk2.clk
 
-reg [5:0]  interpo_5_0_s2_address;                     //             interpo_5_0_s2.address
+wire [5:0]  interpo_5_0_s2_address;                     //             interpo_5_0_s2.address
 wire        interpo_5_0_s2_clken;                       //                           .clken
 wire [31:0] interpo_5_0_s2_readdata;                    //                           .readdata
 wire        interpo_5_0_clk2_clk;                      //           interpo_5_0_clk2.clk
 
-reg [5:0]  interpo_5_1_s2_address;                     //             interpo_5_1_s2.address
+wire [5:0]  interpo_5_1_s2_address;                     //             interpo_5_1_s2.address
 wire        interpo_5_1_s2_clken;                       //                           .clken
 wire [31:0] interpo_5_1_s2_readdata;                    //                           .readdata
 wire        interpo_5_1_clk2_clk;                       //           interpo_5_1_clk2.clk
 
-reg [5:0]  interpo_5_2_s2_address;                     //             interpo_5_2_s2.address
+wire [5:0]  interpo_5_2_s2_address;                     //             interpo_5_2_s2.address
 wire        interpo_5_2_s2_clken;                       //                           .clken
 wire [31:0] interpo_5_2_s2_readdata;                    //                           .readdata
 wire        interpo_5_2_clk2_clk;                       //           interpo_5_2_clk2.clk
 
-reg [5:0]  interpo_5_3_s2_address;                     //             interpo_5_3_s2.address
+wire [5:0]  interpo_5_3_s2_address;                     //             interpo_5_3_s2.address
 wire        interpo_5_3_s2_clken;                      //                           .clken
 wire [31:0] interpo_5_3_s2_readdata;                    //                           .readdata
 wire        interpo_5_3_clk2_clk;                      //           interpo_5_3_clk2.clk
 
-reg [8:0]  adapt_fir_mem_s2_address;                   //           adapt_fir_mem_s2.address
+wire [8:0]  adapt_fir_mem_s2_address;                   //           adapt_fir_mem_s2.address
 wire        adapt_fir_mem_s2_clken;                     //                           .clken
 wire [31:0] adapt_fir_mem_s2_readdata;                  //                           .readdata
 wire        adapt_fir_mem_clk2_clk;                     //         adapt_fir_mem_clk2.clk
@@ -506,34 +506,13 @@ assign PCIE_WAKE_N = 1'b1;	 // 07/30/2013, pull-high to avoid system reboot afte
 
 assign LEDG[7:4] = 4'b1010;
 
-assign interpo_4_0_s2_clken = 1'b1;
-assign interpo_5_0_s2_clken = 1'b1;
-assign interpo_5_1_s2_clken = 1'b1;
-assign interpo_5_2_s2_clken = 1'b1;
-assign interpo_5_3_s2_clken = 1'b1;
-assign adapt_fir_mem_s2_clken = 1'b1;
-
-assign interpo_4_0_clk2_clk = CLOCK_50;
-assign interpo_5_0_clk2_clk = CLOCK_50;
-assign interpo_5_1_clk2_clk = CLOCK_50;
-assign interpo_5_2_clk2_clk = CLOCK_50;
-assign interpo_5_3_clk2_clk = CLOCK_50;
-assign adapt_fir_mem_clk2_clk = CLOCK_50;
-
 heart_beat	heart_beat_clk50(
 	.clk(CLOCK_50),
 	.led(hb_50)
 );
 assign LEDR[0] = hb_50;
 
-always@(posedge CLOCK_50) begin
-	interpo_4_0_s2_address <= interpo_4_0_s2_address + 1;
-	interpo_5_0_s2_address <= interpo_5_0_s2_address + 1;
-	interpo_5_1_s2_address <= interpo_5_1_s2_address + 1;
-	interpo_5_2_s2_address <= interpo_5_2_s2_address + 1;
-	interpo_5_3_s2_address <= interpo_5_3_s2_address + 1;
-	adapt_fir_mem_s2_address <= adapt_fir_mem_s2_address + 1;
-end	
+	
 
  
     de2i_150_qsys u0 (
@@ -643,6 +622,7 @@ micFilterCLK micFilterCLK_inst(
 micFilter_Top micFilter_Top_inst(
 			.clk 						(sCLK25_0),						//Clock input (nom. 25 MHz)
 			.rst 						(micfilter_rst_export),	 	//Synchronous reset input
+			.cntl						(micfilter_cntl_export),
 			.HSMC_ADA_D				(HSMC_ADA_D),
 			.HSMC_ADA_DCO			(HSMC_ADA_DCO),
 			.HSMC_ADB_D				(HSMC_ADB_D),
@@ -652,7 +632,27 @@ micFilter_Top micFilter_Top_inst(
 			.fir_memory_s2_address		(fir_memory_s2_address),
 			.fir_memory_s2_clken			(fir_memory_s2_clken),		
 			.fir_memory_s2_readdata		(fir_memory_s2_readdata),	
-			.fir_memory_clk2_clk			(fir_memory_clk2_clk)		
+			.fir_memory_clk2_clk			(fir_memory_clk2_clk),
+			.interpo_4_0_s2_address		(interpo_4_0_s2_address),	
+			.interpo_4_0_s2_clken		(interpo_4_0_s2_clken),	
+			.interpo_4_0_s2_readdata	(interpo_4_0_s2_readdata),
+			.interpo_4_0_clk2_clk		(interpo_4_0_clk2_clk),		
+			.interpo_5_0_s2_address		(interpo_5_0_s2_address),	
+			.interpo_5_0_s2_clken		(interpo_5_0_s2_clken),	
+			.interpo_5_0_s2_readdata	(interpo_5_0_s2_readdata),
+			.interpo_5_0_clk2_clk		(interpo_5_0_clk2_clk),	
+			.interpo_5_1_s2_address		(interpo_5_1_s2_address),	
+			.interpo_5_1_s2_clken		(interpo_5_1_s2_clken),	
+			.interpo_5_1_s2_readdata	(interpo_5_1_s2_readdata),
+			.interpo_5_1_clk2_clk		(interpo_5_1_clk2_clk),	
+			.interpo_5_2_s2_address		(interpo_5_2_s2_address),	
+			.interpo_5_2_s2_clken		(interpo_5_2_s2_clken),	
+			.interpo_5_2_s2_readdata	(interpo_5_2_s2_readdata),
+			.interpo_5_2_clk2_clk		(interpo_5_2_clk2_clk),	
+			.interpo_5_3_s2_address		(interpo_5_3_s2_address),	
+			.interpo_5_3_s2_clken		(interpo_5_3_s2_clken),	
+			.interpo_5_3_s2_readdata	(interpo_5_3_s2_readdata),
+			.interpo_5_3_clk2_clk		(interpo_5_3_clk2_clk)
 	);
 
 

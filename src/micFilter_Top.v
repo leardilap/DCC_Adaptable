@@ -25,7 +25,8 @@
 
 module micFilter_Top(
 			input clk, 						
-			input rst, 					
+			input rst, 		
+			input [31:0] cntl,   			
 			input [13:0] HSMC_ADA_D,			
 			input HSMC_ADA_DCO,		
 			input [13:0] HSMC_ADB_D,			
@@ -35,7 +36,27 @@ module micFilter_Top(
 			output [14:0] fir_memory_s2_address,	
 			output fir_memory_s2_clken,		
 			input [31:0] fir_memory_s2_readdata,	
-			output fir_memory_clk2_clk		
+			output fir_memory_clk2_clk,
+			output [4:0] 	interpo_4_0_s2_address,	
+			output 			interpo_4_0_s2_clken,		
+			input  [31:0]	interpo_4_0_s2_readdata,	
+			output 			interpo_4_0_clk2_clk,
+			output [5:0] 	interpo_5_0_s2_address, 		
+			output 			interpo_5_0_s2_clken,			
+			input  [31:0]	interpo_5_0_s2_readdata,		
+			output 			interpo_5_0_clk2_clk,			
+			output [5:0] 	interpo_5_1_s2_address,		
+			output 			interpo_5_1_s2_clken,			
+			input  [31:0]	interpo_5_1_s2_readdata,		
+			output 			interpo_5_1_clk2_clk,			
+			output [5:0] 	interpo_5_2_s2_address, 		
+			output 			interpo_5_2_s2_clken,			
+			input  [31:0]	interpo_5_2_s2_readdata,		
+			output 			interpo_5_2_clk2_clk,			
+			output [5:0] 	interpo_5_3_s2_address, 		
+			output 			interpo_5_3_s2_clken,			
+			input  [31:0]	interpo_5_3_s2_readdata,		
+			output 			interpo_5_3_clk2_clk			
 			
 			
 	);
@@ -53,6 +74,7 @@ assign HSMC_DA = sGamma_corr[13:0];
 micFilter micFilter_inst(	
 			.adj 						(adjust),					//Coefficient update halt input bit (low = stop update)
 			.clk_in 					(clk),						//Clock input (nom. 25 MHz)
+			.cntl						(cntl),
 			.gamma 					(sGamma),					//Detector signal input s(k)
 			.mic 						(sMic),						//Mechanical sensor signal input v(q)
 			.rst 						(rst),						//Synchronous reset input
@@ -61,7 +83,28 @@ micFilter micFilter_inst(
 			.fir_memory_s2_address		(fir_memory_s2_address),	 			
 			.fir_memory_s2_clken			(fir_memory_s2_clken),		
 			.fir_memory_s2_readdata		(fir_memory_s2_readdata),	
-			.fir_memory_clk2_clk			(fir_memory_clk2_clk)		
+			.fir_memory_clk2_clk			(fir_memory_clk2_clk),
+			.interpo_4_0_s2_address		(interpo_4_0_s2_address),	
+			.interpo_4_0_s2_clken		(interpo_4_0_s2_clken),	
+			.interpo_4_0_s2_readdata	(interpo_4_0_s2_readdata),
+			.interpo_4_0_clk2_clk		(interpo_4_0_clk2_clk),		
+			.interpo_5_0_s2_address		(interpo_5_0_s2_address),	
+			.interpo_5_0_s2_clken		(interpo_5_0_s2_clken),	
+			.interpo_5_0_s2_readdata	(interpo_5_0_s2_readdata),
+			.interpo_5_0_clk2_clk		(interpo_5_0_clk2_clk),	
+			.interpo_5_1_s2_address		(interpo_5_1_s2_address),	
+			.interpo_5_1_s2_clken		(interpo_5_1_s2_clken),	
+			.interpo_5_1_s2_readdata	(interpo_5_1_s2_readdata),
+			.interpo_5_1_clk2_clk		(interpo_5_1_clk2_clk),	
+			.interpo_5_2_s2_address		(interpo_5_2_s2_address),	
+			.interpo_5_2_s2_clken		(interpo_5_2_s2_clken),	
+			.interpo_5_2_s2_readdata	(interpo_5_2_s2_readdata),
+			.interpo_5_2_clk2_clk		(interpo_5_2_clk2_clk),	
+			.interpo_5_3_s2_address		(interpo_5_3_s2_address),	
+			.interpo_5_3_s2_clken		(interpo_5_3_s2_clken),	
+			.interpo_5_3_s2_readdata	(interpo_5_3_s2_readdata),
+			.interpo_5_3_clk2_clk		(interpo_5_3_clk2_clk)
+			
 	);
 
 	//--- analog to digital converter capture and sync

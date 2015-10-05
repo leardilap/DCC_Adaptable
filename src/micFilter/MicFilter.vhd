@@ -40,6 +40,7 @@ entity micFilter is
 				);
 	PORT (	adj 		: in STD_LOGIC;											-- Coefficient update halt input bit (low = stop update)
 			clk_in 		: in STD_LOGIC;											-- Clock input (nom. 25 MHz)
+			cntl			: in STD_logic_vector (31 downto 0);
 			gamma 		: in STD_LOGIC_VECTOR ( 15 downto 0 );					-- Detector signal input s(k)
 			mic 		: in STD_LOGIC_VECTOR ( 15 downto 0 );					-- Mechanical sensor signal input v(q)
 			rst 		: in STD_LOGIC;											-- Synchronous reset input
@@ -48,9 +49,29 @@ entity micFilter is
 			fir_memory_s2_address		: out std_logic_vector(14 downto 0); 	 			
 			fir_memory_s2_clken			: out std_logic;
 			fir_memory_s2_readdata		: in std_logic_vector(31 downto 0); 	
-			fir_memory_clk2_clk			: out std_logic
+			fir_memory_clk2_clk			: out std_logic;
+			interpo_4_0_s2_address 		: out std_logic_vector (4 downto 0);	
+			interpo_4_0_s2_clken			: out std_logic;		
+			interpo_4_0_s2_readdata		: in std_logic_vector(31 downto 0);
+			interpo_4_0_clk2_clk			: out std_logic;
+			interpo_5_0_s2_address 		: out std_logic_vector (5 downto 0);	
+			interpo_5_0_s2_clken			: out std_logic;		
+			interpo_5_0_s2_readdata		: in std_logic_vector(31 downto 0);
+			interpo_5_0_clk2_clk			: out std_logic;
+			interpo_5_1_s2_address 		: out std_logic_vector (5 downto 0);	
+			interpo_5_1_s2_clken			: out std_logic;		
+			interpo_5_1_s2_readdata		: in std_logic_vector(31 downto 0);
+			interpo_5_1_clk2_clk			: out std_logic;
+			interpo_5_2_s2_address 		: out std_logic_vector (5 downto 0);	
+			interpo_5_2_s2_clken			: out std_logic;		
+			interpo_5_2_s2_readdata		: in std_logic_vector(31 downto 0);
+			interpo_5_2_clk2_clk			: out std_logic;
+			interpo_5_3_s2_address 		: out std_logic_vector (5 downto 0);	
+			interpo_5_3_s2_clken			: out std_logic;		
+			interpo_5_3_s2_readdata		: in std_logic_vector(31 downto 0);
+			interpo_5_3_clk2_clk			: out std_logic
 			
-	);								-- Clock output
+	);								
   end micFilter;
 
 architecture micFilter_behav of micFilter is
@@ -136,18 +157,30 @@ architecture micFilter_behav of micFilter is
 	component InterpolationX4 is
 	generic( c_file : string);
 	port (	clk	: in STD_LOGIC;
+				clk25M	: in STD_LOGIC;
 			rst : in STD_LOGIC;
+			cntl : in STD_LOGIC;
 			x 	: in STD_LOGIC_VECTOR ( 15 downto 0 );
-			y 	: out STD_LOGIC_VECTOR ( 15 downto 0 ));
+			y 	: out STD_LOGIC_VECTOR ( 15 downto 0 );
+			s2_address 		: out std_logic_vector (4 downto 0);	
+			s2_clken			: out std_logic;		
+			s2_readdata		: in std_logic_vector(31 downto 0);
+			clk2_clk			: out std_logic);
 	end component;
 	
 	-- Interpolation X5 --
 	component InterpolationX5 is
 	generic( c_file : string);
-	port (	clk : in STD_LOGIC;
+	port (	clk	: in STD_LOGIC;
+				clk25M	: in STD_LOGIC;
 			rst : in STD_LOGIC;
+			cntl : in STD_LOGIC;
 			x 	: in STD_LOGIC_VECTOR ( 15 downto 0 );
-			y 	: out STD_LOGIC_VECTOR ( 15 downto 0 ));
+			y 	: out STD_LOGIC_VECTOR ( 15 downto 0 );
+			s2_address 		: out std_logic_vector (5 downto 0);	
+			s2_clken			: out std_logic;		
+			s2_readdata		: in std_logic_vector(31 downto 0);
+			clk2_clk			: out std_logic);
   end component;
   
 	-- Interpolation Clock Generator --
@@ -241,38 +274,73 @@ begin
 				
 	InterpolationX4_0: component InterpolationX4
 	generic map( c_file	=> IntX4_cFile)
-    port map (	clk => clk_i4,
+		port map (	clk => clk_i4,
+						clk25M => clk_25M,
 				rst => reset,
+				cntl => cntl(0),
 				x	=> pHat,
-				y	=> pHat_i1);
+				y	=> pHat_i1,
+				s2_address		=> interpo_4_0_s2_address,	
+				s2_clken			=> interpo_4_0_s2_clken,	
+				s2_readdata		=> interpo_4_0_s2_readdata,
+				clk2_clk			=> interpo_4_0_clk2_clk
+		);
 
 	InterpolationX5_0: component InterpolationX5
 	generic map( c_file	=> IntX5_cFile1)
     port map (	clk => clk_i3,
+				clk25M => clk_25M,
 				rst => reset,
+				cntl => cntl(1),
 				x	=> pHat_i1,
-				y	=> pHat_i2);
+				y	=> pHat_i2,
+				s2_address		=> interpo_5_0_s2_address,	
+				s2_clken			=> interpo_5_0_s2_clken,	
+				s2_readdata		=> interpo_5_0_s2_readdata,
+				clk2_clk			=> interpo_5_0_clk2_clk
+		);
 				
 	InterpolationX5_1: component InterpolationX5
 	generic map( c_file	=> IntX5_cFile2)
     port map (	clk => clk_i2,
+				clk25M => clk_25M,
 				rst => reset,
+				cntl => cntl(2),
 				x	=> pHat_i2,
-				y	=> pHat_i3);
+				y	=> pHat_i3,
+				s2_address		=> interpo_5_1_s2_address,	
+				s2_clken			=> interpo_5_1_s2_clken,	
+				s2_readdata		=> interpo_5_1_s2_readdata,
+				clk2_clk			=> interpo_5_1_clk2_clk
+		);
 	
 	InterpolationX5_2: component InterpolationX5
 	generic map( c_file	=> IntX5_cFile3)
     port map (	clk => clk_i1,
+				clk25M => clk_25M,
 				rst => reset,
+				cntl => cntl(3),
 				x	=> pHat_i3,
-				y	=> pHat_i4);
+				y	=> pHat_i4,
+				s2_address		=> interpo_5_2_s2_address,	
+				s2_clken			=> interpo_5_2_s2_clken,	
+				s2_readdata		=> interpo_5_2_s2_readdata,
+				clk2_clk			=> interpo_5_2_clk2_clk
+		);
 	
 	InterpolationX5_3: component InterpolationX5
 	generic map( c_file	=> IntX5_cFile4)
     port map (	clk => clk_25M,
+				clk25M => clk_25M,
 				rst => reset,
+				cntl => cntl(4),
 				x	=> pHat_i4,
-				y	=> pHat_25M);
+				y	=> pHat_25M,
+				s2_address		=> interpo_5_3_s2_address,	
+				s2_clken			=> interpo_5_3_s2_clken,	
+				s2_readdata		=> interpo_5_3_s2_readdata,
+				clk2_clk			=> interpo_5_3_clk2_clk
+		);
 				
 	Subtract_0: component Subtract
 	generic map( factor	=> Sub_factor)  			-- INTEGER RANGE 0 TO 65565 := 4111 -- Subtract - DIN2 Factor (4.12)
