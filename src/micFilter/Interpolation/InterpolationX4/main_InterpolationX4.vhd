@@ -54,7 +54,7 @@ architecture behav_InterpolationX4 of InterpolationX4 is
    signal reg : STD_LOGIC_VECTOR (15 downto 0):= (others=>'0');
 	signal count : integer := 0;
 	
-	type state_type is (idle, loading);
+	type state_type is (idle, loading, last);
 	signal state : state_type;
 	
 	signal s2_address_buff :integer;	
@@ -102,14 +102,16 @@ begin
 					s2_clken <= '1';
 					coef_cnt <= coef_cnt + 1;
 					c_data <= s2_readdata;
-					coef(coef_cnt) <= signed(s2_readdata);
+					coef(coef_cnt-1) <= signed(s2_readdata);
 					if (coef_cnt = 31) then
-						state <= idle;
+						state <= last;
 						s2_clken <= '0';
 					else	
 						state <= loading;
 					end if;
-					
+				when last => 
+					coef(31) <= signed(s2_readdata);
+					state <= idle;
 				when others => 
 					state <= idle;
 					s2_clken <= '0';
