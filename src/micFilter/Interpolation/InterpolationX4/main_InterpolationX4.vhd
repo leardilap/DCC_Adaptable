@@ -32,29 +32,37 @@ architecture behav_InterpolationX4 of InterpolationX4 is
 	type array8_16_t is array (0 to 7) of SIGNED(15 downto 0);
 	type array8_32_t is array (0 to 7) of SIGNED(31 downto 0);
 	--- Constants -----------------------------------------------------------
-	impure function init_coef(coef_file : in string) return array32_32_t is 	-- coefficient array initialization
-        file coefF : text open read_mode is coef_file;
-        variable l : line;
-        variable s: string(1 to 32);
-        variable tmp_coef : array32_32_t := (others=>(others=>'0'));
-    begin
-        for i in array32_32_t'range loop
-            readline(coefF,l);
-            read(l, s);
-            tmp_coef(i) := signed(to_std_logic_vector(s));
-        end loop;
-        return tmp_coef;
-    end function;
-    constant coef : array32_32_t := init_coef(c_file);
+--	impure function init_coef(coef_file : in string) return array32_32_t is 	-- coefficient array initialization
+--        file coefF : text open read_mode is coef_file;
+--        variable l : line;
+--        variable s: string(1 to 32);
+--        variable tmp_coef : array32_32_t := (others=>(others=>'0'));
+--    begin
+--        for i in array32_32_t'range loop
+--            readline(coefF,l);
+--            read(l, s);
+--            tmp_coef(i) := signed(to_std_logic_vector(s));
+--        end loop;
+--        return tmp_coef;
+--    end function;
+   signal coef : array32_32_t := (others => (others => '0'));
 	--- Signals --------------------------------------------------------------
 	signal shiftReg : array8_16_t := (others=>(others=>'0'));
 	signal b : array8_32_t := (others=>(others=>'0'));
 	signal add1,add2,add3,add4,add12,add34,add1234 : SIGNED (31 downto 0):= (others=>'0');
 	signal tmp : array8_32_t := (others=>(others=>'0'));
-    signal reg : STD_LOGIC_VECTOR (15 downto 0):= (others=>'0');
+   signal reg : STD_LOGIC_VECTOR (15 downto 0):= (others=>'0');
 	signal count : integer := 0;
 	
+	type state_type is (idle, loading);
+	signal state : state_type;
+	
+	signal s2_address_buff :integer;	
 	signal c_data : std_logic_vector(31 downto 0);
+	attribute dont_touch : string;
+	attribute dont_touch of c_data : signal is "true";
+	signal coef_cnt : integer range 0 to 31 := 0;
+	signal cntl_buff : std_logic;
 	--- Components -----------------------------------------------------------
 	component iMultiplier
     port (	DIN 	: IN SIGNED (15 downto 0);
@@ -73,10 +81,44 @@ begin
 	---------------------------------------------------------------
 	-- Update COEFF
 	clk2_clk <= clk25M;
-	c_data <= s2_readdata;
-	s2_clken <= '1';
-	s2_address <= (others => '0');
-	
+	s2_address <= std_logic_vector(to_unsigned(coef_cnt,5));
+	process (clk25M)
+	begin 
+		if rising_edge(clk25M) then
+			cntl_buff <= cntl;
+			case state is 
+			
+				when idle => 
+					
+					if (cntl = '1' and cntl_buff = '0') then  -- rising_edge of control signal indicating to load coefF
+						state <= loading;
+						coef_cnt <= 0;
+						s2_clken <= '1';
+					else 
+						state <= idle;
+					end if; 
+				
+				when loading => 
+					s2_clken <= '1';
+					coef_cnt <= coef_cnt + 1;
+					c_data <= s2_readdata;
+					coef(coef_cnt) <= signed(s2_readdata);
+					if (coef_cnt = 31) then
+						state <= idle;
+						s2_clken <= '0';
+					else	
+						state <= loading;
+					end if;
+					
+				when others => 
+					state <= idle;
+					s2_clken <= '0';
+			end case;
+				
+				
+		end if;
+		
+	end process;
 	
 	
 	Multiplier_0 : component iMultiplier
