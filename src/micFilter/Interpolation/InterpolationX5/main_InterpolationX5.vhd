@@ -33,20 +33,8 @@ architecture behav_InterpolationX5 of InterpolationX5 is
 	type array8_16_t is array (0 to 7) of SIGNED(15 downto 0);
 	type array8_32_t is array (0 to 7) of SIGNED(31 downto 0);
 	-- Constants --
-	impure function init_coef(coef_file : in string) return array40_32_t is    -- coefficient array initialization
-        file coefF : text open read_mode is coef_file;
-        variable l : line;
-        variable s: string(1 to 32);
-        variable tmp_coef : array40_32_t := (others=>(others=>'0'));
-    begin
-        for i in array40_32_t'range loop
-            readline(coefF,l);
-            read(l, s);
-            tmp_coef(i) := signed(to_std_logic_vector(s));
-        end loop;
-        return tmp_coef;
-    end function;
-    constant coef : array40_32_t := init_coef(c_file);
+
+   signal coef : array40_32_t := (others => (others => '0'));
 	-- Signals --
 	signal shiftReg : array8_16_t := (others=>(others=>'0'));
 	signal b : array8_32_t := (others=>(others=>'0'));
@@ -55,7 +43,11 @@ architecture behav_InterpolationX5 of InterpolationX5 is
    signal reg : STD_LOGIC_VECTOR (15 downto 0):= (others=>'0');
 	signal count : integer := 0;
 	
-	signal c_data : std_logic_vector(31 downto 0);
+	type state_type is (idle, loading, last);
+	signal state : state_type;
+	
+	signal coef_cnt : integer range 0 to 39 := 0;
+	signal cntl_buff : std_logic;
 	-- Components --
 	component iMultiplier
     port (	DIN 	: IN SIGNED (15 downto 0);
@@ -75,9 +67,47 @@ begin
 	---------------------------------------------------------------
 	-- Update COEFF
 	clk2_clk <= clk25M;
-	c_data <= s2_readdata;
-	s2_clken <= '1';
-	s2_address <= (others => '0');
+	s2_address <= std_logic_vector(to_unsigned(coef_cnt,6));
+	process (clk25M)
+	begin 
+		if rising_edge(clk25M) then
+			cntl_buff <= cntl;
+			case state is 
+			
+				when idle => 
+					
+					if (cntl = '1' and cntl_buff = '0') then  -- rising_edge of control signal indicating to load coefF
+						state <= loading;
+						coef_cnt <= 0;
+						s2_clken <= '1';
+					else 
+						state <= idle;
+						s2_clken <= '0';
+					end if; 
+				
+				when loading => 
+					s2_clken <= '1';
+					coef_cnt <= coef_cnt + 1;
+					coef(coef_cnt-1) <= signed(s2_readdata);
+					if (coef_cnt = 39) then
+						state <= last;
+						s2_clken <= '0';
+					else	
+						state <= loading;
+					end if;
+				when last => 
+					coef(39) <= signed(s2_readdata);
+					state <= idle;
+					s2_clken <= '0';
+				when others => 
+					state <= idle;
+					s2_clken <= '0';
+			end case;
+				
+				
+		end if;
+		
+	end process;
 
 
 

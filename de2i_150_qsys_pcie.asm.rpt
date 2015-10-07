@@ -1,5 +1,5 @@
 Assembler report for de2i_150_qsys_pcie
-Wed Oct  7 01:41:05 2015
+Thu Oct  8 00:06:38 2015
 Quartus II 64-Bit Version 14.0.0 Build 200 06/17/2014 SJ Web Edition
 
 
@@ -40,7 +40,7 @@ agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Wed Oct  7 01:41:05 2015 ;
+; Assembler Status      ; Successful - Thu Oct  8 00:06:38 2015 ;
 ; Revision Name         ; de2i_150_qsys_pcie                    ;
 ; Top-level Entity Name ; de2i_150_qsys_pcie                    ;
 ; Family                ; Cyclone IV GX                         ;
@@ -82,7 +82,7 @@ agreement for further details.
 +----------------+---------------------------------+
 ; Device         ; EP4CGX150DF31C7                 ;
 ; JTAG usercode  ; 0xFFFFFFFF                      ;
-; Checksum       ; 0x01B33684                      ;
+; Checksum       ; 0x03CC34BE                      ;
 +----------------+---------------------------------+
 
 
@@ -93,8 +93,8 @@ agreement for further details.
 +--------------------+-----------------------------+
 ; Device             ; EPCS64                      ;
 ; JTAG usercode      ; 0x00000000                  ;
-; Checksum           ; 0x69C22987                  ;
-; Compression Ratio  ; 3                           ;
+; Checksum           ; 0x670C0F74                  ;
+; Compression Ratio  ; 2                           ;
 +--------------------+-----------------------------+
 
 
@@ -104,14 +104,14 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Assembler
     Info: Version 14.0.0 Build 200 06/17/2014 SJ Web Edition
-    Info: Processing started: Wed Oct  7 01:40:50 2015
+    Info: Processing started: Thu Oct  8 00:06:12 2015
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off de2i_150_qsys_pcie -c de2i_150_qsys_pcie
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus II 64-Bit Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 952 megabytes
-    Info: Processing ended: Wed Oct  7 01:41:06 2015
-    Info: Elapsed time: 00:00:16
-    Info: Total CPU time (on all processors): 00:00:16
+    Info: Peak virtual memory: 1120 megabytes
+    Info: Processing ended: Thu Oct  8 00:06:39 2015
+    Info: Elapsed time: 00:00:27
+    Info: Total CPU time (on all processors): 00:00:26
 
 

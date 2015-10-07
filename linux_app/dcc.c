@@ -46,6 +46,7 @@ typedef enum{
    MENU_MICFILTER_CNTL,
 	MENU_MICFILTER_RST,
 	MENU_DMA_FIFO,
+	MENU_FILE_READ,
 	MENU_QUIT = 99
 }MENU_ID;
 
@@ -63,6 +64,7 @@ void UI_ShowMenu(void){
 	printf("[%d]: MICFILTER_CNTL\r\n", MENU_MICFILTER_CNTL);
 	printf("[%d]: MICFILTER_RST\r\n", MENU_MICFILTER_RST);
 	printf("[%d]: DMA Fifo Test\r\n", MENU_DMA_FIFO);
+	printf("[%d]: FILE READ\r\n", MENU_FILE_READ);
 	printf("[%d]: Quit\r\n", MENU_QUIT);
 	printf("Please input your selection:");
 }
@@ -465,7 +467,36 @@ BOOL TEST_DMA_FIFO(PCIE_HANDLE hPCIe){
 	return bPass;
 }
 
+BOOL TEST_FILE_READ(PCIE_HANDLE hPCIe){
+	BOOL bPass = TRUE;
+	int i;
+	int addr;
+	unsigned int val;
+	const int nTestSize = INTERPO_5_0_SIZE;
+	
+	char *pWrite;
 
+	pWrite = (char *)malloc(nTestSize);
+
+	FILE *fileWrite = fopen("INT5_0_wr.txt", "r");
+	if (fileWrite == NULL)
+	{
+    	printf("Error opening file!\n");
+    	exit(1);
+	}
+	
+	
+	
+	for(i=0;i<nTestSize;i++) {
+		fscanf(fileWrite, "%d 0x%02X", &addr, &val);
+		printf("ADD: %d \tVAL: 0x%02X\n", addr, val);
+		*(pWrite+i) = PAT_GEN(val);
+		printf("%d\t0x%02X\n", i, (unsigned char)*(pWrite+i));
+	}
+	
+	fclose(fileWrite);
+	return bPass;
+}
 
 int main(void)
 {
@@ -525,6 +556,9 @@ int main(void)
 					break;
 				case MENU_DMA_FIFO:
 					TEST_DMA_FIFO(hPCIE);
+					break;
+				case MENU_FILE_READ:
+					TEST_FILE_READ(hPCIE);
 					break;
 				case MENU_QUIT:
 					bQuit = TRUE;
