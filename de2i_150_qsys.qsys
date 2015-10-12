@@ -152,6 +152,14 @@
          type = "int";
       }
    }
+   element micFilter_adjust
+   {
+      datum _sortIndex
+      {
+         value = "15";
+         type = "int";
+      }
+   }
    element micFilter_cntl
    {
       datum _sortIndex
@@ -189,6 +197,22 @@
          type = "int";
       }
    }
+   element Interpo_5_1.s1
+   {
+      datum baseAddress
+      {
+         value = "331776";
+         type = "String";
+      }
+   }
+   element Interpo_4_0.s1
+   {
+      datum baseAddress
+      {
+         value = "262144";
+         type = "String";
+      }
+   }
    element button.s1
    {
       datum _lockedAddress
@@ -200,6 +224,62 @@
       {
          value = "32";
          type = "long";
+      }
+   }
+   element Interpo_5_0.s1
+   {
+      datum baseAddress
+      {
+         value = "327680";
+         type = "String";
+      }
+   }
+   element Interpo_5_2.s1
+   {
+      datum baseAddress
+      {
+         value = "335872";
+         type = "String";
+      }
+   }
+   element led.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element micFilter_cntl.s1
+   {
+      datum baseAddress
+      {
+         value = "256";
+         type = "String";
+      }
+   }
+   element micFilter_rst.s1
+   {
+      datum baseAddress
+      {
+         value = "288";
+         type = "String";
+      }
+   }
+   element Interpo_5_3.s1
+   {
+      datum baseAddress
+      {
+         value = "339968";
+         type = "String";
+      }
+   }
+   element Adapt_FIR_mem.s1
+   {
+      datum baseAddress
+      {
+         value = "393216";
+         type = "String";
       }
    }
    element fir_memory.s1
@@ -215,75 +295,11 @@
          type = "String";
       }
    }
-   element Adapt_FIR_mem.s1
+   element micFilter_adjust.s1
    {
       datum baseAddress
       {
-         value = "393216";
-         type = "String";
-      }
-   }
-   element Interpo_5_2.s1
-   {
-      datum baseAddress
-      {
-         value = "335872";
-         type = "String";
-      }
-   }
-   element Interpo_5_3.s1
-   {
-      datum baseAddress
-      {
-         value = "339968";
-         type = "String";
-      }
-   }
-   element Interpo_5_0.s1
-   {
-      datum baseAddress
-      {
-         value = "327680";
-         type = "String";
-      }
-   }
-   element Interpo_4_0.s1
-   {
-      datum baseAddress
-      {
-         value = "262144";
-         type = "String";
-      }
-   }
-   element micFilter_cntl.s1
-   {
-      datum baseAddress
-      {
-         value = "256";
-         type = "String";
-      }
-   }
-   element led.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element micFilter_rst.s1
-   {
-      datum baseAddress
-      {
-         value = "288";
-         type = "String";
-      }
-   }
-   element Interpo_5_1.s1
-   {
-      datum baseAddress
-      {
-         value = "331776";
+         value = "320";
          type = "String";
       }
    }
@@ -502,6 +518,11 @@
  <interface
    name="micfilter_rst"
    internal="micFilter_rst.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="micfilter_adjust"
+   internal="micFilter_adjust.external_connection"
    type="conduit"
    dir="end" />
  <module kind="clock_source" version="14.0" enabled="1" name="clk_50">
@@ -919,6 +940,24 @@
    version="14.0"
    enabled="1"
    name="micFilter_rst">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="1" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module
+   kind="altera_avalon_pio"
+   version="14.0"
+   enabled="1"
+   name="micFilter_adjust">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
@@ -1453,6 +1492,30 @@
    end="micFilter_rst.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0120" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="micFilter_adjust.clk" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="micFilter_adjust.reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="micFilter_adjust.reset" />
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="micFilter_adjust.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0140" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />

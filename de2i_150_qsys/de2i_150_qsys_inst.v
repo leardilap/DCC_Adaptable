@@ -100,6 +100,7 @@
 		.adapt_fir_mem_reset2_reset                 (<connected-to-adapt_fir_mem_reset2_reset>),                 //       adapt_fir_mem_reset2.reset
 		.adapt_fir_mem_reset2_reset_req             (<connected-to-adapt_fir_mem_reset2_reset_req>),             //                           .reset_req
 		.micfilter_cntl_export                      (<connected-to-micfilter_cntl_export>),                      //             micfilter_cntl.export
-		.micfilter_rst_export                       (<connected-to-micfilter_rst_export>)                        //              micfilter_rst.export
+		.micfilter_rst_export                       (<connected-to-micfilter_rst_export>),                       //              micfilter_rst.export
+		.micfilter_adjust_export                    (<connected-to-micfilter_adjust_export>)                     //           micfilter_adjust.export
 	);
 

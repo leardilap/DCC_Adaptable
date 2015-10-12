@@ -101,7 +101,8 @@
 			adapt_fir_mem_reset2_reset                 : in  std_logic                     := 'X';             -- reset
 			adapt_fir_mem_reset2_reset_req             : in  std_logic                     := 'X';             -- reset_req
 			micfilter_cntl_export                      : out std_logic_vector(31 downto 0);                    -- export
-			micfilter_rst_export                       : out std_logic                                         -- export
+			micfilter_rst_export                       : out std_logic;                                        -- export
+			micfilter_adjust_export                    : out std_logic                                         -- export
 		);
 	end component de2i_150_qsys;
 
@@ -208,6 +209,7 @@
 			adapt_fir_mem_reset2_reset                 => CONNECTED_TO_adapt_fir_mem_reset2_reset,                 --       adapt_fir_mem_reset2.reset
 			adapt_fir_mem_reset2_reset_req             => CONNECTED_TO_adapt_fir_mem_reset2_reset_req,             --                           .reset_req
 			micfilter_cntl_export                      => CONNECTED_TO_micfilter_cntl_export,                      --             micfilter_cntl.export
-			micfilter_rst_export                       => CONNECTED_TO_micfilter_rst_export                        --              micfilter_rst.export
+			micfilter_rst_export                       => CONNECTED_TO_micfilter_rst_export,                       --              micfilter_rst.export
+			micfilter_adjust_export                    => CONNECTED_TO_micfilter_adjust_export                     --           micfilter_adjust.export
 		);
 

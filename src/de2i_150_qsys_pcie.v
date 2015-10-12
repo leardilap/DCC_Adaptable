@@ -50,7 +50,7 @@
 // ============================================================================
 
 `define ENABLE_PCIE
-`define DATE 32'h07101502
+`define DATE 32'h12101501
 
 module de2i_150_qsys_pcie(
 
@@ -492,8 +492,8 @@ wire [31:0] interpo_5_3_s2_readdata;                    //                      
 wire        interpo_5_3_clk2_clk;                      //           interpo_5_3_clk2.clk
 
 wire [8:0]  adapt_fir_mem_s2_address;                   //           adapt_fir_mem_s2.address
-wire        adapt_fir_mem_s2_clken;                     //                           .clken
-wire [31:0] adapt_fir_mem_s2_readdata;                  //                           .readdata
+wire        adapt_fir_mem_s2_write;                     //                           .clken
+wire [31:0] adapt_fir_mem_s2_writedata;                  //                           .readdata
 wire        adapt_fir_mem_clk2_clk;                     //         adapt_fir_mem_clk2.clk
 
 wire [31:0] micfilter_cntl_export;                      //             micfilter_cntl.export
@@ -530,7 +530,7 @@ assign LEDR[0] = hb_50;
 		   .fir_memory_s2_write                	(1'b0),         											//                           .write
 		   .fir_memory_s2_readdata             	(fir_memory_s2_readdata),      											//                           .readdata
 		   .fir_memory_s2_writedata            	(32'b0),     											//                           .writedata
-		   .fir_memory_s2_byteenable           	(3'b0),    											//                           .byteenable
+		   .fir_memory_s2_byteenable           	(4'b0),    											//                           .byteenable
 		   .fir_memory_clk2_clk                	(fir_memory_clk2_clk),         											//            fir_memory_clk2.clk
 		   .fir_memory_reset2_reset            	(1'b0),     											//          fir_memory_reset2.reset
 		   .fir_memory_reset2_reset_req        	(1'b0),  											//                           .reset_req
@@ -540,7 +540,7 @@ assign LEDR[0] = hb_50;
 			.interpo_4_0_s2_write						(1'b0),                         //                           .write
 			.interpo_4_0_s2_readdata					(interpo_4_0_s2_readdata),                      //                           .readdata
 			.interpo_4_0_s2_writedata					(32'b0),                     //                           .writedata
-			.interpo_4_0_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_4_0_s2_byteenable					(4'b0),                    //                           .byteenable
 			.interpo_4_0_clk2_clk						(interpo_4_0_clk2_clk),                         //             interpo_4_clk2.clk
 			.interpo_4_0_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
 			.interpo_4_0_reset2_reset_req				(1'b0),                 //                           .reset_req
@@ -550,7 +550,7 @@ assign LEDR[0] = hb_50;
 			.interpo_5_0_s2_write						(1'b0),                         //                           .write
 			.interpo_5_0_s2_readdata					(interpo_5_0_s2_readdata),                      //                           .readdata
 			.interpo_5_0_s2_writedata					(32'b0),                     //                           .writedata
-			.interpo_5_0_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_5_0_s2_byteenable					(4'b0),                    //                           .byteenable
 			.interpo_5_0_clk2_clk						(interpo_5_0_clk2_clk),                         //             interpo_4_clk2.clk
 			.interpo_5_0_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
 			.interpo_5_0_reset2_reset_req				(1'b0),                 //                           .reset_req
@@ -560,7 +560,7 @@ assign LEDR[0] = hb_50;
 			.interpo_5_1_s2_write						(1'b0),                         //                           .write
 			.interpo_5_1_s2_readdata					(interpo_5_1_s2_readdata),                      //                           .readdata
 			.interpo_5_1_s2_writedata					(32'b0),                     //                           .writedata
-			.interpo_5_1_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_5_1_s2_byteenable					(4'b0),                    //                           .byteenable
 			.interpo_5_1_clk2_clk						(interpo_5_1_clk2_clk),                         //             interpo_4_clk2.clk
 			.interpo_5_1_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
 			.interpo_5_1_reset2_reset_req				(1'b0),                 //                           .reset_req
@@ -570,7 +570,7 @@ assign LEDR[0] = hb_50;
 			.interpo_5_2_s2_write						(1'b0),                         //                           .write
 			.interpo_5_2_s2_readdata					(interpo_5_2_s2_readdata),                      //                           .readdata
 			.interpo_5_2_s2_writedata					(32'b0),                     //                           .writedata
-			.interpo_5_2_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_5_2_s2_byteenable					(4'b0),                    //                           .byteenable
 			.interpo_5_2_clk2_clk						(interpo_5_2_clk2_clk),                         //             interpo_4_clk2.clk
 			.interpo_5_2_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
 			.interpo_5_2_reset2_reset_req				(1'b0),                 //                           .reset_req
@@ -580,23 +580,23 @@ assign LEDR[0] = hb_50;
 			.interpo_5_3_s2_write						(1'b0),                         //                           .write
 			.interpo_5_3_s2_readdata					(interpo_5_3_s2_readdata),                      //                           .readdata
 			.interpo_5_3_s2_writedata					(32'b0),                     //                           .writedata
-			.interpo_5_3_s2_byteenable					(3'b0),                    //                           .byteenable
+			.interpo_5_3_s2_byteenable					(4'b0),                    //                           .byteenable
 			.interpo_5_3_clk2_clk						(interpo_5_3_clk2_clk),                         //             interpo_4_clk2.clk
 			.interpo_5_3_reset2_reset					(1'b0),                     //           interpo_4_reset2.reset
 			.interpo_5_3_reset2_reset_req				(1'b0),                 //                           .reset_req
 			.adapt_fir_mem_s2_address             	(adapt_fir_mem_s2_address),      //           adapt_fir_mem_s2.address
 			.adapt_fir_mem_s2_chipselect         	(1'b1),                        //                           .chipselect
-			.adapt_fir_mem_s2_clken                (adapt_fir_mem_s2_clken),        //                           .clken
-			.adapt_fir_mem_s2_write                (1'b0),                        //                           .write
-			.adapt_fir_mem_s2_readdata             (adapt_fir_mem_s2_readdata),     //                           .readdata
-			.adapt_fir_mem_s2_writedata            (32'b0),                       //                           .writedata
-			.adapt_fir_mem_s2_byteenable           (3'b0),                        //                           .byteenable
+			.adapt_fir_mem_s2_clken                (1'b1),        //                           .clken
+			.adapt_fir_mem_s2_write                (adapt_fir_mem_s2_write),                        //                           .write
+			.adapt_fir_mem_s2_readdata             (),     //                           .readdata
+			.adapt_fir_mem_s2_writedata            (adapt_fir_mem_s2_writedata),                       //                           .writedata
+			.adapt_fir_mem_s2_byteenable           (4'hF),                        //                           .byteenable
 			.adapt_fir_mem_clk2_clk                (adapt_fir_mem_clk2_clk),        //         adapt_fir_mem_clk2.clk
 			.adapt_fir_mem_reset2_reset            (1'b0),                        //       adapt_fir_mem_reset2.reset
 			.adapt_fir_mem_reset2_reset_req        (1'b0),                 //     //                           .reset_req
 			.micfilter_cntl_export                 (micfilter_cntl_export),     //             micfilter_cntl.export
-			.micfilter_rst_export                  (micfilter_rst_export)      //              micfilter_rst.export
-
+			.micfilter_rst_export                  (micfilter_rst_export),      //              micfilter_rst.export
+			.micfilter_adjust_export                  (micfilter_adjust_export) 
   );
 
 hex_module hex_module_inst(
@@ -620,6 +620,7 @@ micFilterCLK micFilterCLK_inst(
 );
 
 micFilter_Top micFilter_Top_inst(
+			.adj						(micfilter_adjust_export),
 			.clk 						(sCLK25_0),						//Clock input (nom. 25 MHz)
 			.rst 						(micfilter_rst_export),	 	//Synchronous reset input
 			.cntl						(micfilter_cntl_export),
@@ -652,7 +653,13 @@ micFilter_Top micFilter_Top_inst(
 			.interpo_5_3_s2_address		(interpo_5_3_s2_address),	
 			.interpo_5_3_s2_clken		(interpo_5_3_s2_clken),	
 			.interpo_5_3_s2_readdata	(interpo_5_3_s2_readdata),
-			.interpo_5_3_clk2_clk		(interpo_5_3_clk2_clk)
+			.interpo_5_3_clk2_clk		(interpo_5_3_clk2_clk),
+			.adapt_fir_mem_s2_address    (adapt_fir_mem_s2_address),  
+			.adapt_fir_mem_s2_write      (adapt_fir_mem_s2_write),   
+			.adapt_fir_mem_s2_writedata  (adapt_fir_mem_s2_writedata),
+			.adapt_fir_mem_clk2_clk      (adapt_fir_mem_clk2_clk)   
+			
+			
 	);
 
 

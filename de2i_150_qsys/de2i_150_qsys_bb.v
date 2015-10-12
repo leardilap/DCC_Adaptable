@@ -101,7 +101,8 @@ module de2i_150_qsys (
 	adapt_fir_mem_reset2_reset,
 	adapt_fir_mem_reset2_reset_req,
 	micfilter_cntl_export,
-	micfilter_rst_export);	
+	micfilter_rst_export,
+	micfilter_adjust_export);	
 
 	input		clk_clk;
 	input		reset_reset_n;
@@ -205,4 +206,5 @@ module de2i_150_qsys (
 	input		adapt_fir_mem_reset2_reset_req;
 	output	[31:0]	micfilter_cntl_export;
 	output		micfilter_rst_export;
+	output		micfilter_adjust_export;
 endmodule

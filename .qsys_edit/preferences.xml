@@ -16,6 +16,7 @@
   </columns>
  </clocktable>
  <library expandedCategories="Project,Library" />
- <window width="1894" height="1107" x="43" y="326" />
+ <window width="1894" height="1107" x="43" y="411" />
  <hdlexample language="VERILOG" />
+ <generation synthesis="VERILOG" simulation="VHDL" mixed_lang_simulation="0" />
 </preferences>

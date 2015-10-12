@@ -24,6 +24,7 @@
 // ============================================================================
 
 module micFilter_Top(
+			input adj,
 			input clk, 						
 			input rst, 		
 			input [31:0] cntl,   			
@@ -56,12 +57,14 @@ module micFilter_Top(
 			output [5:0] 	interpo_5_3_s2_address, 		
 			output 			interpo_5_3_s2_clken,			
 			input  [31:0]	interpo_5_3_s2_readdata,		
-			output 			interpo_5_3_clk2_clk			
-			
+			output 			interpo_5_3_clk2_clk,			
+			output [8:0]  adapt_fir_mem_s2_address,    
+			output        adapt_fir_mem_s2_write,      
+			output [31:0] adapt_fir_mem_s2_writedata,  
+			output        adapt_fir_mem_clk2_clk      
 			
 	);
 
-wire adjust;
 reg [15:0] sGamma;
 reg [15:0] sGamma_b;
 reg [15:0] sMic;
@@ -72,7 +75,7 @@ assign adjust	= 1'b1;
 assign HSMC_DA = sGamma_corr[13:0];
 
 micFilter micFilter_inst(	
-			.adj 						(adjust),					//Coefficient update halt input bit (low = stop update)
+			.adj 						(adj),					//Coefficient update halt input bit (low = stop update)
 			.clk_in 					(clk),						//Clock input (nom. 25 MHz)
 			.cntl						(cntl),
 			.gamma 					(sGamma),					//Detector signal input s(k)
@@ -103,7 +106,11 @@ micFilter micFilter_inst(
 			.interpo_5_3_s2_address		(interpo_5_3_s2_address),	
 			.interpo_5_3_s2_clken		(interpo_5_3_s2_clken),	
 			.interpo_5_3_s2_readdata	(interpo_5_3_s2_readdata),
-			.interpo_5_3_clk2_clk		(interpo_5_3_clk2_clk)
+			.interpo_5_3_clk2_clk		(interpo_5_3_clk2_clk),
+			.adapt_fir_mem_s2_address    (adapt_fir_mem_s2_address),  
+			.adapt_fir_mem_s2_write      (adapt_fir_mem_s2_write),   
+			.adapt_fir_mem_s2_writedata  (adapt_fir_mem_s2_writedata),
+			.adapt_fir_mem_clk2_clk      (adapt_fir_mem_clk2_clk)
 			
 	);
 

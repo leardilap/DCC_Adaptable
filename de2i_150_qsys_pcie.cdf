@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP4CGX150DF31) Path("/home/luisardila/ProjectB/DCC/") File("de2i_150_qsys_pcie.sof") MfrSpec(OpMask(1));
+		Device PartName(EP4CGX150DF31) Path("D:/ProjectB/DCC/") File("de2i_150_qsys_pcie.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

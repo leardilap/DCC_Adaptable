@@ -101,7 +101,8 @@
 			adapt_fir_mem_reset2_reset                 : in  std_logic                     := 'X';             -- reset
 			adapt_fir_mem_reset2_reset_req             : in  std_logic                     := 'X';             -- reset_req
 			micfilter_cntl_export                      : out std_logic_vector(31 downto 0);                    -- export
-			micfilter_rst_export                       : out std_logic                                         -- export
+			micfilter_rst_export                       : out std_logic;                                        -- export
+			micfilter_adjust_export                    : out std_logic                                         -- export
 		);
 	end component de2i_150_qsys;
 

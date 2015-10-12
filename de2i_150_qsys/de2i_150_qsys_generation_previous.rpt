@@ -1,5 +1,5 @@
 Info: Starting: Create block symbol file (.bsf)
-Info: ip-generate --project-directory=/home/luisardila/ProjectB/DCC --output-directory=/home/luisardila/ProjectB/DCC/de2i_150_qsys --report-file=bsf:/home/luisardila/ProjectB/DCC/de2i_150_qsys/de2i_150_qsys.bsf --system-info=DEVICE_FAMILY="Cyclone IV GX" --system-info=DEVICE=EP4CGX150DF31C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=/home/luisardila/ProjectB/DCC/de2i_150_qsys.qsys
+Info: ip-generate --project-directory=/dos/ProjectB/DCC --output-directory=/dos/ProjectB/DCC/de2i_150_qsys --report-file=bsf:/dos/ProjectB/DCC/de2i_150_qsys/de2i_150_qsys.bsf --system-info=DEVICE_FAMILY="Cyclone IV GX" --system-info=DEVICE=EP4CGX150DF31C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=/dos/ProjectB/DCC/de2i_150_qsys.qsys
 Progress: Loading DCC/de2i_150_qsys.qsys
 Progress: Reading input file
 Progress: Adding clk_50 [clock_source 14.0]
@@ -32,87 +32,8 @@ Progress: Adding micFilter_cntl [altera_avalon_pio 14.0]
 Progress: Parameterizing module micFilter_cntl
 Progress: Adding micFilter_rst [altera_avalon_pio 14.0]
 Progress: Parameterizing module micFilter_rst
-Progress: Building connections
-Progress: Parameterizing connections
-Progress: Validating
-Progress: Done reading input file
-Info: de2i_150_qsys.de2i_150_qsys: There are recommended upgrades for: pcie_ip
-Info: de2i_150_qsys.pcie_ip:  Rx Master BAR 1_0 mapped to 19 -bit Avalon-MM address
-Info: de2i_150_qsys.pcie_ip:  Rx Master BAR 2 mapped to 15 -bit Avalon-MM address
-Warning: de2i_150_qsys.pcie_ip.pcie_ip: Module dependency loop involving: "pcie_internal_hip" (altera_pcie_internal_hard_ip_qsys 14.0)
-Warning: de2i_150_qsys.pcie_ip.pcie_ip: Module dependency loop involving: "pcie_internal_hip" (altera_pcie_internal_hard_ip_qsys 14.0), "avalon_clk" (altera_clock_bridge 14.0)
-Info: de2i_150_qsys.pcie_ip.pcie_internal_hip:  Txs Address width is 31
-Info: de2i_150_qsys.pcie_ip.pcie_internal_hip: Application clock frequency is 125 Mhz 
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip.app_msi_ack: Interface has no signals
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip.app_msi_num: Interface has no signals
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip.app_msi_req: Interface has no signals
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip.test_out_export: Interface has no signals
-Info: de2i_150_qsys.pcie_ip.altgx_internal: Family: Cyclone IV GX
-Info: de2i_150_qsys.pcie_ip.altgx_internal: Lanes: 1
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.pcie_core_clk cannot be both connected and exported
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.app_msi_ack must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.rc_rx_analogreset must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.rc_rx_digitalreset must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.app_msi_num must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.app_msi_req must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.msi_interface_export must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.tx_deemph_0 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.tx_margin_0 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.test_out_export must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pipe_interface_internal: pipe_interface_internal.pll_powerdown_pcs must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pipe_interface_internal: pipe_interface_internal.rateswitch_pcs must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.pipe_interface_internal: pipe_interface_internal.rateswitchbaseclock_pcs must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_2 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_3 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_4 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_5 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_6 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_7 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_8 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_9 must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip.reset_controller_internal: reset_controller_internal.reset_n_out cannot be both connected and exported
-Info: de2i_150_qsys.button: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
-Warning: de2i_150_qsys.fifo_memory: The Nios II HAL drivers for the Altera Avalon FIFO support only 32-bit data width.
-        If you connect this FIFO to a Nios II CPU, you will need to access the registers directly.
-Warning: de2i_150_qsys.pcie_ip: pcie_ip.powerdown must be exported, or connected to a matching conduit.
-Warning: de2i_150_qsys.pcie_ip: Interrupt sender pcie_ip.cra_irq is not connected to an interrupt receiver
-Info: ip-generate succeeded.
-Info: Finished: Create block symbol file (.bsf)
-Info: 
-Info: Starting: Create HDL design files for synthesis
-Info: ip-generate --project-directory=/home/luisardila/ProjectB/DCC --output-directory=/home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis --file-set=QUARTUS_SYNTH --report-file=html:/home/luisardila/ProjectB/DCC/de2i_150_qsys/de2i_150_qsys.html --report-file=sopcinfo:/home/luisardila/ProjectB/DCC/de2i_150_qsys.sopcinfo --report-file=cmp:/home/luisardila/ProjectB/DCC/de2i_150_qsys/de2i_150_qsys.cmp --report-file=qip:/home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/de2i_150_qsys.qip --report-file=svd:/home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/de2i_150_qsys.svd --report-file=regmap:/home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/de2i_150_qsys.regmap --report-file=xml:/home/luisardila/ProjectB/DCC/de2i_150_qsys/de2i_150_qsys.xml --report-file=debuginfo:/home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/de2i_150_qsys.debuginfo --system-info=DEVICE_FAMILY="Cyclone IV GX" --system-info=DEVICE=EP4CGX150DF31C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=/home/luisardila/ProjectB/DCC/de2i_150_qsys.qsys --language=VERILOG
-Progress: Loading DCC/de2i_150_qsys.qsys
-Progress: Reading input file
-Progress: Adding clk_50 [clock_source 14.0]
-Progress: Parameterizing module clk_50
-Progress: Adding pcie_ip [altera_pcie_hard_ip 14.0]
-Progress: Parameterizing module pcie_ip
-Progress: Adding sgdma [altera_avalon_sgdma 14.0]
-Progress: Parameterizing module sgdma
-Progress: Adding fir_memory [altera_avalon_onchip_memory2 14.0]
-Progress: Parameterizing module fir_memory
-Progress: Adding led [altera_avalon_pio 14.0]
-Progress: Parameterizing module led
-Progress: Adding button [altera_avalon_pio 14.0]
-Progress: Parameterizing module button
-Progress: Adding fifo_memory [altera_avalon_fifo 14.0]
-Progress: Parameterizing module fifo_memory
-Progress: Adding Interpo_4_0 [altera_avalon_onchip_memory2 14.0]
-Progress: Parameterizing module Interpo_4_0
-Progress: Adding Interpo_5_0 [altera_avalon_onchip_memory2 14.0]
-Progress: Parameterizing module Interpo_5_0
-Progress: Adding Interpo_5_1 [altera_avalon_onchip_memory2 14.0]
-Progress: Parameterizing module Interpo_5_1
-Progress: Adding Interpo_5_2 [altera_avalon_onchip_memory2 14.0]
-Progress: Parameterizing module Interpo_5_2
-Progress: Adding Interpo_5_3 [altera_avalon_onchip_memory2 14.0]
-Progress: Parameterizing module Interpo_5_3
-Progress: Adding Adapt_FIR_mem [altera_avalon_onchip_memory2 14.0]
-Progress: Parameterizing module Adapt_FIR_mem
-Progress: Adding micFilter_cntl [altera_avalon_pio 14.0]
-Progress: Parameterizing module micFilter_cntl
-Progress: Adding micFilter_rst [altera_avalon_pio 14.0]
-Progress: Parameterizing module micFilter_rst
+Progress: Adding micFilter_adjust [altera_avalon_pio 14.0]
+Progress: Parameterizing module micFilter_adjust
 Progress: Building connections
 Progress: Parameterizing connections
 Progress: Validating
@@ -157,58 +78,141 @@ Warning: de2i_150_qsys.fifo_memory: The Nios II HAL drivers for the Altera Avalo
         If you connect this FIFO to a Nios II CPU, you will need to access the registers directly.
 Warning: de2i_150_qsys.pcie_ip: pcie_ip.powerdown must be exported, or connected to a matching conduit.
 Warning: de2i_150_qsys.pcie_ip: Interrupt sender pcie_ip.cra_irq is not connected to an interrupt receiver
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: ip-generate --project-directory=/dos/ProjectB/DCC --output-directory=/dos/ProjectB/DCC/de2i_150_qsys/synthesis --file-set=QUARTUS_SYNTH --report-file=html:/dos/ProjectB/DCC/de2i_150_qsys/de2i_150_qsys.html --report-file=sopcinfo:/dos/ProjectB/DCC/de2i_150_qsys.sopcinfo --report-file=cmp:/dos/ProjectB/DCC/de2i_150_qsys/de2i_150_qsys.cmp --report-file=qip:/dos/ProjectB/DCC/de2i_150_qsys/synthesis/de2i_150_qsys.qip --report-file=svd:/dos/ProjectB/DCC/de2i_150_qsys/synthesis/de2i_150_qsys.svd --report-file=regmap:/dos/ProjectB/DCC/de2i_150_qsys/synthesis/de2i_150_qsys.regmap --report-file=xml:/dos/ProjectB/DCC/de2i_150_qsys/de2i_150_qsys.xml --report-file=debuginfo:/dos/ProjectB/DCC/de2i_150_qsys/synthesis/de2i_150_qsys.debuginfo --system-info=DEVICE_FAMILY="Cyclone IV GX" --system-info=DEVICE=EP4CGX150DF31C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=/dos/ProjectB/DCC/de2i_150_qsys.qsys --language=VHDL
+Progress: Loading DCC/de2i_150_qsys.qsys
+Progress: Reading input file
+Progress: Adding clk_50 [clock_source 14.0]
+Progress: Parameterizing module clk_50
+Progress: Adding pcie_ip [altera_pcie_hard_ip 14.0]
+Progress: Parameterizing module pcie_ip
+Progress: Adding sgdma [altera_avalon_sgdma 14.0]
+Progress: Parameterizing module sgdma
+Progress: Adding fir_memory [altera_avalon_onchip_memory2 14.0]
+Progress: Parameterizing module fir_memory
+Progress: Adding led [altera_avalon_pio 14.0]
+Progress: Parameterizing module led
+Progress: Adding button [altera_avalon_pio 14.0]
+Progress: Parameterizing module button
+Progress: Adding fifo_memory [altera_avalon_fifo 14.0]
+Progress: Parameterizing module fifo_memory
+Progress: Adding Interpo_4_0 [altera_avalon_onchip_memory2 14.0]
+Progress: Parameterizing module Interpo_4_0
+Progress: Adding Interpo_5_0 [altera_avalon_onchip_memory2 14.0]
+Progress: Parameterizing module Interpo_5_0
+Progress: Adding Interpo_5_1 [altera_avalon_onchip_memory2 14.0]
+Progress: Parameterizing module Interpo_5_1
+Progress: Adding Interpo_5_2 [altera_avalon_onchip_memory2 14.0]
+Progress: Parameterizing module Interpo_5_2
+Progress: Adding Interpo_5_3 [altera_avalon_onchip_memory2 14.0]
+Progress: Parameterizing module Interpo_5_3
+Progress: Adding Adapt_FIR_mem [altera_avalon_onchip_memory2 14.0]
+Progress: Parameterizing module Adapt_FIR_mem
+Progress: Adding micFilter_cntl [altera_avalon_pio 14.0]
+Progress: Parameterizing module micFilter_cntl
+Progress: Adding micFilter_rst [altera_avalon_pio 14.0]
+Progress: Parameterizing module micFilter_rst
+Progress: Adding micFilter_adjust [altera_avalon_pio 14.0]
+Progress: Parameterizing module micFilter_adjust
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: de2i_150_qsys.de2i_150_qsys: There are recommended upgrades for: pcie_ip
+Info: de2i_150_qsys.pcie_ip:  Rx Master BAR 1_0 mapped to 19 -bit Avalon-MM address
+Info: de2i_150_qsys.pcie_ip:  Rx Master BAR 2 mapped to 15 -bit Avalon-MM address
+Warning: de2i_150_qsys.pcie_ip.pcie_ip: Module dependency loop involving: "pcie_internal_hip" (altera_pcie_internal_hard_ip_qsys 14.0)
+Warning: de2i_150_qsys.pcie_ip.pcie_ip: Module dependency loop involving: "pcie_internal_hip" (altera_pcie_internal_hard_ip_qsys 14.0), "avalon_clk" (altera_clock_bridge 14.0)
+Info: de2i_150_qsys.pcie_ip.pcie_internal_hip:  Txs Address width is 31
+Info: de2i_150_qsys.pcie_ip.pcie_internal_hip: Application clock frequency is 125 Mhz 
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip.app_msi_ack: Interface has no signals
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip.app_msi_num: Interface has no signals
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip.app_msi_req: Interface has no signals
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip.test_out_export: Interface has no signals
+Info: de2i_150_qsys.pcie_ip.altgx_internal: Family: Cyclone IV GX
+Info: de2i_150_qsys.pcie_ip.altgx_internal: Lanes: 1
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.pcie_core_clk cannot be both connected and exported
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.app_msi_ack must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.rc_rx_analogreset must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.rc_rx_digitalreset must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.app_msi_num must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.app_msi_req must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.msi_interface_export must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.tx_deemph_0 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.tx_margin_0 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pcie_internal_hip: pcie_internal_hip.test_out_export must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pipe_interface_internal: pipe_interface_internal.pll_powerdown_pcs must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pipe_interface_internal: pipe_interface_internal.rateswitch_pcs must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.pipe_interface_internal: pipe_interface_internal.rateswitchbaseclock_pcs must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_2 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_3 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_4 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_5 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_6 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_7 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_8 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.refclk_conduit: refclk_conduit.conduit_out_9 must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip.reset_controller_internal: reset_controller_internal.reset_n_out cannot be both connected and exported
+Info: de2i_150_qsys.button: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
+Warning: de2i_150_qsys.fifo_memory: The Nios II HAL drivers for the Altera Avalon FIFO support only 32-bit data width.
+        If you connect this FIFO to a Nios II CPU, you will need to access the registers directly.
+Warning: de2i_150_qsys.pcie_ip: pcie_ip.powerdown must be exported, or connected to a matching conduit.
+Warning: de2i_150_qsys.pcie_ip: Interrupt sender pcie_ip.cra_irq is not connected to an interrupt receiver
 Info: de2i_150_qsys: Generating de2i_150_qsys "de2i_150_qsys" for QUARTUS_SYNTH
 Info: pcie_ip: "de2i_150_qsys" instantiated altera_pcie_hard_ip "pcie_ip"
 Info: sgdma: Starting RTL generation for module 'de2i_150_qsys_sgdma'
-Info: sgdma:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_sgdma -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_sgdma/generate_rtl.pl --name=de2i_150_qsys_sgdma --dir=/tmp/alt6705_8217494984809973340.dir/0370_sgdma_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0370_sgdma_gen//de2i_150_qsys_sgdma_component_configuration.pl  --do_build_sim=0  ]
+Info: sgdma:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_sgdma -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_sgdma/generate_rtl.pl --name=de2i_150_qsys_sgdma --dir=/tmp/alt6720_1751899788014068592.dir/0002_sgdma_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0002_sgdma_gen//de2i_150_qsys_sgdma_component_configuration.pl  --do_build_sim=0  ]
 Info: sgdma: Done RTL generation for module 'de2i_150_qsys_sgdma'
 Info: sgdma: "de2i_150_qsys" instantiated altera_avalon_sgdma "sgdma"
 Info: fir_memory: Starting RTL generation for module 'de2i_150_qsys_fir_memory'
-Info: fir_memory:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_fir_memory --dir=/tmp/alt6705_8217494984809973340.dir/0371_fir_memory_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0371_fir_memory_gen//de2i_150_qsys_fir_memory_component_configuration.pl  --do_build_sim=0  ]
+Info: fir_memory:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_fir_memory --dir=/tmp/alt6720_1751899788014068592.dir/0003_fir_memory_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0003_fir_memory_gen//de2i_150_qsys_fir_memory_component_configuration.pl  --do_build_sim=0  ]
 Info: fir_memory: Done RTL generation for module 'de2i_150_qsys_fir_memory'
 Info: fir_memory: "de2i_150_qsys" instantiated altera_avalon_onchip_memory2 "fir_memory"
 Info: led: Starting RTL generation for module 'de2i_150_qsys_led'
-Info: led:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_qsys_led --dir=/tmp/alt6705_8217494984809973340.dir/0372_led_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0372_led_gen//de2i_150_qsys_led_component_configuration.pl  --do_build_sim=0  ]
+Info: led:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_qsys_led --dir=/tmp/alt6720_1751899788014068592.dir/0004_led_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0004_led_gen//de2i_150_qsys_led_component_configuration.pl  --do_build_sim=0  ]
 Info: led: Done RTL generation for module 'de2i_150_qsys_led'
 Info: led: "de2i_150_qsys" instantiated altera_avalon_pio "led"
 Info: button: Starting RTL generation for module 'de2i_150_qsys_button'
-Info: button:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_qsys_button --dir=/tmp/alt6705_8217494984809973340.dir/0373_button_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0373_button_gen//de2i_150_qsys_button_component_configuration.pl  --do_build_sim=0  ]
+Info: button:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_qsys_button --dir=/tmp/alt6720_1751899788014068592.dir/0005_button_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0005_button_gen//de2i_150_qsys_button_component_configuration.pl  --do_build_sim=0  ]
 Info: button: Done RTL generation for module 'de2i_150_qsys_button'
 Info: button: "de2i_150_qsys" instantiated altera_avalon_pio "button"
 Info: fifo_memory: Starting RTL generation for module 'de2i_150_qsys_fifo_memory'
-Info: fifo_memory:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_fifo -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_fifo/generate_rtl.pl --name=de2i_150_qsys_fifo_memory --dir=/tmp/alt6705_8217494984809973340.dir/0374_fifo_memory_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0374_fifo_memory_gen//de2i_150_qsys_fifo_memory_component_configuration.pl  --do_build_sim=0  ]
+Info: fifo_memory:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_fifo -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_fifo/generate_rtl.pl --name=de2i_150_qsys_fifo_memory --dir=/tmp/alt6720_1751899788014068592.dir/0006_fifo_memory_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0006_fifo_memory_gen//de2i_150_qsys_fifo_memory_component_configuration.pl  --do_build_sim=0  ]
 Info: fifo_memory: Done RTL generation for module 'de2i_150_qsys_fifo_memory'
 Info: fifo_memory: "de2i_150_qsys" instantiated altera_avalon_fifo "fifo_memory"
 Info: Interpo_4_0: Starting RTL generation for module 'de2i_150_qsys_Interpo_4_0'
-Info: Interpo_4_0:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_4_0 --dir=/tmp/alt6705_8217494984809973340.dir/0375_Interpo_4_0_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0375_Interpo_4_0_gen//de2i_150_qsys_Interpo_4_0_component_configuration.pl  --do_build_sim=0  ]
+Info: Interpo_4_0:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_4_0 --dir=/tmp/alt6720_1751899788014068592.dir/0007_Interpo_4_0_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0007_Interpo_4_0_gen//de2i_150_qsys_Interpo_4_0_component_configuration.pl  --do_build_sim=0  ]
 Info: Interpo_4_0: Done RTL generation for module 'de2i_150_qsys_Interpo_4_0'
 Info: Interpo_4_0: "de2i_150_qsys" instantiated altera_avalon_onchip_memory2 "Interpo_4_0"
 Info: Interpo_5_0: Starting RTL generation for module 'de2i_150_qsys_Interpo_5_0'
-Info: Interpo_5_0:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_5_0 --dir=/tmp/alt6705_8217494984809973340.dir/0376_Interpo_5_0_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0376_Interpo_5_0_gen//de2i_150_qsys_Interpo_5_0_component_configuration.pl  --do_build_sim=0  ]
+Info: Interpo_5_0:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_5_0 --dir=/tmp/alt6720_1751899788014068592.dir/0008_Interpo_5_0_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0008_Interpo_5_0_gen//de2i_150_qsys_Interpo_5_0_component_configuration.pl  --do_build_sim=0  ]
 Info: Interpo_5_0: Done RTL generation for module 'de2i_150_qsys_Interpo_5_0'
 Info: Interpo_5_0: "de2i_150_qsys" instantiated altera_avalon_onchip_memory2 "Interpo_5_0"
 Info: Interpo_5_1: Starting RTL generation for module 'de2i_150_qsys_Interpo_5_1'
-Info: Interpo_5_1:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_5_1 --dir=/tmp/alt6705_8217494984809973340.dir/0377_Interpo_5_1_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0377_Interpo_5_1_gen//de2i_150_qsys_Interpo_5_1_component_configuration.pl  --do_build_sim=0  ]
+Info: Interpo_5_1:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_5_1 --dir=/tmp/alt6720_1751899788014068592.dir/0009_Interpo_5_1_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0009_Interpo_5_1_gen//de2i_150_qsys_Interpo_5_1_component_configuration.pl  --do_build_sim=0  ]
 Info: Interpo_5_1: Done RTL generation for module 'de2i_150_qsys_Interpo_5_1'
 Info: Interpo_5_1: "de2i_150_qsys" instantiated altera_avalon_onchip_memory2 "Interpo_5_1"
 Info: Interpo_5_2: Starting RTL generation for module 'de2i_150_qsys_Interpo_5_2'
-Info: Interpo_5_2:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_5_2 --dir=/tmp/alt6705_8217494984809973340.dir/0378_Interpo_5_2_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0378_Interpo_5_2_gen//de2i_150_qsys_Interpo_5_2_component_configuration.pl  --do_build_sim=0  ]
+Info: Interpo_5_2:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_5_2 --dir=/tmp/alt6720_1751899788014068592.dir/0010_Interpo_5_2_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0010_Interpo_5_2_gen//de2i_150_qsys_Interpo_5_2_component_configuration.pl  --do_build_sim=0  ]
 Info: Interpo_5_2: Done RTL generation for module 'de2i_150_qsys_Interpo_5_2'
 Info: Interpo_5_2: "de2i_150_qsys" instantiated altera_avalon_onchip_memory2 "Interpo_5_2"
 Info: Interpo_5_3: Starting RTL generation for module 'de2i_150_qsys_Interpo_5_3'
-Info: Interpo_5_3:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_5_3 --dir=/tmp/alt6705_8217494984809973340.dir/0379_Interpo_5_3_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0379_Interpo_5_3_gen//de2i_150_qsys_Interpo_5_3_component_configuration.pl  --do_build_sim=0  ]
+Info: Interpo_5_3:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Interpo_5_3 --dir=/tmp/alt6720_1751899788014068592.dir/0011_Interpo_5_3_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0011_Interpo_5_3_gen//de2i_150_qsys_Interpo_5_3_component_configuration.pl  --do_build_sim=0  ]
 Info: Interpo_5_3: Done RTL generation for module 'de2i_150_qsys_Interpo_5_3'
 Info: Interpo_5_3: "de2i_150_qsys" instantiated altera_avalon_onchip_memory2 "Interpo_5_3"
 Info: Adapt_FIR_mem: Starting RTL generation for module 'de2i_150_qsys_Adapt_FIR_mem'
-Info: Adapt_FIR_mem:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Adapt_FIR_mem --dir=/tmp/alt6705_8217494984809973340.dir/0380_Adapt_FIR_mem_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0380_Adapt_FIR_mem_gen//de2i_150_qsys_Adapt_FIR_mem_component_configuration.pl  --do_build_sim=0  ]
+Info: Adapt_FIR_mem:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=de2i_150_qsys_Adapt_FIR_mem --dir=/tmp/alt6720_1751899788014068592.dir/0012_Adapt_FIR_mem_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0012_Adapt_FIR_mem_gen//de2i_150_qsys_Adapt_FIR_mem_component_configuration.pl  --do_build_sim=0  ]
 Info: Adapt_FIR_mem: Done RTL generation for module 'de2i_150_qsys_Adapt_FIR_mem'
 Info: Adapt_FIR_mem: "de2i_150_qsys" instantiated altera_avalon_onchip_memory2 "Adapt_FIR_mem"
 Info: micFilter_cntl: Starting RTL generation for module 'de2i_150_qsys_micFilter_cntl'
-Info: micFilter_cntl:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_qsys_micFilter_cntl --dir=/tmp/alt6705_8217494984809973340.dir/0381_micFilter_cntl_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0381_micFilter_cntl_gen//de2i_150_qsys_micFilter_cntl_component_configuration.pl  --do_build_sim=0  ]
+Info: micFilter_cntl:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_qsys_micFilter_cntl --dir=/tmp/alt6720_1751899788014068592.dir/0013_micFilter_cntl_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0013_micFilter_cntl_gen//de2i_150_qsys_micFilter_cntl_component_configuration.pl  --do_build_sim=0  ]
 Info: micFilter_cntl: Done RTL generation for module 'de2i_150_qsys_micFilter_cntl'
 Info: micFilter_cntl: "de2i_150_qsys" instantiated altera_avalon_pio "micFilter_cntl"
 Info: micFilter_rst: Starting RTL generation for module 'de2i_150_qsys_micFilter_rst'
-Info: micFilter_rst:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_qsys_micFilter_rst --dir=/tmp/alt6705_8217494984809973340.dir/0382_micFilter_rst_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6705_8217494984809973340.dir/0382_micFilter_rst_gen//de2i_150_qsys_micFilter_rst_component_configuration.pl  --do_build_sim=0  ]
+Info: micFilter_rst:   Generation command is [exec /home/luisardila/altera/14.0/quartus/linux64/perl/bin/perl -I /home/luisardila/altera/14.0/quartus/linux64/perl/lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/europa -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin/perl_lib -I /home/luisardila/altera/14.0/quartus/sopc_builder/bin -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/common -I /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /home/luisardila/altera/14.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=de2i_150_qsys_micFilter_rst --dir=/tmp/alt6720_1751899788014068592.dir/0014_micFilter_rst_gen/ --quartus_dir=/home/luisardila/altera/14.0/quartus --verilog --config=/tmp/alt6720_1751899788014068592.dir/0014_micFilter_rst_gen//de2i_150_qsys_micFilter_rst_component_configuration.pl  --do_build_sim=0  ]
 Info: micFilter_rst: Done RTL generation for module 'de2i_150_qsys_micFilter_rst'
 Info: micFilter_rst: "de2i_150_qsys" instantiated altera_avalon_pio "micFilter_rst"
 Info: mm_interconnect_0: "de2i_150_qsys" instantiated altera_mm_interconnect "mm_interconnect_0"
@@ -235,42 +239,42 @@ Info: router_005: "mm_interconnect_0" instantiated altera_merlin_router "router_
 Info: router_006: "mm_interconnect_0" instantiated altera_merlin_router "router_006"
 Info: router_009: "mm_interconnect_0" instantiated altera_merlin_router "router_009"
 Info: router_010: "mm_interconnect_0" instantiated altera_merlin_router "router_010"
-Info: router_019: "mm_interconnect_0" instantiated altera_merlin_router "router_019"
+Info: router_020: "mm_interconnect_0" instantiated altera_merlin_router "router_020"
 Info: pcie_ip_bar1_0_limiter: "mm_interconnect_0" instantiated altera_merlin_traffic_limiter "pcie_ip_bar1_0_limiter"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_avalon_sc_fifo.v
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_avalon_sc_fifo.v
 Info: fir_memory_s1_burst_adapter: "mm_interconnect_0" instantiated altera_merlin_burst_adapter "fir_memory_s1_burst_adapter"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_avalon_st_pipeline_base.v
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_avalon_st_pipeline_base.v
 Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
 Info: cmd_demux_001: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux_001"
 Info: cmd_demux_002: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux_002"
 Info: cmd_demux_003: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux_003"
 Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
 Info: cmd_mux_001: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_001"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
 Info: cmd_mux_004: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_004"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
-Info: cmd_mux_014: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_014"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: cmd_mux_015: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_015"
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
 Info: rsp_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux"
 Info: rsp_demux_004: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_004"
-Info: rsp_demux_014: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_014"
+Info: rsp_demux_015: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_015"
 Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
 Info: rsp_mux_001: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux_001"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
 Info: rsp_mux_003: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux_003"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
 Info: pcie_ip_bar1_0_to_fir_memory_s1_cmd_width_adapter: "mm_interconnect_0" instantiated altera_merlin_width_adapter "pcie_ip_bar1_0_to_fir_memory_s1_cmd_width_adapter"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_address_alignment.sv
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_address_alignment.sv
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_burst_uncompressor.sv
 Info: router: "mm_interconnect_1" instantiated altera_merlin_router "router"
 Info: router_001: "mm_interconnect_1" instantiated altera_merlin_router "router_001"
 Info: cmd_demux: "mm_interconnect_1" instantiated altera_merlin_demultiplexer "cmd_demux"
 Info: cmd_mux: "mm_interconnect_1" instantiated altera_merlin_multiplexer "cmd_mux"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
 Info: rsp_demux: "mm_interconnect_1" instantiated altera_merlin_demultiplexer "rsp_demux"
 Info: rsp_mux: "mm_interconnect_1" instantiated altera_merlin_multiplexer "rsp_mux"
-Info: Reusing file /home/luisardila/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
-Info: de2i_150_qsys: Done "de2i_150_qsys" with 60 modules, 105 files
+Info: Reusing file /dos/ProjectB/DCC/de2i_150_qsys/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: de2i_150_qsys: Done "de2i_150_qsys" with 60 modules, 107 files
 Info: ip-generate succeeded.
 Info: Finished: Create HDL design files for synthesis

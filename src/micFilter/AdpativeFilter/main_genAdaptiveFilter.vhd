@@ -41,7 +41,12 @@ port (	clk 	: IN STD_LOGIC;							        -- Clock
 		v 		: IN STD_LOGIC_VECTOR (15 downto 0);	        -- Mechanical sensor signal input
 		s 		: IN STD_LOGIC_VECTOR (15 downto 0);	        -- Detector signal input
 		adj 	: IN STD_LOGIC;						            -- Adjust input bit
-        p_hat 	: OUT STD_LOGIC_VECTOR (15 downto 0):=x"0000");	-- Signal output
+        p_hat 	: OUT STD_LOGIC_VECTOR (15 downto 0):=x"0000";
+			adapt_fir_mem_s2_address 	: out std_logic_vector(8 downto 0);
+			adapt_fir_mem_s2_write		: out std_logic;
+			adapt_fir_mem_s2_writedata	: out std_logic_vector(31 downto 0);
+			adapt_fir_mem_clk2_clk		: out std_logic
+	);	-- Signal output
 end;
 
 
@@ -262,4 +267,10 @@ begin
 	acc_tmp <= acc + mul;			-- accumulate
 	H_tmp	<= signed(H_q) + mul;
 	p_hat <= STD_LOGIC_VECTOR(p_hat_tmp);
+	
+	adapt_fir_mem_s2_address 	<= STD_LOGIC_VECTOR(H_wAdd);
+	adapt_fir_mem_s2_write		<=	H_wCE;
+	adapt_fir_mem_s2_writedata	<= H_d;
+	adapt_fir_mem_clk2_clk		<= clk;
+	
 end behav_genAdF;

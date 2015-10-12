@@ -69,7 +69,11 @@ entity micFilter is
 			interpo_5_3_s2_address 		: out std_logic_vector (5 downto 0);	
 			interpo_5_3_s2_clken			: out std_logic;		
 			interpo_5_3_s2_readdata		: in std_logic_vector(31 downto 0);
-			interpo_5_3_clk2_clk			: out std_logic
+			interpo_5_3_clk2_clk			: out std_logic;
+			adapt_fir_mem_s2_address 	: out std_logic_vector(8 downto 0);
+			adapt_fir_mem_s2_write		: out std_logic;
+			adapt_fir_mem_s2_writedata	: out std_logic_vector(31 downto 0);
+			adapt_fir_mem_clk2_clk		: out std_logic			
 			
 	);								
   end micFilter;
@@ -94,7 +98,12 @@ architecture micFilter_behav of micFilter is
 			v 		: in STD_LOGIC_VECTOR ( 15 downto 0 );
 			s 		: in STD_LOGIC_VECTOR ( 15 downto 0 );
 			adj 	: in STD_LOGIC;
-			p_hat 	: out STD_LOGIC_VECTOR ( 15 downto 0 ));
+			p_hat 	: out STD_LOGIC_VECTOR ( 15 downto 0 );
+			adapt_fir_mem_s2_address 	: out std_logic_vector(8 downto 0);
+			adapt_fir_mem_s2_write		: out std_logic;
+			adapt_fir_mem_s2_writedata	: out std_logic_vector(31 downto 0);
+			adapt_fir_mem_clk2_clk		: out std_logic
+	);
 	end component;
 	
 	-- FIR Filter --
@@ -254,7 +263,12 @@ begin
 				rst 	=> reset,
 				s 		=> s_HP,
 				start 	=> clk_10k,
-				v 		=> v_in);
+				v 		=> v_in,
+				adapt_fir_mem_s2_address	=> adapt_fir_mem_s2_address,		
+				adapt_fir_mem_s2_write		=> adapt_fir_mem_s2_write,				
+				adapt_fir_mem_s2_writedata	=> adapt_fir_mem_s2_writedata,		
+				adapt_fir_mem_clk2_clk		=> adapt_fir_mem_clk2_clk			
+				);
 	
 	InterpClkGen_0: component InterpClkGen
 	generic map(	lPeriod1	=> intClkGen_lP1,		   
@@ -357,4 +371,5 @@ begin
 	s_in <= gamma;
 	v_in <= mic;
 	gamma_corr <= y_out;
+	
 end micFilter_behav;
