@@ -11,20 +11,20 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity FIFO is
-generic ( 	data_width     : integer := 16;                                          -- Data width
-			address_width  : integer := 19;                                          -- Address width
-			buffer_length  : integer := 339761);                                     -- Buffer length
-port (	clk 	: IN STD_LOGIC;							    		                 -- Read clock
-		rst 	: IN STD_LOGIC;										                 -- Reset pointers
-		d0 		: IN STD_LOGIC_VECTOR (data_width-1 downto 0);		                 -- Data input
-		q0 		: OUT STD_LOGIC_VECTOR (data_width-1 downto 0) := (others => '0'));	 -- Data output
+generic ( 	data_width     : integer := 16;          -- Data width
+			address_width  : integer := 19;             -- Address width
+			buffer_length  : integer := 350000);        -- Buffer length FIFO_length  340151 - 339761
+port (	clk 	: IN STD_LOGIC;							  -- Read clock
+		rst 	: IN STD_LOGIC;								  -- Reset pointers
+		delay_lenght : IN STD_LOGIC_VECTOR (address_width - 1 DOWNTO 0);						-- soft lenght from PCIe
+		d0 		: IN STD_LOGIC_VECTOR (data_width-1 downto 0);		                 		-- Data input
+		q0 		: OUT STD_LOGIC_VECTOR (data_width-1 downto 0) := (others => '0'));	 	-- Data output
 end entity;
 
 architecture behav_gFIFO of FIFO is 
     --- Constants ------------------------------------------------------------------------
     constant constAddr_0 : unsigned (address_width-1 downto 0) := to_unsigned(0,address_width);
     constant constAddr_1 : unsigned (address_width-1 downto 0) := to_unsigned(1,address_width);
-    constant b_length : unsigned (address_width-1 downto 0) := to_unsigned(buffer_length-1,address_width);
 	--- Signals --------------------------------------------------------------------------
 	signal pointer : unsigned (address_width-1 downto 0) := constAddr_0;
 	--- Components -----------------------------------------------------------------------
@@ -54,7 +54,7 @@ begin
         if (clk'event and clk = '1') then
             if (rst = '1') then
 			     pointer <= constAddr_0;
-		    elsif (pointer = b_length) then
+		    elsif (pointer = unsigned(delay_lenght)) then
 		         pointer <= constAddr_0;			-- pointer = 0
 		    else
 		         pointer <= pointer+constAddr_1;	-- pointer++

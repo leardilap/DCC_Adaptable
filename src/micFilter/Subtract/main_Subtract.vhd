@@ -10,15 +10,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
  
 entity Subtract is
-   generic( factor      : INTEGER RANGE 0 TO 65565 := 4096);          -- Multiplication factor for negative input := 4111 DIN2 Factor (4.12)
    port(	clk 		: in STD_LOGIC;                                     -- Clock
+			sub_factor	: in STD_LOGIC_VECTOR(15 downto 0);						 -- factor
 			DIN1, DIN2	: in STD_LOGIC_VECTOR(15 downto 0);		          -- Data inputs (16 bit)
 			DOUT		: out STD_LOGIC_VECTOR (15 downto 0) := x"0000");	 -- Data output (16 bit)
 end entity Subtract;
  
 architecture behav_Subtract of Subtract is
-    --- Constants -------------------------------
-    constant m : signed := to_signed(factor,16);
     --- Signals ---------------------------------
     signal tmp : signed ( 15 downto 0) := (others=>'0');
     signal mul : signed ( 31 downto 0) := (others=>'0');
@@ -31,5 +29,5 @@ begin
     end process;
 	
     DOUT <= STD_LOGIC_VECTOR(tmp);
-    mul <= m * signed(DIN2);
+    mul <= signed(sub_factor) * signed(DIN2);
 end architecture behav_Subtract;

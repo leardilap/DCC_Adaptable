@@ -68,6 +68,14 @@
          type = "int";
       }
    }
+   element bypass_sel
+   {
+      datum _sortIndex
+      {
+         value = "18";
+         type = "int";
+      }
+   }
    element clk_50
    {
       datum _sortIndex
@@ -100,6 +108,14 @@
       {
          value = "16448";
          type = "long";
+      }
+   }
+   element delay_lenght
+   {
+      datum _sortIndex
+      {
+         value = "20";
+         type = "int";
       }
    }
    element fifo_memory
@@ -189,6 +205,22 @@
          type = "long";
       }
    }
+   element output1_sel
+   {
+      datum _sortIndex
+      {
+         value = "16";
+         type = "int";
+      }
+   }
+   element output2_sel
+   {
+      datum _sortIndex
+      {
+         value = "17";
+         type = "int";
+      }
+   }
    element pcie_ip
    {
       datum _sortIndex
@@ -197,88 +229,11 @@
          type = "int";
       }
    }
-   element Interpo_5_1.s1
+   element sub_factor.s1
    {
       datum baseAddress
       {
-         value = "331776";
-         type = "String";
-      }
-   }
-   element Interpo_4_0.s1
-   {
-      datum baseAddress
-      {
-         value = "262144";
-         type = "String";
-      }
-   }
-   element button.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "32";
-         type = "long";
-      }
-   }
-   element Interpo_5_0.s1
-   {
-      datum baseAddress
-      {
-         value = "327680";
-         type = "String";
-      }
-   }
-   element Interpo_5_2.s1
-   {
-      datum baseAddress
-      {
-         value = "335872";
-         type = "String";
-      }
-   }
-   element led.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element micFilter_cntl.s1
-   {
-      datum baseAddress
-      {
-         value = "256";
-         type = "String";
-      }
-   }
-   element micFilter_rst.s1
-   {
-      datum baseAddress
-      {
-         value = "288";
-         type = "String";
-      }
-   }
-   element Interpo_5_3.s1
-   {
-      datum baseAddress
-      {
-         value = "339968";
-         type = "String";
-      }
-   }
-   element Adapt_FIR_mem.s1
-   {
-      datum baseAddress
-      {
-         value = "393216";
+         value = "448";
          type = "String";
       }
    }
@@ -295,11 +250,128 @@
          type = "String";
       }
    }
+   element micFilter_rst.s1
+   {
+      datum baseAddress
+      {
+         value = "288";
+         type = "String";
+      }
+   }
+   element Interpo_5_1.s1
+   {
+      datum baseAddress
+      {
+         value = "331776";
+         type = "String";
+      }
+   }
+   element Adapt_FIR_mem.s1
+   {
+      datum baseAddress
+      {
+         value = "393216";
+         type = "String";
+      }
+   }
    element micFilter_adjust.s1
    {
       datum baseAddress
       {
          value = "320";
+         type = "String";
+      }
+   }
+   element bypass_sel.s1
+   {
+      datum baseAddress
+      {
+         value = "416";
+         type = "String";
+      }
+   }
+   element led.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element Interpo_5_3.s1
+   {
+      datum baseAddress
+      {
+         value = "339968";
+         type = "String";
+      }
+   }
+   element Interpo_4_0.s1
+   {
+      datum baseAddress
+      {
+         value = "262144";
+         type = "String";
+      }
+   }
+   element output2_sel.s1
+   {
+      datum baseAddress
+      {
+         value = "384";
+         type = "String";
+      }
+   }
+   element output1_sel.s1
+   {
+      datum baseAddress
+      {
+         value = "352";
+         type = "String";
+      }
+   }
+   element micFilter_cntl.s1
+   {
+      datum baseAddress
+      {
+         value = "256";
+         type = "String";
+      }
+   }
+   element delay_lenght.s1
+   {
+      datum baseAddress
+      {
+         value = "480";
+         type = "String";
+      }
+   }
+   element Interpo_5_0.s1
+   {
+      datum baseAddress
+      {
+         value = "327680";
+         type = "String";
+      }
+   }
+   element button.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "32";
+         type = "long";
+      }
+   }
+   element Interpo_5_2.s1
+   {
+      datum baseAddress
+      {
+         value = "335872";
          type = "String";
       }
    }
@@ -316,6 +388,14 @@
       datum _sortIndex
       {
          value = "2";
+         type = "int";
+      }
+   }
+   element sub_factor
+   {
+      datum _sortIndex
+      {
+         value = "19";
          type = "int";
       }
    }
@@ -523,6 +603,31 @@
  <interface
    name="micfilter_adjust"
    internal="micFilter_adjust.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="output1_sel"
+   internal="output1_sel.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="output2_sel"
+   internal="output2_sel.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="bypass_sel"
+   internal="bypass_sel.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="sub_factor"
+   internal="sub_factor.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="delay_lenght"
+   internal="delay_lenght.external_connection"
    type="conduit"
    dir="end" />
  <module kind="clock_source" version="14.0" enabled="1" name="clk_50">
@@ -969,6 +1074,88 @@
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="1" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module
+   kind="altera_avalon_pio"
+   version="14.0"
+   enabled="1"
+   name="output1_sel">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="4" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module
+   kind="altera_avalon_pio"
+   version="14.0"
+   enabled="1"
+   name="output2_sel">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="4" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module kind="altera_avalon_pio" version="14.0" enabled="1" name="bypass_sel">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="3" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module kind="altera_avalon_pio" version="14.0" enabled="1" name="sub_factor">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="16" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module
+   kind="altera_avalon_pio"
+   version="14.0"
+   enabled="1"
+   name="delay_lenght">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="19" />
   <parameter name="clockRate" value="125000000" />
  </module>
  <connection
@@ -1518,6 +1705,126 @@
   <parameter name="baseAddress" value="0x0140" />
   <parameter name="defaultConnection" value="false" />
  </connection>
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="output1_sel.clk" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="output1_sel.reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="output1_sel.reset" />
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="output1_sel.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0160" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="output2_sel.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0180" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="output2_sel.reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="output2_sel.reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="output2_sel.clk" />
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="bypass_sel.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x01a0" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="bypass_sel.reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="bypass_sel.clk" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="bypass_sel.reset" />
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="sub_factor.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x01c0" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="sub_factor.reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="sub_factor.clk" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="sub_factor.reset" />
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="delay_lenght.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x01e0" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="delay_lenght.reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="delay_lenght.reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="delay_lenght.clk" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>

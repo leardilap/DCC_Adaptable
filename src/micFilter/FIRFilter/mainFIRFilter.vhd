@@ -13,7 +13,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity FIRFilter is
-    Generic ( 	--coefficent_file : string := "X:\c\cpfeiffer\Projects\Microphonics\Vivado\SIM_FILES\coef.dat";    -- Filter coefficient file path
+    Generic ( 
 				fLength : INTEGER := 512;                               -- Filter length
 				aWidth	: INTEGER := 15);                                -- Address width
     Port ( 	clk 	: in STD_LOGIC;                                     -- Clock

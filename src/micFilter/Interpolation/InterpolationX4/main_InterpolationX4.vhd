@@ -13,7 +13,6 @@ use STD.textio.all;
 use work.txt_util.all;
 
 entity InterpolationX4 is
-generic( c_file : string := "X:\c\cpfeiffer\Projects\Microphonics\Vivado\SIM_FILES\i4coef.dat"); -- Coefficient file path
 port (	clk	: in STD_LOGIC;
 				clk25M	: in STD_LOGIC;
 			rst : in STD_LOGIC;															 -- Reset

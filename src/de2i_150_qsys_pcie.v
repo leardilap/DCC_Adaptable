@@ -50,7 +50,7 @@
 // ============================================================================
 
 `define ENABLE_PCIE
-`define DATE 32'h12101501
+`define DATE 32'h06111501
 
 module de2i_150_qsys_pcie(
 
@@ -496,8 +496,15 @@ wire        adapt_fir_mem_s2_write;                     //                      
 wire [31:0] adapt_fir_mem_s2_writedata;                  //                           .readdata
 wire        adapt_fir_mem_clk2_clk;                     //         adapt_fir_mem_clk2.clk
 
-wire [31:0] micfilter_cntl_export;                      //             micfilter_cntl.export
-wire       micfilter_rst_export;                        //              micfilter_rst.export
+wire [31:0] micfilter_cntl;                      //             micfilter_cntl.export
+wire       micfilter_rst;                        //              micfilter_rst.export
+wire [15:0] sOutput1;
+wire [15:0] sOutput2;
+wire [3:0] output1_sel;
+wire [3:0] output2_sel;
+wire [2:0] bypass_sel;
+wire [15:0] sub_factor;
+wire [18:0] delay_lenght;
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -594,9 +601,13 @@ assign LEDR[0] = hb_50;
 			.adapt_fir_mem_clk2_clk                (adapt_fir_mem_clk2_clk),        //         adapt_fir_mem_clk2.clk
 			.adapt_fir_mem_reset2_reset            (1'b0),                        //       adapt_fir_mem_reset2.reset
 			.adapt_fir_mem_reset2_reset_req        (1'b0),                 //     //                           .reset_req
-			.micfilter_cntl_export                 (micfilter_cntl_export),     //             micfilter_cntl.export
-			.micfilter_rst_export                  (micfilter_rst_export),      //              micfilter_rst.export
-			.micfilter_adjust_export                  (micfilter_adjust_export) 
+			.micfilter_cntl_export                 (micfilter_cntl),     //             micfilter_cntl.export
+			.micfilter_rst_export                  (micfilter_rst),      //              micfilter_rst.export
+			.micfilter_adjust_export                  (micfilter_adjust),
+			.output1_sel_export			(output1_sel),
+			.output2_sel_export         (output2_sel),
+			.bypass_sel_export          (bypass_sel),
+			.delay_lenght_export 		 	(delay_lenght)
   );
 
 hex_module hex_module_inst(
@@ -612,7 +623,7 @@ hex_module hex_module_inst(
 );
 
 micFilterCLK micFilterCLK_inst(
-	.areset			(micfilter_rst_export),
+	.areset			(micfilter_rst),
 	.inclk0			(CLOCK_50),
 	.c0				(sCLK25_0),
 	.c1				(sCLK25_180),
@@ -620,16 +631,20 @@ micFilterCLK micFilterCLK_inst(
 );
 
 micFilter_Top micFilter_Top_inst(
-			.adj						(micfilter_adjust_export),
+			.adj						(micfilter_adjust),
 			.clk 						(sCLK25_0),						//Clock input (nom. 25 MHz)
-			.rst 						(micfilter_rst_export),	 	//Synchronous reset input
-			.cntl						(micfilter_cntl_export),
+			.rst 						(micfilter_rst),	 	//Synchronous reset input
+			.cntl						(micfilter_cntl),
 			.HSMC_ADA_D				(HSMC_ADA_D),
 			.HSMC_ADA_DCO			(HSMC_ADA_DCO),
 			.HSMC_ADB_D				(HSMC_ADB_D),
 			.HSMC_ADB_DCO			(HSMC_ADB_DCO),
 			.HSMC_DA					(HSMC_DA),
 			.HSMC_DB             (HSMC_DB),
+			.output1_sel			(output1_sel),
+			.output2_sel         (output2_sel),
+			.bypass_sel          (bypass_sel),
+			.delay_lenght 		 	(delay_lenght),
 			.fir_memory_s2_address		(fir_memory_s2_address),
 			.fir_memory_s2_clken			(fir_memory_s2_clken),		
 			.fir_memory_s2_readdata		(fir_memory_s2_readdata),	

@@ -13,7 +13,6 @@ use STD.textio.all;
 use work.txt_util.all;
 
 entity InterpolationX5 is
-generic( c_file : string := "D:\Dropbox\HS-KA\STM3\ProyectB\micFilter\i5coef.dat"); -- Coefficient file path
 port (	clk	: in STD_LOGIC;
 				clk25M	: in STD_LOGIC;
 			rst : in STD_LOGIC;																			 -- Reset
