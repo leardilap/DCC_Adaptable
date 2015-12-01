@@ -38,6 +38,22 @@ module micFilter_Top(
 			input [3:0] output2_sel,
 			input [2:0] bypass_sel,
 			input  [18:0] delay_lenght,
+			input [11:0] DownSampleRate,
+			input [31:0] DownSampleMult,
+			input [15:0] sub_factor,
+			input [11:0] clkGen_lP,		    // Clock Generator - Low Period   1250;
+			input [11:0] clkGeN_hP,		    // Clock Generator - High Period   2500;
+			input [11:0] intClkGen_lP1,	 // Interp Clock Generator - Clk1 Low Period		3
+			input [11:0] intClkGen_hP1,	 // Interp Clock Generator - Clk1 High Period   5
+			input [11:0] intClkGen_lP2,	 // Interp Clock Generator - Clk2 Low Period     13	
+			input [11:0] intClkGen_hP2,	 // Interp Clock Generator - Clk2 High Period    25	
+			input [11:0] intClkGen_lP3,	 // Interp Clock Generator - Clk3 Low Period     63	
+			input [11:0] intClkGen_hP3,	 // Interp Clock Generator - Clk3 High Period    125	
+			input [11:0] intClkGen_lP4,	 // Interp Clock Generator - Clk4 Low Period     313	
+			input [11:0] intClkGen_hP4,	 // Interp Clock Generator - Clk4 High Period    625
+			input [31:0] adapt_weight,     // Adaptive Filter - Weight mu (4.28) 26844
+			input [15:0] adapt_pTh,		    // Adaptive Filter - Positive Threshold (4.12) 2048
+			input [15:0] adapt_nTh,		    // Adaptive Filter - Negative Threshold (4.12) -2048
 			output [14:0] fir_memory_s2_address,	
 			output fir_memory_s2_clken,		
 			input [31:0] fir_memory_s2_readdata,	
@@ -95,6 +111,10 @@ micFilter micFilter_inst(
 			.bypass_sel          (bypass_sel),
 			.sub_factor				(sub_factor),
 			.delay_lenght 			(delay_lenght),
+			.DownSampleMult      (DownSampleMult),
+			.adapt_weight    		(adapt_weight),  
+			.adapt_pTh	     		(adapt_pTh),		 
+			.adapt_nTh	     		(adapt_nTh),	
 			.fir_memory_s2_address		(fir_memory_s2_address),	 			
 			.fir_memory_s2_clken			(fir_memory_s2_clken),		
 			.fir_memory_s2_readdata		(fir_memory_s2_readdata),	

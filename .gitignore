@@ -1,0 +1,12 @@
+# ignored files
+db/
+incremental_db/
+de2i_150_qsys/
+!de2i_150_qsys/synthesis/de2i_150_qsys.qip
+!de2i_150_qsys/synthesis/de2i_150_qsys.v
+
+de2i_150_qsys_pcie*
+
+!de2i_150_qsys_pcie.qpf
+!de2i_150_qsys_pcie.qsf
+!de2i_150_qsys_pcie.sdc

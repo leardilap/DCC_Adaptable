@@ -11,23 +11,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity micFilter is
 	GENERIC (	adFil_length : Integer := 500;		-- Adaptive Filter - Length
 				adFil_aWidth : Integer := 9;				-- Adaptive Filter - Address Width
-				adFil_pTH 	: Integer := 2048;			-- Adaptive Filter - Positive Threshold (4.12)
-				adFil_nTH 	: Integer := -2048;			-- Adaptive Filter - Negative Threshold (4.12)
-				adFil_weight : Integer := 26844;			-- Adaptive Filter - Weight mu (4.28)
 				FIR_length 	: INTEGER := 257;           -- FIR Filter - Length
-				FIR_aWidth	: INTEGER := 15;				-- FIR Filter - Address Width
-				DsFil_div   : INTEGER := 2500;          -- Downsample Filter - Downsample Rate
-				DsFil_mul  	: Integer := 107374;        -- Downsample Filter - Factor (4.28)
-				clkGen_lP	: INTEGER := 1250;		    -- Clock Generator - Low Period
-				clkGeN_hP	: INTEGER := 1250;		    -- Clock Generator - High Period
-				intClkGen_lP1	: INTEGER := 3;		    -- Interp Clock Generator - Clk1 Low Period
-            intClkGen_hP1	: INTEGER := 2;		    -- Interp Clock Generator - Clk1 High Period
-				intClkGen_lP2	: INTEGER := 13;			-- Interp Clock Generator - Clk2 Low Period
-            intClkGen_hP2	: INTEGER := 12;			-- Interp Clock Generator - Clk2 High Period
-				intClkGen_lP3	: INTEGER := 63;			-- Interp Clock Generator - Clk3 Low Period
-            intClkGen_hP3	: INTEGER := 62;			-- Interp Clock Generator - Clk3 High Period
-				intClkGen_lP4	: INTEGER := 313;			-- Interp Clock Generator - Clk4 Low Period
-            intClkGen_hP4	: INTEGER := 312			-- Interp Clock Generator - Clk4 High Period
+				FIR_aWidth	: INTEGER := 15				-- FIR Filter - Address Width
 				);
 	PORT (	adj 		: in STD_LOGIC;											-- Coefficient update halt input bit (low = stop update)
 			clk_in 		: in STD_LOGIC;											-- Clock input (nom. 25 MHz)
@@ -42,7 +27,11 @@ entity micFilter is
 			output2_sel : in STD_LOGIC_VECTOR ( 3 downto 0 );				-- output selector
 			bypass_sel	: in STD_LOGIC_VECTOR ( 2 downto 0 );				-- bypass selector (input of interpolation)
 			sub_factor	: in STD_LOGIC_VECTOR ( 15 downto 0 );	
-			delay_lenght : in STD_LOGIC_VECTOR ( 18 downto 0 );	 
+			delay_lenght : in STD_LOGIC_VECTOR ( 18 downto 0 );	
+			DownSampleMult: IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+			adapt_weight : in std_logic_vector(31 downto 0);  -- Adaptive Filter - Weight mu (4.28) 26844
+			adapt_pTh		: in std_logic_vector(15 downto 0);  -- Adaptive Filter - Positive Threshold (4.12) 2048
+			adapt_nTh		: in std_logic_vector(15 downto 0);  -- Adaptive Filter - Negative Threshold (4.12) -2048
 			fir_memory_s2_address		: out std_logic_vector(14 downto 0); 	 			
 			fir_memory_s2_clken			: out std_logic;
 			fir_memory_s2_readdata		: in std_logic_vector(31 downto 0); 	
@@ -84,9 +73,7 @@ architecture micFilter_behav of micFilter is
 	--- Components -----------------------------------------------------
 	-- Adaptive Filter --
 	component AdaptiveFilter is
-	generic ( 	weight 	: INTEGER;				     
-				pTh		: INTEGER; 					        
-				nTh		: INTEGER; 				        
+	generic ( 					        
 				aWidth	: INTEGER;						        
 				fLength	: INTEGER);					        	        
 	port (	clk 	: in STD_LOGIC;
@@ -99,7 +86,10 @@ architecture micFilter_behav of micFilter is
 			adapt_fir_mem_s2_address 	: out std_logic_vector(8 downto 0);
 			adapt_fir_mem_s2_write		: out std_logic;
 			adapt_fir_mem_s2_writedata	: out std_logic_vector(31 downto 0);
-			adapt_fir_mem_clk2_clk		: out std_logic
+			adapt_fir_mem_clk2_clk		: out std_logic;
+			adapt_weight : in std_logic_vector(31 downto 0);
+			adapt_pTh		: in std_logic_vector(15 downto 0);
+			adapt_nTh		: in std_logic_vector(15 downto 0)
 	);
 	end component;
 	
@@ -121,22 +111,21 @@ architecture micFilter_behav of micFilter is
 	end component;
 	
 	-- Downsample Filter --
-	component DownsampleFilter is
-	generic (   div         : INTEGER;                           
-				mul_factor  : Integer);                                        
+	component DownsampleFilter is                                          
 	port (	clk 	: in STD_LOGIC;
 			rst 	: in STD_LOGIC;
 			x 		: in STD_LOGIC_VECTOR ( 15 downto 0 );
-			y 		: out STD_LOGIC_VECTOR ( 15 downto 0 ));
+			y 		: out STD_LOGIC_VECTOR ( 15 downto 0 );
+			DownSampleMult: IN STD_LOGIC_VECTOR (31 DOWNTO 0)		-- 53687 multiplication factor (4.28)
+		);
 	end component;
 	
 	-- Clock Generator --
-	component clockGenerator is
-	generic (	lPeriod	: INTEGER;		        
-				hPeriod	: INTEGER);		         
+	component clockGenerator is	         
 	port (	clk_in 	: in STD_LOGIC;
 			rst 	: in STD_LOGIC;
-			clk_out : out STD_LOGIC);
+			clk_out : out STD_LOGIC
+			);
 	end component;
 	
 	-- FIFO Buffer --
@@ -187,30 +176,22 @@ architecture micFilter_behav of micFilter is
   
 	-- Interpolation Clock Generator --
 	component InterpClkGen is
-	generic (	lPeriod1	: INTEGER;		   
-                hPeriod1    : INTEGER;        
-                lPeriod2    : INTEGER;
-                hPeriod2    : INTEGER;
-                lPeriod3    : INTEGER;
-                hPeriod3    : INTEGER;
-                lPeriod4    : INTEGER;
-                hPeriod4    : INTEGER);
 	port (	clk_in 	: in STD_LOGIC;
 			rst		: in STD_LOGIC;
 			clk_1 	: out STD_LOGIC;
 			clk_2 	: out STD_LOGIC;
 			clk_3 	: out STD_LOGIC;
-			clk_4 	: out STD_LOGIC);
+			clk_4 	: out STD_LOGIC
+		  );
 	end component;
   
 begin
 	---- Component instantiation --------------------------------------
-	ClkGen_0: component clockGenerator      
-	generic map(	lPeriod	=> clkGen_lP,		        
-					hPeriod	=> clkGen_hP)		
+	ClkGen_0: component clockGenerator  	
 	port map(	clk_in 	=> clk_25M,
 				rst 	=> reset,
-				clk_out => clk_10k);
+				clk_out => clk_10k
+				);
 				
 	FIFO_0: component FIFO    
     port map (	clk 	=> clk_25M,
@@ -220,13 +201,13 @@ begin
 					q0		=> gamma_delayed
 					);
 	
-	DownsampleFilter_0: component DownsampleFilter
-	generic map(   	div			=> DsFil_div,                          
-					mul_factor 	=> DsFil_mul)   
+	DownsampleFilter_0: component DownsampleFilter 	
     port map (	clk 	=> clk_25M,
 				rst 	=> reset,
 				x 		=> gamma,
-				y 		=> gamma_ds);
+				y 		=> gamma_ds,
+				DownSampleMult => DownSampleMult --107374
+		);
 	
 	FIRFilter_0: component FIRFilter
 	generic map( 
@@ -244,9 +225,7 @@ begin
 	);
 
 	AdaptiveFilter_0: component AdaptiveFilter
-	generic map( 	weight 	=> adFil_weight,			     
-					pTh		=> adFil_pTH,				        
-					nTh		=> adFil_nTH,				        
+	generic map( 				        
 					aWidth	=> adFil_aWidth,						        
 					fLength	=> adFil_length)
     port map (	adj 	=> adjust,
@@ -259,24 +238,20 @@ begin
 				adapt_fir_mem_s2_address	=> adapt_fir_mem_s2_address,		
 				adapt_fir_mem_s2_write		=> adapt_fir_mem_s2_write,				
 				adapt_fir_mem_s2_writedata	=> adapt_fir_mem_s2_writedata,		
-				adapt_fir_mem_clk2_clk		=> adapt_fir_mem_clk2_clk			
+				adapt_fir_mem_clk2_clk		=> adapt_fir_mem_clk2_clk,
+				adapt_weight		=> adapt_weight,
+				adapt_pTh			=> adapt_pTh,	
+				adapt_nTh			=> adapt_nTh	
 				);
 	
 	InterpClkGen_0: component InterpClkGen
-	generic map(	lPeriod1	=> intClkGen_lP1,		   
-					hPeriod1    => intClkGen_hP1,	       
-					lPeriod2    => intClkGen_lP2,	
-					hPeriod2    => intClkGen_hP2,	
-					lPeriod3    => intClkGen_lP3,	
-					hPeriod3    => intClkGen_hP3,	
-					lPeriod4    => intClkGen_lP4,	
-					hPeriod4    => intClkGen_hP4)
     port map (	clk_in 	=> clk_25M,
 				rst 	=> reset,
 				clk_1 	=> clk_i1,
 				clk_2 	=> clk_i2,
 				clk_3 	=> clk_i3,
-				clk_4 	=> clk_i4);
+				clk_4 	=> clk_i4
+					);
 				
 	InterpolationX4_0: component InterpolationX4
 		port map (	clk => clk_i4,

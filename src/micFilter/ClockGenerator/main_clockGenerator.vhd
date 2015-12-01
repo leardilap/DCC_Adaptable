@@ -10,20 +10,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity clockGenerator is
-	Generic (	lPeriod	: INTEGER := 4;		           -- Low period (in multiple of clk_in periods)
-				hPeriod	: INTEGER := 4);		       -- High period (in multiple of clk_in periods)
+	generic (	clkGen_lP	: INTEGER := 1250;		           -- Low period (in multiple of clk_in periods)
+				clkGeN_hP	: INTEGER := 2500);		       -- High period (in multiple of clk_in periods)
     Port ( 	clk_in			: in STD_LOGIC;            -- Input clock
 			rst 			: in STD_LOGIC;            -- Reset
-			clk_out 		: out STD_LOGIC := '0');   -- Output clock
+			clk_out 		: out STD_LOGIC := '0'
+			);   -- Output clock
 end clockGenerator;
 
 architecture behav_clockGenerator of clockGenerator is
-	--- Constants -------------------------
-	constant clkl : INTEGER := lPeriod-1;
-	constant clkp : INTEGER := clkl+hPeriod;
 	--- Signals ---------------------------
     signal clk_tmp : STD_LOGIC := '0';
-    signal count : INTEGER := 0;        				-- counter variable
+    signal count : INTEGER range 0 to 4095:= 0;        				-- counter variable
 begin
     process(clk_in)
     begin
@@ -32,12 +30,12 @@ begin
             count <= 0;
         else
 			-- Clock --
-			if (count <= clkl) then
+			if (count < clkGen_lP) then
 				clk_tmp <= '0';
 			else
 				clk_tmp <= '1';
 			end if;
-			if (count >= clkp) then
+			if (count >= clkGeN_hP) then
 				count <= 0;
 			else
 				count <= count+1;

@@ -10,17 +10,21 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 entity DownsampleFilter is
-generic (   div         : INTEGER := 5000;                           -- divider
-            mul_factor  : Integer := 53687);                         -- multiplication factor (4.28)
+generic (
+			DownSampleRate : integer := 2500
+			);
 port (	clk 	: IN STD_LOGIC;                                      -- clock
 		rst 	: IN STD_LOGIC;                                      -- reset
 		x 		: IN STD_LOGIC_VECTOR (15 downto 0);                 -- input sample
-		y 		: OUT STD_LOGIC_VECTOR (15 downto 0) := x"0000");    -- output sample
+		y 		: OUT STD_LOGIC_VECTOR (15 downto 0) := x"0000";		 -- output sample
+		
+		DownSampleMult: IN STD_LOGIC_VECTOR (31 DOWNTO 0)		-- 53687 multiplication factor (4.28)
+		);   
 end;
 
 architecture behav_DownsampleFilter of DownsampleFilter is 
-    --- Constants -----------------------------------------
-	constant factor : signed (31 downto 0) := to_signed(mul_factor,32);     -- multiplication factor 
+    --- Parameters -----------------------------------------
+	signal factor : signed (31 downto 0);     -- multiplication factor 
 	--- Signals -- ---------------------------------------    
 	signal sample, reg : signed (15 downto 0):= x"0000";                
 	signal acc, mul : signed (31 downto 0):= x"00000000";
@@ -33,18 +37,19 @@ architecture behav_DownsampleFilter of DownsampleFilter is
     end component;
 
 begin
+	factor <= signed(DownSampleMult);
     multiply : component Multiplier16x32_32
     port map (	DIN1	=> sample,
 				DIN2 	=> factor,
 				DOUT 	=> mul);
-			
+	
     process(clk)
     begin
         if (clk'event and clk ='1') then	-- rising edge
             if (rst = '1') then
                 i <= 0;
             else
-				if (i = (div-1)) then
+				if (i = (DownSampleRate-1)) then
 					i <= 0;               
 				else
 					i <= i+1;

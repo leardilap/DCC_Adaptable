@@ -50,7 +50,7 @@
 // ============================================================================
 
 `define ENABLE_PCIE
-`define DATE 32'h06111501
+`define DATE 32'h29111501
 
 module de2i_150_qsys_pcie(
 
@@ -505,6 +505,22 @@ wire [3:0] output2_sel;
 wire [2:0] bypass_sel;
 wire [15:0] sub_factor;
 wire [18:0] delay_lenght;
+
+wire [11:0] DownSampleRate;
+wire [31:0] DownSampleMult;
+wire [11:0] clkGen_lP;		 
+wire [11:0] clkGeN_hP;		 
+wire [11:0] intClkGen_lP1;
+wire [11:0] intClkGen_hP1;
+wire [11:0] intClkGen_lP2;
+wire [11:0] intClkGen_hP2;
+wire [11:0] intClkGen_lP3;
+wire [11:0] intClkGen_hP3;
+wire [11:0] intClkGen_lP4;
+wire [11:0] intClkGen_hP4;
+wire [31:0] adapt_weight;
+wire [15:0] adapt_pTh;
+wire [15:0] adapt_nTh;
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -607,7 +623,12 @@ assign LEDR[0] = hb_50;
 			.output1_sel_export			(output1_sel),
 			.output2_sel_export         (output2_sel),
 			.bypass_sel_export          (bypass_sel),
-			.delay_lenght_export 		 	(delay_lenght)
+			.delay_lenght_export 		 	(delay_lenght),
+			.sub_factor_export				(sub_factor),
+			.DownSampleMult_export      (DownSampleMult),
+			.adapt_weight_export    		(adapt_weight),  
+			.adapt_pTh_export	     		(adapt_pTh),		 
+			.adapt_nTh_export	     		(adapt_nTh)
   );
 
 hex_module hex_module_inst(
@@ -645,6 +666,10 @@ micFilter_Top micFilter_Top_inst(
 			.output2_sel         (output2_sel),
 			.bypass_sel          (bypass_sel),
 			.delay_lenght 		 	(delay_lenght),
+			.DownSampleMult      (DownSampleMult),
+			.adapt_weight    		(adapt_weight),  
+			.adapt_pTh	     		(adapt_pTh),		 
+			.adapt_nTh	     		(adapt_nTh),
 			.fir_memory_s2_address		(fir_memory_s2_address),
 			.fir_memory_s2_clken			(fir_memory_s2_clken),		
 			.fir_memory_s2_readdata		(fir_memory_s2_readdata),	

@@ -20,6 +20,14 @@
          type = "int";
       }
    }
+   element DownSampleMult
+   {
+      datum _sortIndex
+      {
+         value = "21";
+         type = "int";
+      }
+   }
    element Interpo_4_0
    {
       datum _sortIndex
@@ -57,6 +65,30 @@
       datum _sortIndex
       {
          value = "11";
+         type = "int";
+      }
+   }
+   element adapt_nTh
+   {
+      datum _sortIndex
+      {
+         value = "24";
+         type = "int";
+      }
+   }
+   element adapt_pTh
+   {
+      datum _sortIndex
+      {
+         value = "23";
+         type = "int";
+      }
+   }
+   element adapt_weight
+   {
+      datum _sortIndex
+      {
+         value = "22";
          type = "int";
       }
    }
@@ -229,11 +261,115 @@
          type = "int";
       }
    }
-   element sub_factor.s1
+   element Interpo_5_3.s1
    {
       datum baseAddress
       {
-         value = "448";
+         value = "339968";
+         type = "String";
+      }
+   }
+   element micFilter_cntl.s1
+   {
+      datum baseAddress
+      {
+         value = "256";
+         type = "String";
+      }
+   }
+   element micFilter_rst.s1
+   {
+      datum baseAddress
+      {
+         value = "288";
+         type = "String";
+      }
+   }
+   element output1_sel.s1
+   {
+      datum baseAddress
+      {
+         value = "352";
+         type = "String";
+      }
+   }
+   element Adapt_FIR_mem.s1
+   {
+      datum baseAddress
+      {
+         value = "393216";
+         type = "String";
+      }
+   }
+   element DownSampleMult.s1
+   {
+      datum baseAddress
+      {
+         value = "512";
+         type = "String";
+      }
+   }
+   element Interpo_5_2.s1
+   {
+      datum baseAddress
+      {
+         value = "335872";
+         type = "String";
+      }
+   }
+   element adapt_weight.s1
+   {
+      datum baseAddress
+      {
+         value = "784";
+         type = "String";
+      }
+   }
+   element led.s1
+   {
+      datum _lockedAddress
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element micFilter_adjust.s1
+   {
+      datum baseAddress
+      {
+         value = "320";
+         type = "String";
+      }
+   }
+   element Interpo_5_1.s1
+   {
+      datum baseAddress
+      {
+         value = "331776";
+         type = "String";
+      }
+   }
+   element output2_sel.s1
+   {
+      datum baseAddress
+      {
+         value = "384";
+         type = "String";
+      }
+   }
+   element adapt_pTh.s1
+   {
+      datum baseAddress
+      {
+         value = "800";
+         type = "String";
+      }
+   }
+   element Interpo_5_0.s1
+   {
+      datum baseAddress
+      {
+         value = "327680";
          type = "String";
       }
    }
@@ -250,59 +386,11 @@
          type = "String";
       }
    }
-   element micFilter_rst.s1
-   {
-      datum baseAddress
-      {
-         value = "288";
-         type = "String";
-      }
-   }
-   element Interpo_5_1.s1
-   {
-      datum baseAddress
-      {
-         value = "331776";
-         type = "String";
-      }
-   }
-   element Adapt_FIR_mem.s1
-   {
-      datum baseAddress
-      {
-         value = "393216";
-         type = "String";
-      }
-   }
-   element micFilter_adjust.s1
-   {
-      datum baseAddress
-      {
-         value = "320";
-         type = "String";
-      }
-   }
    element bypass_sel.s1
    {
       datum baseAddress
       {
          value = "416";
-         type = "String";
-      }
-   }
-   element led.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element Interpo_5_3.s1
-   {
-      datum baseAddress
-      {
-         value = "339968";
          type = "String";
       }
    }
@@ -314,43 +402,11 @@
          type = "String";
       }
    }
-   element output2_sel.s1
-   {
-      datum baseAddress
-      {
-         value = "384";
-         type = "String";
-      }
-   }
-   element output1_sel.s1
-   {
-      datum baseAddress
-      {
-         value = "352";
-         type = "String";
-      }
-   }
-   element micFilter_cntl.s1
-   {
-      datum baseAddress
-      {
-         value = "256";
-         type = "String";
-      }
-   }
    element delay_lenght.s1
    {
       datum baseAddress
       {
          value = "480";
-         type = "String";
-      }
-   }
-   element Interpo_5_0.s1
-   {
-      datum baseAddress
-      {
-         value = "327680";
          type = "String";
       }
    }
@@ -367,11 +423,11 @@
          type = "long";
       }
    }
-   element Interpo_5_2.s1
+   element sub_factor.s1
    {
       datum baseAddress
       {
-         value = "335872";
+         value = "448";
          type = "String";
       }
    }
@@ -628,6 +684,26 @@
  <interface
    name="delay_lenght"
    internal="delay_lenght.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="downsamplemult"
+   internal="DownSampleMult.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="adapt_weight"
+   internal="adapt_weight.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="adapt_pth"
+   internal="adapt_pTh.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="adapt_nth"
+   internal="adapt_nTh.external_connection"
    type="conduit"
    dir="end" />
  <module kind="clock_source" version="14.0" enabled="1" name="clk_50">
@@ -1156,6 +1232,70 @@
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="19" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module
+   kind="altera_avalon_pio"
+   version="14.0"
+   enabled="1"
+   name="DownSampleMult">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module
+   kind="altera_avalon_pio"
+   version="14.0"
+   enabled="1"
+   name="adapt_weight">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module kind="altera_avalon_pio" version="14.0" enabled="1" name="adapt_pTh">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="16" />
+  <parameter name="clockRate" value="125000000" />
+ </module>
+ <module kind="altera_avalon_pio" version="14.0" enabled="1" name="adapt_nTh">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="16" />
   <parameter name="clockRate" value="125000000" />
  </module>
  <connection
@@ -1825,6 +1965,102 @@
    version="14.0"
    start="pcie_ip.pcie_core_clk"
    end="delay_lenght.clk" />
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="adapt_pTh.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0320" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="adapt_weight.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0310" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="DownSampleMult.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0200" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="adapt_weight.clk" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="adapt_weight.reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="adapt_weight.reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="adapt_pTh.reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="adapt_pTh.clk" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="adapt_pTh.reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="adapt_nTh.reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="adapt_nTh.clk" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="adapt_nTh.reset" />
+ <connection
+   kind="clock"
+   version="14.0"
+   start="pcie_ip.pcie_core_clk"
+   end="DownSampleMult.clk" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="pcie_ip.pcie_core_reset"
+   end="DownSampleMult.reset" />
+ <connection
+   kind="reset"
+   version="14.0"
+   start="clk_50.clk_reset"
+   end="DownSampleMult.reset" />
+ <connection
+   kind="avalon"
+   version="14.0"
+   start="pcie_ip.bar1_0"
+   end="adapt_nTh.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0330" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>

@@ -40,22 +40,25 @@ port (	clk 	: IN STD_LOGIC;							        -- Clock
         start 	: IN STD_LOGIC;							        -- Start filter cycle
 		v 		: IN STD_LOGIC_VECTOR (15 downto 0);	        -- Mechanical sensor signal input
 		s 		: IN STD_LOGIC_VECTOR (15 downto 0);	        -- Detector signal input
-		adj 	: IN STD_LOGIC;						            -- Adjust input bit
-        p_hat 	: OUT STD_LOGIC_VECTOR (15 downto 0):=x"0000";
-			adapt_fir_mem_s2_address 	: out std_logic_vector(8 downto 0);
-			adapt_fir_mem_s2_write		: out std_logic;
-			adapt_fir_mem_s2_writedata	: out std_logic_vector(31 downto 0);
-			adapt_fir_mem_clk2_clk		: out std_logic
-	);	-- Signal output
+		adj 	: IN STD_LOGIC;						            		-- Adjust input bit
+		p_hat 	: OUT STD_LOGIC_VECTOR (15 downto 0):=x"0000"; -- Signal output
+		adapt_fir_mem_s2_address 	: out std_logic_vector(8 downto 0);
+		adapt_fir_mem_s2_write		: out std_logic;
+		adapt_fir_mem_s2_writedata	: out std_logic_vector(31 downto 0);
+		adapt_fir_mem_clk2_clk		: out std_logic;
+		adapt_weight : in std_logic_vector(31 downto 0);
+		adapt_pTh		: in std_logic_vector(15 downto 0);
+		adapt_nTh		: in std_logic_vector(15 downto 0)
+	);	
 end;
 
 
 architecture behav_genAdF of AdaptiveFilter is 
     --- Constants ----------------------------------------------------------------------
 	-- Calculation constants --
-    constant mu : signed (31 downto 0) := to_signed(weight,32); 					            -- mu 
-	constant threshold : signed (15 downto 0) := to_signed(pTh,16); 					        -- threshold
-	constant neg_threshold : signed (15 downto 0) := to_signed(nTh,16); 				        -- negative threshold	
+    signal mu : signed (31 downto 0) := signed(adapt_weight); 					            -- mu 
+	signal threshold : signed (15 downto 0) := signed(adapt_pTh); 					        -- threshold
+	signal neg_threshold : signed (15 downto 0) := signed(adapt_nTh); 				        -- negative threshold	
 	-- System constants --
 	constant constA_0 : unsigned (aWidth-1 downto 0) := to_unsigned(0,aWidth); 	                     
 	constant constA_1 : unsigned (aWidth-1 downto 0) := to_unsigned(1,aWidth); 	              
