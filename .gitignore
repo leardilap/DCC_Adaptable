@@ -1,9 +1,16 @@
 # ignored files
+*~
+*.bak
+windows*
 db/
 incremental_db/
+demo_batch/
+.*
+
 de2i_150_qsys/
 !de2i_150_qsys/synthesis/de2i_150_qsys.qip
 !de2i_150_qsys/synthesis/de2i_150_qsys.v
+
 
 de2i_150_qsys_pcie*
 
