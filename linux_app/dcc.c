@@ -50,6 +50,15 @@ typedef enum{
    MENU_MICFILTER_CNTL,
 	MENU_MICFILTER_RST,
 	MENU_MICFILTER_ADJUST,
+	MENU_OUTPUT1_SEL,
+	MENU_OUTPUT2_SEL,
+	MENU_BYPASS_SEL,
+	MENU_SUB_FACTOR,
+	MENU_DELAY_LENGHT,
+	MENU_DOWNSAMPLE_MULT,
+	MENU_ADAPT_WEIGHT,
+	MENU_ADAPT_POS_TH,
+	MENU_ADAPT_NEG_TH,
 	MENU_WRITE_COEFF,
 	MENU_READ_COEFF,
 	MENU_QUIT = 99
@@ -57,14 +66,23 @@ typedef enum{
 
 void UI_ShowMenu(void){
 	printf("==============================\r\n");
-	printf("[%d]: Led control\r\n", MENU_LED);							//from example
-	printf("[%d]: Button Status Read\r\n", MENU_BUTTON);				//from example
-	printf("[%d]: MICFILTER_CNTL\r\n", MENU_MICFILTER_CNTL);
-	printf("[%d]: MICFILTER_RST\r\n", MENU_MICFILTER_RST);
-	printf("[%d]: MICFILTER_ADJUST\r\n", MENU_MICFILTER_ADJUST);
-	printf("[%d]: WRITE COEFF\r\n", MENU_WRITE_COEFF);
-	printf("[%d]: READ COEFF\r\n", MENU_READ_COEFF);
-	printf("[%d]: Quit\r\n", MENU_QUIT);
+	printf("[%d]: Led control\r\n", 					MENU_LED);							//from example
+	printf("[%d]: Button Status Read\r\n", 		MENU_BUTTON);				//from example
+	printf("[%d]: MICFILTER_CNTL\r\n", 				MENU_MICFILTER_CNTL);
+	printf("[%d]: MICFILTER_RST\r\n", 				MENU_MICFILTER_RST);
+	printf("[%d]: MICFILTER_ADJUST\r\n", 			MENU_MICFILTER_ADJUST);
+	printf("[%d]: OUTPUT1_SEL\r\n", 					MENU_OUTPUT1_SEL);
+	printf("[%d]: MENU_OUTPUT2_SEL\r\n",   		MENU_OUTPUT2_SEL);
+	printf("[%d]: MENU_BYPASS_SEL\r\n",    		MENU_BYPASS_SEL);
+	printf("[%d]: MENU_SUB_FACTOR\r\n",    		MENU_SUB_FACTOR);
+	printf("[%d]: MENU_DELAY_LENGHT\r\n",  		MENU_DELAY_LENGHT);
+	printf("[%d]: MENU_DOWNSAMPLE_MULT\r\n",		MENU_DOWNSAMPLE_MULT);
+	printf("[%d]: MENU_ADAPT_WEIGHT\r\n",  		MENU_ADAPT_WEIGHT);
+	printf("[%d]: MENU_ADAPT_POS_TH\r\n",  		MENU_ADAPT_POS_TH);
+	printf("[%d]: MENU_ADAPT_NEG_TH\r\n",  		MENU_ADAPT_NEG_TH);
+	printf("[%d]: WRITE COEFF\r\n", 					MENU_WRITE_COEFF);
+	printf("[%d]: READ COEFF\r\n",	 				MENU_READ_COEFF);
+	printf("[%d]: Quit\r\n", 							MENU_QUIT);
 	printf("Please input your selection:");
 }
 
@@ -82,7 +100,7 @@ BOOL TEST_LED(PCIE_HANDLE hPCIe){
 	printf("Please input led control mask:");
 	scanf("%d", &Mask);
 
-	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, DEMO_PCIE_IO_LED_ADDR,(DWORD)Mask);
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, DEMO_PCIE_IO_LED_ADDR, (DWORD)Mask);
 	if (bPass)
 		printf("Led control success, mask=%xh\r\n", Mask);
 	else
@@ -96,7 +114,7 @@ BOOL TEST_BUTTON(PCIE_HANDLE hPCIe){
 	BOOL bPass = TRUE;
 	DWORD Status;
 
-	bPass = PCIE_Read32(hPCIe, DEMO_PCIE_USER_BAR, DEMO_PCIE_IO_BUTTON_ADDR,&Status);
+	bPass = PCIE_Read32(hPCIe, DEMO_PCIE_USER_BAR, DEMO_PCIE_IO_BUTTON_ADDR, &Status);
 	if (bPass)
 		printf("Button status mask=%xh\r\n", Status);
 	else
@@ -113,7 +131,7 @@ BOOL MICFILTER_CNTL(PCIE_HANDLE hPCIe){
 	printf("Please input micFilter control mask:");
 	scanf("%d", &Mask);
 
-	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_MICFILTER_CNTL_ADDR,(DWORD)Mask);
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_MICFILTER_CNTL_ADDR, (DWORD)Mask);
 	if (bPass)
 		printf("micFilter control success, mask=%xh\r\n", Mask);
 	else
@@ -126,13 +144,13 @@ BOOL MICFILTER_CNTL(PCIE_HANDLE hPCIe){
 BOOL MICFILTER_RST(PCIE_HANDLE hPCIe, int Mask){
 	BOOL bPass;
 	
-	if (Mask == 55){
+	if (Mask == -1){
 	
 	printf("Please input micFilter rst mask:");
 	scanf("%d", &Mask);
 	}
 	
-	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_MICFILTER_RST_ADDR,(DWORD)Mask);
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_MICFILTER_RST_ADDR, (DWORD)Mask);
 	if (bPass)
 		printf("micFilter rst success, mask=%xh\r\n", Mask);
 	else
@@ -145,13 +163,13 @@ BOOL MICFILTER_RST(PCIE_HANDLE hPCIe, int Mask){
 BOOL MICFILTER_ADJUST(PCIE_HANDLE hPCIe, int Mask){
 	BOOL bPass;
 	
-	if (Mask == 55) {
+	if (Mask == -1) {
 	
 	printf("Please input micFilter Adjust mask:");
 	scanf("%d", &Mask);
 	}
 	
-	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_MICFILTER_ADJUST_ADDR,(DWORD)Mask);
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_MICFILTER_ADJUST_ADDR, (DWORD)Mask);
 	if (bPass)
 		printf("micFilter Adjust success, mask=%xh\r\n", Mask);
 	else
@@ -161,6 +179,176 @@ BOOL MICFILTER_ADJUST(PCIE_HANDLE hPCIe, int Mask){
 	return bPass;
 }
 
+BOOL OUTPUT1_SEL(PCIE_HANDLE hPCIe, int Mask){
+	BOOL bPass;
+	
+	if (Mask == -1) {
+	
+	printf("Please input output1 sel mask:");
+	scanf("%d", &Mask);
+	}
+	
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_OUTPUT1_SEL_ADDR, (DWORD)Mask);
+	if (bPass)
+		printf("output1 sel success, mask=%xh\r\n", Mask);
+	else
+		printf("output1 sel failed\r\n");
+
+	
+	return bPass;
+}
+
+BOOL OUTPUT2_SEL(PCIE_HANDLE hPCIe, int Mask){
+	BOOL bPass;
+	
+	if (Mask == -1) {
+	
+	printf("Please input output2 sel mask:");
+	scanf("%d", &Mask);
+	}
+	
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_OUTPUT2_SEL_ADDR, (DWORD)Mask);
+	if (bPass)
+		printf("output2 sel success, mask=%xh\r\n", Mask);
+	else
+		printf("output2 sel failed\r\n");
+
+	
+	return bPass;
+}
+
+BOOL BYPASS_SEL(PCIE_HANDLE hPCIe, int Mask){
+	BOOL bPass;
+	
+	if (Mask == -1) {
+	
+	printf("Please input bypass sel mask:");
+	scanf("%d", &Mask);
+	}
+	
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_BYPASS_SEL_ADDR, (DWORD)Mask);
+	if (bPass)
+		printf("bypass sel success, mask=%xh\r\n", Mask);
+	else
+		printf("bypass sel failed\r\n");
+
+	
+	return bPass;
+}
+
+BOOL SUB_FACTOR(PCIE_HANDLE hPCIe, int Mask){
+	BOOL bPass;
+	
+	if (Mask == -1) {
+	
+	printf("Please input sub factor mask:");
+	scanf("%d", &Mask);
+	}
+	
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_SUB_FACTOR_ADDR, (DWORD)Mask);
+	if (bPass)
+		printf("sub factor success, mask=%xh\r\n", Mask);
+	else
+		printf("sub factor failed\r\n");
+
+	
+	return bPass;
+}
+
+BOOL DELAY_LENGHT(PCIE_HANDLE hPCIe, int Mask){
+	BOOL bPass;
+	
+	if (Mask == -1) {
+	
+	printf("Please input DELAY_LENGHT mask:");
+	scanf("%d", &Mask);
+	}
+	
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_DELAY_LENGHT_ADDR, (DWORD)Mask);
+	if (bPass)
+		printf("DELAY_LENGHT success, mask=%xh\r\n", Mask);
+	else
+		printf("DELAY_LENGHT failed\r\n");
+
+	
+	return bPass;
+}
+
+BOOL DOWNSAMPLE_MULT(PCIE_HANDLE hPCIe, int Mask){
+	BOOL bPass;
+	
+	if (Mask == -1) {
+	
+	printf("Please input DOWNSAMPLE_MULT mask:");
+	scanf("%d", &Mask);
+	}
+	
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_DOWNSAMPLE_MULT_ADDR, (DWORD)Mask);
+	if (bPass)
+		printf("DOWNSAMPLE_MULT success, mask=%xh\r\n", Mask);
+	else
+		printf("DOWNSAMPLE_MULT failed\r\n");
+
+	
+	return bPass;
+}
+
+BOOL ADAPT_WEIGHT(PCIE_HANDLE hPCIe, int Mask){
+	BOOL bPass;
+	
+	if (Mask == -1) {
+	
+	printf("Please input ADAPT_WEIGHT mask:");
+	scanf("%d", &Mask);
+	}
+	
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_ADAPT_WEIGHT_ADDR, (DWORD)Mask);
+	if (bPass)
+		printf("ADAPT_WEIGHT success, mask=%xh\r\n", Mask);
+	else
+		printf("ADAPT_WEIGHT failed\r\n");
+
+	
+	return bPass;
+}
+
+BOOL ADAPT_POS_TH(PCIE_HANDLE hPCIe, int Mask){
+	BOOL bPass;
+	
+	if (Mask == -1) {
+	
+	printf("Please input ADAPT_POS_TH mask:");
+	scanf("%d", &Mask);
+	}
+	
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_ADAPT_POS_TH_ADDR, (DWORD)Mask);
+	if (bPass)
+		printf("ADAPT_POS_TH success, mask=%xh\r\n", Mask);
+	else
+		printf("ADAPT_POS_TH failed\r\n");
+
+	
+	return bPass;
+}
+
+BOOL ADAPT_NEG_TH(PCIE_HANDLE hPCIe, int Mask){
+	BOOL bPass;
+	
+	if (Mask == -1) {
+	
+	printf("Please input ADAPT_NEG_TH mask:");
+	scanf("%d", &Mask);
+	}
+	
+	bPass = PCIE_Write32(hPCIe, DEMO_PCIE_USER_BAR, PCIE_ADAPT_NEG_TH_ADDR, (DWORD)Mask);
+	if (bPass)
+		printf("ADAPT_NEG_TH success, mask=%xh\r\n", Mask);
+	else
+		printf("ADAPT_NEG_TH failed\r\n");
+
+	
+	return bPass;
+}
 
 char PAT_GEN(int nIndex){
 	char Data;
@@ -180,7 +368,7 @@ BOOL WRITE_COEFF(PCIE_HANDLE hPCIe, int selector){
 	char *pWrite;
 	PCIE_LOCAL_ADDRESS LocalAddr;
 
-	if (selector == 55) {
+	if (selector == -1) {
 		printf("==============================\r\n");
 		printf("[%d]: INT4_0\r\n", 0);							
 		printf("[%d]: INT5_0\r\n", 1);				
@@ -295,7 +483,7 @@ BOOL READ_COEFF(PCIE_HANDLE hPCIe, int selector){
 	char *pRead;
 	PCIE_LOCAL_ADDRESS LocalAddr;
 
-	if (selector == 55) {
+	if (selector == -1) {
 		printf("==============================\r\n");
 		printf("[%d]: INT4_0\r\n", 0);							
 		printf("[%d]: INT5_0\r\n", 1);				
@@ -386,6 +574,15 @@ void init(PCIE_HANDLE hPCIe)
 {
 	MICFILTER_RST(hPCIe, 0);
 	MICFILTER_ADJUST(hPCIe, 1);
+	OUTPUT1_SEL(hPCIe, 0);
+	OUTPUT2_SEL(hPCIe, 0);
+	BYPASS_SEL(hPCIe, 0);
+	SUB_FACTOR(hPCIe, 4111);
+	DELAY_LENGHT(hPCIe, 340151);
+	DOWNSAMPLE_MULT(hPCIe, 107374);
+	ADAPT_WEIGHT(hPCIe, 26844);
+	ADAPT_POS_TH(hPCIe, 2048);
+	ADAPT_NEG_TH(hPCIe, -2048); 
 	int i;
 	for(i = 0; i < 7; i++) {	// 0 to 6
 	READ_COEFF(hPCIe, i);
@@ -429,16 +626,43 @@ int main(void)
 					MICFILTER_CNTL(hPCIE);
 					break;
 				case MENU_MICFILTER_RST:
-					MICFILTER_RST(hPCIE, 55);
+					MICFILTER_RST(hPCIE, -1);
 					break;
 				case MENU_MICFILTER_ADJUST:
-					MICFILTER_ADJUST(hPCIE, 55);
+					MICFILTER_ADJUST(hPCIE, -1);
 					break;
+				case MENU_OUTPUT1_SEL:
+					OUTPUT1_SEL(hPCIE, -1);
+					break;
+				case MENU_OUTPUT2_SEL:
+					OUTPUT2_SEL(hPCIE, -1);
+					break;	
+				case MENU_BYPASS_SEL:
+					BYPASS_SEL(hPCIE, -1);
+					break;
+				case MENU_SUB_FACTOR:
+					SUB_FACTOR(hPCIE, -1);
+					break;
+				case MENU_DELAY_LENGHT:
+					DELAY_LENGHT(hPCIE, -1);
+					break;
+				case MENU_DOWNSAMPLE_MULT:
+					DOWNSAMPLE_MULT(hPCIE, -1);
+					break;
+				case MENU_ADAPT_WEIGHT:
+					ADAPT_WEIGHT(hPCIE, -1);
+					break;
+				case MENU_ADAPT_POS_TH:
+					ADAPT_POS_TH(hPCIE, -1);
+					break;
+				case MENU_ADAPT_NEG_TH:
+					ADAPT_NEG_TH(hPCIE, -1);
+					break;		
 				case MENU_WRITE_COEFF:
-					WRITE_COEFF(hPCIE, 55);
+					WRITE_COEFF(hPCIE, -1);
 					break;
 				case MENU_READ_COEFF:
-					READ_COEFF(hPCIE, 55);
+					READ_COEFF(hPCIE, -1);
 					break;
 				case MENU_QUIT:
 					bQuit = TRUE;
